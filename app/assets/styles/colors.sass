@@ -1,0 +1,48 @@
+@use '@/assets/styles/quasar-variables.sass' as *
+
+$colors: (
+primary: $primary,
+primary-light: $primary-light,
+secondary: $secondary,
+accent: $accent,
+positive: $positive,
+negative: $negative,
+positive-light: $positive-light,
+negative-light: $negative-light,
+warning-light: $warning-light,
+info: $info,
+warning: $warning,
+dark: $dark,
+default: $default,
+grey-1: $grey-1,
+grey-2: $grey-2,
+grey-3: $grey-3,
+grey-4: $grey-4,
+grey-5: $grey-5,
+grey-6: $grey-6,
+grey-7: $grey-7,
+grey-8: $grey-8,
+grey-9: $grey-9,
+)
+
+@each $color, $value in $colors
+    .bg-#{$color}
+        background-color: $value
+    .text-#{$color}
+        color: $value
+    .border-#{$color}
+        border-color: $value
+
+$border-sizes: (
+  "xs": 1px,
+  "sm": 2px,
+  "md": 4px,
+  "lg": 8px,
+  "xl": 16px,
+)
+@each $size, $value in $border-sizes
+    @each $color, $color-value in $colors
+        .border-#{$size}-#{$color}
+            border-width: $value
+            border-style: solid
+            border-color: $color-value
