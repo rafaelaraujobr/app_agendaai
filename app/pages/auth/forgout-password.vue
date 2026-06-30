@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center bg-grey-1">
+  <q-page class="flex flex-center">
     <q-card flat style="width: 350px" class="bg-transparent">
       <q-form @submit.prevent="handleSubmit" class="q-mb-sm">
         <q-card-section>
@@ -19,19 +19,16 @@
           <q-input
             v-model="email"
             outlined
-            bg-color="white"
+            bg-color="grey-1"
             dense
+            autocomplete="off"
             outofocus
             :rules="[
               (val) => (val !== null && val !== '') || 'O email é obrigatório',
               (val) => val.length <= 50 || 'Máximo de 50 caracteres',
               (val) => val.length >= 3 || 'Mínimo de 3 caracteres',
             ]"
-          >
-            <template #prepend>
-              <q-icon name="mdi-email-outline" />
-            </template>
-          </q-input>
+          />
         </q-card-section>
         <q-card-section class="q-gutter-y-md">
           <q-btn
@@ -54,17 +51,17 @@
           />
         </q-card-section>
       </q-form>
-        <q-item class="bg-grey-2 rounded-border">
-          <q-item-section top side>
-            <q-icon name="mdi-information-outline" color="primary" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label caption class="text-dark text-weight-medium">Não se preocupe, acontece com todo mundo!</q-item-label>
-            <q-item-label caption>
-              O link expira em 1 hora.
-            </q-item-label>
-          </q-item-section>
-        </q-item>
+      <q-item class="bg-grey-2 rounded-border">
+        <q-item-section top side>
+          <q-icon name="mdi-information-outline" color="primary" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label caption class="text-dark text-weight-medium"
+            >Não se preocupe, acontece com todo mundo!</q-item-label
+          >
+          <q-item-label caption> O link expira em 1 hora. </q-item-label>
+        </q-item-section>
+      </q-item>
     </q-card>
   </q-page>
 </template>
