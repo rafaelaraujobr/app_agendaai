@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { quasarConfig } from "./app/configs/quasar.config";
+import { quasarConfig } from "./configs/quasar.config";
+import { nitroConfig } from "./configs/nitro.config";
+import { appConfig } from "./configs/app.config";
+import { nodemailerConfig } from "./configs/nodemailer.config";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -7,7 +10,27 @@ export default defineNuxtConfig({
   routeRules: {
     "/auth/**": { ssr: false },
   },
+  vite: {
+    optimizeDeps: {
+      include: [
+        "@tsparticles/engine",
+        "@tsparticles/slim",
+        "@tsparticles/vue3",
+        "vue3-lottie",
+      ],
+    },
+  },
   css: ["@/assets/styles/custom.sass", "@/assets/styles/colors.sass"],
-  modules: ["@nuxt/eslint", "@nuxt/fonts", "@pinia/nuxt", "nuxt-quasar-ui"],
+  modules: [
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@pinia/nuxt",
+    "nuxt-quasar-ui",
+    "nuxt-auth-utils",
+    "nuxt-nodemailer",
+  ],
+  nodemailer: nodemailerConfig,
   quasar: quasarConfig,
+  nitro: nitroConfig,
+  app: appConfig,
 });

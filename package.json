@@ -5,27 +5,44 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "host": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "prisma generate && nuxt prepare"
   },
   "dependencies": {
     "@nuxt/eslint": "1.16.0",
     "@nuxt/fonts": "0.14.0",
     "@pinia/nuxt": "0.11.3",
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "@quasar/extras": "^1.18.0",
     "@tsparticles/engine": "^4.2.1",
     "@tsparticles/slim": "^4.2.1",
     "@tsparticles/vue3": "^4.2.1",
+    "bcryptjs": "^3.0.3",
     "eslint": "^10.5.0",
+    "handlebars": "^4.7.9",
     "nuxt": "^4.4.8",
+    "nuxt-auth-utils": "0.5.29",
     "nuxt-quasar-ui": "3.0.1",
+    "pg": "^8.22.0",
     "pinia": "^3.0.4",
-    "quasar": "^2.20.1",
+    "quasar": "^2.21.0",
     "vue": "^3.5.38",
-    "vue-router": "^5.1.0"
+    "vue-router": "^5.1.0",
+    "vue3-lottie": "^3.3.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "sass-embedded": "^1.100.0"
-  }
+    "@types/pg": "^8.20.0",
+    "@typescript-eslint/parser": "^8.62.1",
+    "dotenv": "^17.4.2",
+    "nodemailer": "^9.0.3",
+    "nuxt-nodemailer": "^1.1.4",
+    "prisma": "^7.8.0",
+    "sass-embedded": "^1.100.0",
+    "tsx": "^4.22.5"
+  },
+  "packageManager": "pnpm@11.9.0+sha512.bd682d5d03fe525ef7c9fd6780c6884d1e756ac4c9c9fe00c538782824310dcf90e3ddc4f53835f06dfaebd5085e41855e0bcbb3b60de2ac5bbab89e5036f03b"
 }

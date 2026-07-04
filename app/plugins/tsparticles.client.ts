@@ -1,6 +1,6 @@
-import Particles from "@tsparticles/vue3";
-import { loadSlim } from "@tsparticles/slim";
 import type { Engine } from "@tsparticles/engine";
+import { loadSlim } from "@tsparticles/slim";
+import Particles from "@tsparticles/vue3";
 
 async function initEngine(engine: Engine) {
   await loadSlim(engine);

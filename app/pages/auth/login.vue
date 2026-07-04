@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <q-card flat style="width: 350px" class="bg-transparent">
-      <q-form @submit.prevent="handleSubmit">
+      <q-form @submit.prevent="handleLogin">
         <q-card-section>
           <div class="row items-center justify-center">
             <div class="col-12 text-center text-weight-medium text-h6 q-mt-sm">
@@ -17,11 +17,23 @@
               dense
               label="Continuar com Google"
               :icon="`img:${googleIcon}`"
-              :loading="googleLoading"
+              :loading="isLoadingGoogle"
               padding="sm md"
               class="bg-white full-width border-xs-grey-3 text-primary"
               @click="handleGoogleLogin"
-            />
+            >
+              <template #loading>
+                <div style="margin-top: -53px">
+                  <client-only>
+                    <Vue3Lottie
+                      :animation-data="GoogleAnimation"
+                      :height="150"
+                      :width="150"
+                    />
+                  </client-only>
+                </div>
+              </template>
+            </q-btn>
           </div>
           <div class="row items-center q-mt-md">
             <div class="col-5"><q-separator /></div>
@@ -57,7 +69,7 @@
             :rules="[
               (val) => (val !== null && val !== '') || 'A senha é obrigatória',
               (val) => val.length <= 20 || 'Máximo de 20 caracteres',
-              (val) => val.length >= 6 || 'Mínimo de 8 caracteres',
+              (val) => val.length >= 5 || 'Mínimo de 5 caracteres',
             ]"
           >
             <template #append>
@@ -88,9 +100,7 @@
             class="full-width"
           />
           <div class="row items-center justify-center q-my-md">
-            <span class="text-subtitle2 q-mr-xs"
-              >Ainda não tem uma conta?</span
-            >
+            <span class="text-subtitle2 q-mr-xs">Ainda não tem uma conta?</span>
             <router-link
               to="/auth/register"
               class="text-primary text-weight-medium text-subtitle2"
@@ -104,19 +114,35 @@
   </q-page>
 </template>
 <script setup lang="ts">
+definePageMeta({
+  layout: "auth",
+});
 import googleIcon from "~/assets/images/google.svg";
+import GoogleAnimation from "~/assets/lotties/google.json";
+import useAuth from "~/composables/useAuth";
 
-const email = ref<string>("");
-const password = ref<string>("");
+const { loginWithGoogle, login } = useAuth();
+
+const email = ref<string>("admin@gmail.com");
+const password = ref<string>("admin@123");
 const showPassword = ref<boolean>(false);
 const loading = ref<boolean>(false);
-const googleLoading = ref<boolean>(false);
-
-const handleSubmit = async () => {
-  loading.value = true;
-};
+const isLoadingGoogle = ref<boolean>(false);
 
 const handleGoogleLogin = async () => {
-  googleLoading.value = true;
+  isLoadingGoogle.value = true;
+  await loginWithGoogle();
+};
+
+const handleLogin = async () => {
+  try {
+    loading.value = true;
+    await login(email.value, password.value);
+    await navigateTo("/");
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
 };
 </script>

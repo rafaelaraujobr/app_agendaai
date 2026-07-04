@@ -1,12 +1,11 @@
 <template>
   <q-page class="flex flex-center">
     <div class="row q-gutter-x-md">
-      <q-btn label="Click me" no-caps />
       <q-input
         v-model="text"
         color="primary"
         bg-color="grey-1"
-        class="border-grey-2 prepend-custom "
+        class="border-grey-2 prepend-custom"
         dense
         outlined
       >
@@ -21,8 +20,10 @@
   </q-page>
 </template>
 <script setup lang="ts">
+definePageMeta({
+  middleware: ["auth"],
+});
 const text = ref<string>("");
 </script>
 
-<style lang="sass" scoped>
-</style>
+<style lang="sass" scoped></style>

@@ -134,6 +134,9 @@
   </q-page>
 </template>
 <script setup lang="ts">
+definePageMeta({
+  layout: "auth",
+});
 import googleIcon from "~/assets/images/google.svg";
 const name = ref<string>("");
 const email = ref<string>("");

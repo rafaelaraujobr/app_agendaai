@@ -1,3 +1,9 @@
 allowBuilds:
+  '@parcel/watcher': true
+  '@prisma/engines': true
   '@tsparticles/engine': true
   esbuild: true
+  prisma: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - quasar@2.21.0

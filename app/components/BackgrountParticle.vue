@@ -1,13 +1,11 @@
 <template>
-  <div class="particle-wave">
-    <client-only>
-      <vue-particles
-        id="tsparticles"
-        :options="options"
-        @particlesLoaded="particlesLoaded"
-      />
-    </client-only>
-  </div>
+  <client-only>
+    <vue-particles
+      id="tsparticles"
+      :options="options"
+      @particlesLoaded="particlesLoaded"
+    />
+  </client-only>
 </template>
 
 <script setup lang="ts">
@@ -70,42 +68,4 @@ const particlesLoaded = (container?: Container) => {
 };
 </script>
 
-<style scoped>
-.particle-wave {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-  height: 340px;
-  overflow: hidden;
-  pointer-events: none !important;
-  background: transparent;
-}
-
-:deep(#tsparticles),
-:deep(#tsparticles canvas) {
-  width: 120% !important;
-  height: 100% !important;
-  pointer-events: none !important;
-  filter: drop-shadow(0 0 5px rgba(196, 255, 255, 0.85));
-}
-
-:deep(#tsparticles) {
-  margin-left: -10%;
-}
-
-:deep(#tsparticles canvas) {
-  animation: particle-wave-drift 12s ease-in-out infinite alternate;
-}
-
-@keyframes particle-wave-drift {
-  from {
-    transform: translate3d(-3%, 0, 0);
-  }
-
-  to {
-    transform: translate3d(3%, 0, 0);
-  }
-}
-</style>
+<style scoped></style>
