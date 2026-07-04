@@ -29,6 +29,15 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
     "nuxt-nodemailer",
   ],
+  runtimeConfig: {
+    session: {
+      password: process.env.NUXT_SESSION_PASSWORD,
+      cookie: {
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   nodemailer: nodemailerConfig,
   quasar: quasarConfig,
   nitro: nitroConfig,

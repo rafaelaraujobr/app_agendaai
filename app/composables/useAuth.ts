@@ -2,10 +2,14 @@ const useAuth = () => {
   const { user, fetch } = useUserSession();
 
   const login = async (email: string, password: string) => {
-    return $fetch("/api/auth/login", {
+    const response = await $fetch("/api/auth/login", {
       method: "POST",
       body: { email, password },
     });
+
+    await fetch(); //atualiza o estado do usuario
+
+    return response;
   };
 
   const loginWithGoogle = async () => {
@@ -13,9 +17,13 @@ const useAuth = () => {
   };
 
   const logout = async (): Promise<any> => {
-    return await $fetch("/api/auth/logout", {
+    const response = await $fetch("/api/auth/logout", {
       method: "POST",
     });
+
+    await fetch(); //atualiza o estado do usuario
+
+    return response;
   };
 
   return {
