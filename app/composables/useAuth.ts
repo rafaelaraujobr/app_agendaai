@@ -1,29 +1,23 @@
 const useAuth = () => {
   const { user, fetch } = useUserSession();
 
-  const login = async (email: string, password: string) => {
-    const response = await $fetch("/api/auth/login", {
+  const login = async (email: string, password: string): Promise<void> => {
+    await $fetch("/api/auth/login", {
       method: "POST",
       body: { email, password },
     });
-
-    await fetch(); //atualiza o estado do usuario
-
-    return response;
+    await fetch();
   };
 
-  const loginWithGoogle = async () => {
+  const loginWithGoogle = async (): Promise<void> => {
     await navigateTo("/api/auth/google", { external: true });
   };
 
-  const logout = async (): Promise<any> => {
-    const response = await $fetch("/api/auth/logout", {
+  const logout = async (): Promise<void> => {
+    await $fetch("/api/auth/logout", {
       method: "POST",
     });
-
     await fetch(); //atualiza o estado do usuario
-
-    return response;
   };
 
   return {
