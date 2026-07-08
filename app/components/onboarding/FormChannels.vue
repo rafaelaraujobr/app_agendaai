@@ -11,7 +11,7 @@
         <label class="text-weight-medium text-subtitle2 q-mb-xs">
           Seus canais
         </label>
-        <div class="scroll-y" style="max-height: 300px">
+        <div class="scroll-y q-gutter-y-sm" style="max-height: 300px">
           <div
             v-for="(channel, index) in channels"
             :key="index"
@@ -29,12 +29,6 @@
                 "
                 maxlength="50"
                 dense
-                :rules="[
-                  (val) =>
-                    (val !== null && val !== '') || 'O canal é obrigatório',
-                  (val) => val.length <= 50 || 'Máximo de 50 caracteres',
-                  (val) => val.length >= 3 || 'Mínimo de 3 caracteres',
-                ]"
               >
                 <template #before>
                   <q-select
@@ -49,11 +43,6 @@
                     bg-color="grey-1"
                     style="width: 72px"
                     dense
-                    :rules="[
-                      (val) =>
-                        (val !== null && val !== '') ||
-                        'Tipo do canal é obrigatório',
-                    ]"
                     @update:model-value="updateChannel(index)"
                   >
                   <template #selected-item="{ opt }">

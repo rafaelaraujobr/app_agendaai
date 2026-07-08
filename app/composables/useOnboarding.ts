@@ -56,6 +56,7 @@ export type CreateBusinessPayload = {
     description: string | null;
     businessTypeId: string | null;
     logoFile: File | null;
+    phone: string | null;
   };
   businessLayout: {
     primaryColor: string;
@@ -88,6 +89,7 @@ export type CreateBusinessPayload = {
 export const useOnboarding = () => {
   const businessName = ref("");
   const businessType = ref("");
+  const businessPhone = ref("");
   const slug = ref("");
   const businessDescription = ref("");
   const logoFile = ref<File | null>(null);
@@ -168,7 +170,6 @@ export const useOnboarding = () => {
   });
 
   const channelSelected = ref<OnboardingChannel[]>([
-    { type: "whatsapp", value: "" },
     { type: "instagram", value: "" },
     { type: "facebook", value: "" },
   ]);
@@ -321,6 +322,7 @@ export const useOnboarding = () => {
       description: businessDescription.value || null,
       businessTypeId: businessType.value || null,
       logoFile: logoFile.value,
+      phone: businessPhone.value || null,
     },
     businessLayout: {
       primaryColor: primaryColor.value,
@@ -358,6 +360,7 @@ export const useOnboarding = () => {
     address,
     businessDescription,
     businessName,
+    businessPhone,
     businessType,
     businessTypes,
     channelOptions,

@@ -11,6 +11,7 @@
       <q-step :name="1" title="business-data" :done="step > 1">
         <FormBusiness
           v-model:business-name="businessName"
+          v-model:business-phone="businessPhone"
           v-model:business-type="businessType"
           v-model:slug="slug"
           v-model:business-description="businessDescription"
@@ -97,6 +98,7 @@ const {
   address,
   businessDescription,
   businessName,
+  businessPhone,
   businessType,
   businessTypes,
   channelOptions,

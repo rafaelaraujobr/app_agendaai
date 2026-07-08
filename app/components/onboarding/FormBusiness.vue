@@ -37,6 +37,21 @@
         ]"
       />
 
+      <label class="text-weight-medium text-subtitle2 q-mb-xs"> Whatsapp </label>
+      <q-input
+        v-model="businessPhone"
+        outlined
+        bg-color="grey-1"
+        type="tel"
+        placeholder="Ex: +551234567890"
+        dense
+        mask="(##) #####-####"
+        :rules="[
+          (val) =>
+            (val && val.length > 0) || 'Whatsapp do seu negócio é obrigatório',
+        ]"
+      />
+
       <label class="text-weight-medium text-subtitle2 q-mb-xs">
         Slug (URL amigável)
       </label>
@@ -108,6 +123,7 @@ const formRef = ref<QForm | null>(null);
 const businessName = defineModel<string>("businessName", { required: true });
 const businessType = defineModel<string>("businessType", { required: true });
 const slug = defineModel<string>("slug", { required: true });
+const businessPhone = defineModel<string>("businessPhone", { required: false });
 const businessDescription = defineModel<string>("businessDescription", {
   required: true,
 });

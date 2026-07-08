@@ -8,7 +8,6 @@
     "host": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "db:seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate && nuxt prepare"
   },
   "dependencies": {
