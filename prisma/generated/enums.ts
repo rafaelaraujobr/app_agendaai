@@ -9,19 +9,89 @@
 * 🟢 You can import this file directly.
 */
 
+export const AuthProvider = {
+  GOOGLE: 'GOOGLE',
+  APPLE: 'APPLE'
+} as const
+
+export type AuthProvider = (typeof AuthProvider)[keyof typeof AuthProvider]
+
+
+export const MemberRole = {
+  OWNER: 'OWNER',
+  COLLABORATOR: 'COLLABORATOR'
+} as const
+
+export type MemberRole = (typeof MemberRole)[keyof typeof MemberRole]
+
+
+export const MemberStatus = {
+  INVITED: 'INVITED',
+  ACTIVE: 'ACTIVE',
+  DISABLED: 'DISABLED'
+} as const
+
+export type MemberStatus = (typeof MemberStatus)[keyof typeof MemberStatus]
+
+
+export const DayOfWeek = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY'
+} as const
+
+export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
+
+
+export const AppointmentStatus = {
+  PENDING_WHATSAPP: 'PENDING_WHATSAPP',
+  CONFIRMED: 'CONFIRMED',
+  RESCHEDULED: 'RESCHEDULED',
+  CANCELED: 'CANCELED',
+  COMPLETED: 'COMPLETED',
+  NO_SHOW: 'NO_SHOW'
+} as const
+
+export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof AppointmentStatus]
+
+
+export const SubscriptionStatus = {
+  ACTIVE: 'ACTIVE',
+  TRIALING: 'TRIALING',
+  PAST_DUE: 'PAST_DUE',
+  CANCELED: 'CANCELED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
 export const PlanCode = {
   FREE: 'FREE',
   PRO: 'PRO',
-  ENTERPRISE: 'ENTERPRISE'
+  PREMIUM: 'PREMIUM'
 } as const
 
 export type PlanCode = (typeof PlanCode)[keyof typeof PlanCode]
 
 
-export const ServiceStatus = {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE',
-  PENDING: 'PENDING'
+export const ChannelType = {
+  WHATSAPP: 'WHATSAPP',
+  TELEGRAM: 'TELEGRAM',
+  INSTAGRAM: 'INSTAGRAM',
+  FACEBOOK: 'FACEBOOK'
 } as const
 
-export type ServiceStatus = (typeof ServiceStatus)[keyof typeof ServiceStatus]
+export type ChannelType = (typeof ChannelType)[keyof typeof ChannelType]
+
+
+export const ChannelStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type ChannelStatus = (typeof ChannelStatus)[keyof typeof ChannelStatus]

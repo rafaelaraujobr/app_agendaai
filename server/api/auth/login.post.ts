@@ -51,6 +51,9 @@ export default defineEventHandler(async (event) => {
       avatarUrl: user.avatarUrl ?? "",
       preferences: user.preferences ?? {},
     },
+    secure: {
+      userId: user.id,
+    },
     loggedInAt: Date.now(),
   });
   return {

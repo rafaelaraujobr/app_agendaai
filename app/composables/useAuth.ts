@@ -1,6 +1,7 @@
 const useAuth = () => {
   const { user, fetch } = useUserSession();
 
+
   const login = async (email: string, password: string): Promise<void> => {
     await $fetch("/api/auth/login", {
       method: "POST",

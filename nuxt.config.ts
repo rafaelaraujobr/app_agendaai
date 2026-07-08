@@ -13,9 +13,7 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: [
-        "@tsparticles/engine",
-        "@tsparticles/slim",
-        "@tsparticles/vue3",
+        "vue-advanced-cropper",
         "vue3-lottie",
       ],
     },

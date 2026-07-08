@@ -28,12 +28,18 @@ export type AggregatePlan = {
 
 export type PlanAvgAggregateOutputType = {
   maxServices: number | null
-  maxColaborators: number | null
+  maxCollaborators: number | null
+  reportsLevel: number | null
+  priceMonthly: runtime.Decimal | null
+  priceYearly: runtime.Decimal | null
 }
 
 export type PlanSumAggregateOutputType = {
   maxServices: number | null
-  maxColaborators: number | null
+  maxCollaborators: number | null
+  reportsLevel: number | null
+  priceMonthly: runtime.Decimal | null
+  priceYearly: runtime.Decimal | null
 }
 
 export type PlanMinAggregateOutputType = {
@@ -41,10 +47,11 @@ export type PlanMinAggregateOutputType = {
   code: $Enums.PlanCode | null
   name: string | null
   maxServices: number | null
-  maxColaborators: number | null
-  allowCustomDomain: boolean | null
-  allowAdvancedTheme: boolean | null
-  allowAnalytics: boolean | null
+  maxCollaborators: number | null
+  customDomainEnabled: boolean | null
+  reportsLevel: number | null
+  priceMonthly: runtime.Decimal | null
+  priceYearly: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,10 +61,11 @@ export type PlanMaxAggregateOutputType = {
   code: $Enums.PlanCode | null
   name: string | null
   maxServices: number | null
-  maxColaborators: number | null
-  allowCustomDomain: boolean | null
-  allowAdvancedTheme: boolean | null
-  allowAnalytics: boolean | null
+  maxCollaborators: number | null
+  customDomainEnabled: boolean | null
+  reportsLevel: number | null
+  priceMonthly: runtime.Decimal | null
+  priceYearly: runtime.Decimal | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -67,10 +75,11 @@ export type PlanCountAggregateOutputType = {
   code: number
   name: number
   maxServices: number
-  maxColaborators: number
-  allowCustomDomain: number
-  allowAdvancedTheme: number
-  allowAnalytics: number
+  maxCollaborators: number
+  customDomainEnabled: number
+  reportsLevel: number
+  priceMonthly: number
+  priceYearly: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -79,12 +88,18 @@ export type PlanCountAggregateOutputType = {
 
 export type PlanAvgAggregateInputType = {
   maxServices?: true
-  maxColaborators?: true
+  maxCollaborators?: true
+  reportsLevel?: true
+  priceMonthly?: true
+  priceYearly?: true
 }
 
 export type PlanSumAggregateInputType = {
   maxServices?: true
-  maxColaborators?: true
+  maxCollaborators?: true
+  reportsLevel?: true
+  priceMonthly?: true
+  priceYearly?: true
 }
 
 export type PlanMinAggregateInputType = {
@@ -92,10 +107,11 @@ export type PlanMinAggregateInputType = {
   code?: true
   name?: true
   maxServices?: true
-  maxColaborators?: true
-  allowCustomDomain?: true
-  allowAdvancedTheme?: true
-  allowAnalytics?: true
+  maxCollaborators?: true
+  customDomainEnabled?: true
+  reportsLevel?: true
+  priceMonthly?: true
+  priceYearly?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,10 +121,11 @@ export type PlanMaxAggregateInputType = {
   code?: true
   name?: true
   maxServices?: true
-  maxColaborators?: true
-  allowCustomDomain?: true
-  allowAdvancedTheme?: true
-  allowAnalytics?: true
+  maxCollaborators?: true
+  customDomainEnabled?: true
+  reportsLevel?: true
+  priceMonthly?: true
+  priceYearly?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,10 +135,11 @@ export type PlanCountAggregateInputType = {
   code?: true
   name?: true
   maxServices?: true
-  maxColaborators?: true
-  allowCustomDomain?: true
-  allowAdvancedTheme?: true
-  allowAnalytics?: true
+  maxCollaborators?: true
+  customDomainEnabled?: true
+  reportsLevel?: true
+  priceMonthly?: true
+  priceYearly?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -218,10 +236,11 @@ export type PlanGroupByOutputType = {
   code: $Enums.PlanCode
   name: string
   maxServices: number | null
-  maxColaborators: number | null
-  allowCustomDomain: boolean
-  allowAdvancedTheme: boolean
-  allowAnalytics: boolean
+  maxCollaborators: number | null
+  customDomainEnabled: boolean
+  reportsLevel: number
+  priceMonthly: runtime.Decimal | null
+  priceYearly: runtime.Decimal | null
   createdAt: Date
   updatedAt: Date
   _count: PlanCountAggregateOutputType | null
@@ -254,12 +273,14 @@ export type PlanWhereInput = {
   code?: Prisma.EnumPlanCodeFilter<"Plan"> | $Enums.PlanCode
   name?: Prisma.StringFilter<"Plan"> | string
   maxServices?: Prisma.IntNullableFilter<"Plan"> | number | null
-  maxColaborators?: Prisma.IntNullableFilter<"Plan"> | number | null
-  allowCustomDomain?: Prisma.BoolFilter<"Plan"> | boolean
-  allowAdvancedTheme?: Prisma.BoolFilter<"Plan"> | boolean
-  allowAnalytics?: Prisma.BoolFilter<"Plan"> | boolean
+  maxCollaborators?: Prisma.IntNullableFilter<"Plan"> | number | null
+  customDomainEnabled?: Prisma.BoolFilter<"Plan"> | boolean
+  reportsLevel?: Prisma.IntFilter<"Plan"> | number
+  priceMonthly?: Prisma.DecimalNullableFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.DecimalNullableFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
+  subscriptions?: Prisma.BusinessSubscriptionListRelationFilter
 }
 
 export type PlanOrderByWithRelationInput = {
@@ -267,12 +288,14 @@ export type PlanOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   maxServices?: Prisma.SortOrderInput | Prisma.SortOrder
-  maxColaborators?: Prisma.SortOrderInput | Prisma.SortOrder
-  allowCustomDomain?: Prisma.SortOrder
-  allowAdvancedTheme?: Prisma.SortOrder
-  allowAnalytics?: Prisma.SortOrder
+  maxCollaborators?: Prisma.SortOrderInput | Prisma.SortOrder
+  customDomainEnabled?: Prisma.SortOrder
+  reportsLevel?: Prisma.SortOrder
+  priceMonthly?: Prisma.SortOrderInput | Prisma.SortOrder
+  priceYearly?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  subscriptions?: Prisma.BusinessSubscriptionOrderByRelationAggregateInput
 }
 
 export type PlanWhereUniqueInput = Prisma.AtLeast<{
@@ -283,12 +306,14 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PlanWhereInput | Prisma.PlanWhereInput[]
   name?: Prisma.StringFilter<"Plan"> | string
   maxServices?: Prisma.IntNullableFilter<"Plan"> | number | null
-  maxColaborators?: Prisma.IntNullableFilter<"Plan"> | number | null
-  allowCustomDomain?: Prisma.BoolFilter<"Plan"> | boolean
-  allowAdvancedTheme?: Prisma.BoolFilter<"Plan"> | boolean
-  allowAnalytics?: Prisma.BoolFilter<"Plan"> | boolean
+  maxCollaborators?: Prisma.IntNullableFilter<"Plan"> | number | null
+  customDomainEnabled?: Prisma.BoolFilter<"Plan"> | boolean
+  reportsLevel?: Prisma.IntFilter<"Plan"> | number
+  priceMonthly?: Prisma.DecimalNullableFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.DecimalNullableFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
+  subscriptions?: Prisma.BusinessSubscriptionListRelationFilter
 }, "id" | "code">
 
 export type PlanOrderByWithAggregationInput = {
@@ -296,10 +321,11 @@ export type PlanOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   maxServices?: Prisma.SortOrderInput | Prisma.SortOrder
-  maxColaborators?: Prisma.SortOrderInput | Prisma.SortOrder
-  allowCustomDomain?: Prisma.SortOrder
-  allowAdvancedTheme?: Prisma.SortOrder
-  allowAnalytics?: Prisma.SortOrder
+  maxCollaborators?: Prisma.SortOrderInput | Prisma.SortOrder
+  customDomainEnabled?: Prisma.SortOrder
+  reportsLevel?: Prisma.SortOrder
+  priceMonthly?: Prisma.SortOrderInput | Prisma.SortOrder
+  priceYearly?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PlanCountOrderByAggregateInput
@@ -317,10 +343,11 @@ export type PlanScalarWhereWithAggregatesInput = {
   code?: Prisma.EnumPlanCodeWithAggregatesFilter<"Plan"> | $Enums.PlanCode
   name?: Prisma.StringWithAggregatesFilter<"Plan"> | string
   maxServices?: Prisma.IntNullableWithAggregatesFilter<"Plan"> | number | null
-  maxColaborators?: Prisma.IntNullableWithAggregatesFilter<"Plan"> | number | null
-  allowCustomDomain?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
-  allowAdvancedTheme?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
-  allowAnalytics?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
+  maxCollaborators?: Prisma.IntNullableWithAggregatesFilter<"Plan"> | number | null
+  customDomainEnabled?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
+  reportsLevel?: Prisma.IntWithAggregatesFilter<"Plan"> | number
+  priceMonthly?: Prisma.DecimalNullableWithAggregatesFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.DecimalNullableWithAggregatesFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
 }
@@ -330,12 +357,14 @@ export type PlanCreateInput = {
   code: $Enums.PlanCode
   name: string
   maxServices?: number | null
-  maxColaborators?: number | null
-  allowCustomDomain?: boolean
-  allowAdvancedTheme?: boolean
-  allowAnalytics?: boolean
+  maxCollaborators?: number | null
+  customDomainEnabled?: boolean
+  reportsLevel?: number
+  priceMonthly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.BusinessSubscriptionCreateNestedManyWithoutPlanInput
 }
 
 export type PlanUncheckedCreateInput = {
@@ -343,12 +372,14 @@ export type PlanUncheckedCreateInput = {
   code: $Enums.PlanCode
   name: string
   maxServices?: number | null
-  maxColaborators?: number | null
-  allowCustomDomain?: boolean
-  allowAdvancedTheme?: boolean
-  allowAnalytics?: boolean
+  maxCollaborators?: number | null
+  customDomainEnabled?: boolean
+  reportsLevel?: number
+  priceMonthly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.BusinessSubscriptionUncheckedCreateNestedManyWithoutPlanInput
 }
 
 export type PlanUpdateInput = {
@@ -356,12 +387,14 @@ export type PlanUpdateInput = {
   code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
   name?: Prisma.StringFieldUpdateOperationsInput | string
   maxServices?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  maxColaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  allowCustomDomain?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAdvancedTheme?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAnalytics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  maxCollaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customDomainEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reportsLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  priceMonthly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.BusinessSubscriptionUpdateManyWithoutPlanNestedInput
 }
 
 export type PlanUncheckedUpdateInput = {
@@ -369,12 +402,14 @@ export type PlanUncheckedUpdateInput = {
   code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
   name?: Prisma.StringFieldUpdateOperationsInput | string
   maxServices?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  maxColaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  allowCustomDomain?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAdvancedTheme?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAnalytics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  maxCollaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customDomainEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reportsLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  priceMonthly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.BusinessSubscriptionUncheckedUpdateManyWithoutPlanNestedInput
 }
 
 export type PlanCreateManyInput = {
@@ -382,10 +417,11 @@ export type PlanCreateManyInput = {
   code: $Enums.PlanCode
   name: string
   maxServices?: number | null
-  maxColaborators?: number | null
-  allowCustomDomain?: boolean
-  allowAdvancedTheme?: boolean
-  allowAnalytics?: boolean
+  maxCollaborators?: number | null
+  customDomainEnabled?: boolean
+  reportsLevel?: number
+  priceMonthly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -395,10 +431,11 @@ export type PlanUpdateManyMutationInput = {
   code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
   name?: Prisma.StringFieldUpdateOperationsInput | string
   maxServices?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  maxColaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  allowCustomDomain?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAdvancedTheme?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAnalytics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  maxCollaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customDomainEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reportsLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  priceMonthly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -408,10 +445,11 @@ export type PlanUncheckedUpdateManyInput = {
   code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
   name?: Prisma.StringFieldUpdateOperationsInput | string
   maxServices?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  maxColaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  allowCustomDomain?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAdvancedTheme?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  allowAnalytics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  maxCollaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customDomainEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reportsLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  priceMonthly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -421,17 +459,21 @@ export type PlanCountOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   maxServices?: Prisma.SortOrder
-  maxColaborators?: Prisma.SortOrder
-  allowCustomDomain?: Prisma.SortOrder
-  allowAdvancedTheme?: Prisma.SortOrder
-  allowAnalytics?: Prisma.SortOrder
+  maxCollaborators?: Prisma.SortOrder
+  customDomainEnabled?: Prisma.SortOrder
+  reportsLevel?: Prisma.SortOrder
+  priceMonthly?: Prisma.SortOrder
+  priceYearly?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type PlanAvgOrderByAggregateInput = {
   maxServices?: Prisma.SortOrder
-  maxColaborators?: Prisma.SortOrder
+  maxCollaborators?: Prisma.SortOrder
+  reportsLevel?: Prisma.SortOrder
+  priceMonthly?: Prisma.SortOrder
+  priceYearly?: Prisma.SortOrder
 }
 
 export type PlanMaxOrderByAggregateInput = {
@@ -439,10 +481,11 @@ export type PlanMaxOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   maxServices?: Prisma.SortOrder
-  maxColaborators?: Prisma.SortOrder
-  allowCustomDomain?: Prisma.SortOrder
-  allowAdvancedTheme?: Prisma.SortOrder
-  allowAnalytics?: Prisma.SortOrder
+  maxCollaborators?: Prisma.SortOrder
+  customDomainEnabled?: Prisma.SortOrder
+  reportsLevel?: Prisma.SortOrder
+  priceMonthly?: Prisma.SortOrder
+  priceYearly?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -452,17 +495,26 @@ export type PlanMinOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   maxServices?: Prisma.SortOrder
-  maxColaborators?: Prisma.SortOrder
-  allowCustomDomain?: Prisma.SortOrder
-  allowAdvancedTheme?: Prisma.SortOrder
-  allowAnalytics?: Prisma.SortOrder
+  maxCollaborators?: Prisma.SortOrder
+  customDomainEnabled?: Prisma.SortOrder
+  reportsLevel?: Prisma.SortOrder
+  priceMonthly?: Prisma.SortOrder
+  priceYearly?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type PlanSumOrderByAggregateInput = {
   maxServices?: Prisma.SortOrder
-  maxColaborators?: Prisma.SortOrder
+  maxCollaborators?: Prisma.SortOrder
+  reportsLevel?: Prisma.SortOrder
+  priceMonthly?: Prisma.SortOrder
+  priceYearly?: Prisma.SortOrder
+}
+
+export type PlanScalarRelationFilter = {
+  is?: Prisma.PlanWhereInput
+  isNot?: Prisma.PlanWhereInput
 }
 
 export type EnumPlanCodeFieldUpdateOperationsInput = {
@@ -481,6 +533,137 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type PlanCreateNestedOneWithoutSubscriptionsInput = {
+  create?: Prisma.XOR<Prisma.PlanCreateWithoutSubscriptionsInput, Prisma.PlanUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.PlanCreateOrConnectWithoutSubscriptionsInput
+  connect?: Prisma.PlanWhereUniqueInput
+}
+
+export type PlanUpdateOneRequiredWithoutSubscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.PlanCreateWithoutSubscriptionsInput, Prisma.PlanUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.PlanCreateOrConnectWithoutSubscriptionsInput
+  upsert?: Prisma.PlanUpsertWithoutSubscriptionsInput
+  connect?: Prisma.PlanWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PlanUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.PlanUpdateWithoutSubscriptionsInput>, Prisma.PlanUncheckedUpdateWithoutSubscriptionsInput>
+}
+
+export type PlanCreateWithoutSubscriptionsInput = {
+  id?: string
+  code: $Enums.PlanCode
+  name: string
+  maxServices?: number | null
+  maxCollaborators?: number | null
+  customDomainEnabled?: boolean
+  reportsLevel?: number
+  priceMonthly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PlanUncheckedCreateWithoutSubscriptionsInput = {
+  id?: string
+  code: $Enums.PlanCode
+  name: string
+  maxServices?: number | null
+  maxCollaborators?: number | null
+  customDomainEnabled?: boolean
+  reportsLevel?: number
+  priceMonthly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PlanCreateOrConnectWithoutSubscriptionsInput = {
+  where: Prisma.PlanWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlanCreateWithoutSubscriptionsInput, Prisma.PlanUncheckedCreateWithoutSubscriptionsInput>
+}
+
+export type PlanUpsertWithoutSubscriptionsInput = {
+  update: Prisma.XOR<Prisma.PlanUpdateWithoutSubscriptionsInput, Prisma.PlanUncheckedUpdateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.PlanCreateWithoutSubscriptionsInput, Prisma.PlanUncheckedCreateWithoutSubscriptionsInput>
+  where?: Prisma.PlanWhereInput
+}
+
+export type PlanUpdateToOneWithWhereWithoutSubscriptionsInput = {
+  where?: Prisma.PlanWhereInput
+  data: Prisma.XOR<Prisma.PlanUpdateWithoutSubscriptionsInput, Prisma.PlanUncheckedUpdateWithoutSubscriptionsInput>
+}
+
+export type PlanUpdateWithoutSubscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  maxServices?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCollaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customDomainEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reportsLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  priceMonthly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PlanUncheckedUpdateWithoutSubscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumPlanCodeFieldUpdateOperationsInput | $Enums.PlanCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  maxServices?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxCollaborators?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customDomainEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reportsLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  priceMonthly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  priceYearly?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type PlanCountOutputType
+ */
+
+export type PlanCountOutputType = {
+  subscriptions: number
+}
+
+export type PlanCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subscriptions?: boolean | PlanCountOutputTypeCountSubscriptionsArgs
+}
+
+/**
+ * PlanCountOutputType without action
+ */
+export type PlanCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlanCountOutputType
+   */
+  select?: Prisma.PlanCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PlanCountOutputType without action
+ */
+export type PlanCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BusinessSubscriptionWhereInput
+}
 
 
 export type PlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -488,12 +671,15 @@ export type PlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   code?: boolean
   name?: boolean
   maxServices?: boolean
-  maxColaborators?: boolean
-  allowCustomDomain?: boolean
-  allowAdvancedTheme?: boolean
-  allowAnalytics?: boolean
+  maxCollaborators?: boolean
+  customDomainEnabled?: boolean
+  reportsLevel?: boolean
+  priceMonthly?: boolean
+  priceYearly?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  subscriptions?: boolean | Prisma.Plan$subscriptionsArgs<ExtArgs>
+  _count?: boolean | Prisma.PlanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["plan"]>
 
 export type PlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -501,10 +687,11 @@ export type PlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   code?: boolean
   name?: boolean
   maxServices?: boolean
-  maxColaborators?: boolean
-  allowCustomDomain?: boolean
-  allowAdvancedTheme?: boolean
-  allowAnalytics?: boolean
+  maxCollaborators?: boolean
+  customDomainEnabled?: boolean
+  reportsLevel?: boolean
+  priceMonthly?: boolean
+  priceYearly?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["plan"]>
@@ -514,10 +701,11 @@ export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   code?: boolean
   name?: boolean
   maxServices?: boolean
-  maxColaborators?: boolean
-  allowCustomDomain?: boolean
-  allowAdvancedTheme?: boolean
-  allowAnalytics?: boolean
+  maxCollaborators?: boolean
+  customDomainEnabled?: boolean
+  reportsLevel?: boolean
+  priceMonthly?: boolean
+  priceYearly?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["plan"]>
@@ -527,28 +715,38 @@ export type PlanSelectScalar = {
   code?: boolean
   name?: boolean
   maxServices?: boolean
-  maxColaborators?: boolean
-  allowCustomDomain?: boolean
-  allowAdvancedTheme?: boolean
-  allowAnalytics?: boolean
+  maxCollaborators?: boolean
+  customDomainEnabled?: boolean
+  reportsLevel?: boolean
+  priceMonthly?: boolean
+  priceYearly?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "maxServices" | "maxColaborators" | "allowCustomDomain" | "allowAdvancedTheme" | "allowAnalytics" | "createdAt" | "updatedAt", ExtArgs["result"]["plan"]>
+export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "maxServices" | "maxCollaborators" | "customDomainEnabled" | "reportsLevel" | "priceMonthly" | "priceYearly" | "createdAt" | "updatedAt", ExtArgs["result"]["plan"]>
+export type PlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subscriptions?: boolean | Prisma.Plan$subscriptionsArgs<ExtArgs>
+  _count?: boolean | Prisma.PlanCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type PlanIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type PlanIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $PlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Plan"
-  objects: {}
+  objects: {
+    subscriptions: Prisma.$BusinessSubscriptionPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     code: $Enums.PlanCode
     name: string
     maxServices: number | null
-    maxColaborators: number | null
-    allowCustomDomain: boolean
-    allowAdvancedTheme: boolean
-    allowAnalytics: boolean
+    maxCollaborators: number | null
+    customDomainEnabled: boolean
+    reportsLevel: number
+    priceMonthly: runtime.Decimal | null
+    priceYearly: runtime.Decimal | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["plan"]>
@@ -945,6 +1143,7 @@ readonly fields: PlanFieldRefs;
  */
 export interface Prisma__PlanClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  subscriptions<T extends Prisma.Plan$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Plan$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -978,10 +1177,11 @@ export interface PlanFieldRefs {
   readonly code: Prisma.FieldRef<"Plan", 'PlanCode'>
   readonly name: Prisma.FieldRef<"Plan", 'String'>
   readonly maxServices: Prisma.FieldRef<"Plan", 'Int'>
-  readonly maxColaborators: Prisma.FieldRef<"Plan", 'Int'>
-  readonly allowCustomDomain: Prisma.FieldRef<"Plan", 'Boolean'>
-  readonly allowAdvancedTheme: Prisma.FieldRef<"Plan", 'Boolean'>
-  readonly allowAnalytics: Prisma.FieldRef<"Plan", 'Boolean'>
+  readonly maxCollaborators: Prisma.FieldRef<"Plan", 'Int'>
+  readonly customDomainEnabled: Prisma.FieldRef<"Plan", 'Boolean'>
+  readonly reportsLevel: Prisma.FieldRef<"Plan", 'Int'>
+  readonly priceMonthly: Prisma.FieldRef<"Plan", 'Decimal'>
+  readonly priceYearly: Prisma.FieldRef<"Plan", 'Decimal'>
   readonly createdAt: Prisma.FieldRef<"Plan", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Plan", 'DateTime'>
 }
@@ -1001,6 +1201,10 @@ export type PlanFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
+  /**
    * Filter, which Plan to fetch.
    */
   where: Prisma.PlanWhereUniqueInput
@@ -1019,6 +1223,10 @@ export type PlanFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
+  /**
    * Filter, which Plan to fetch.
    */
   where: Prisma.PlanWhereUniqueInput
@@ -1036,6 +1244,10 @@ export type PlanFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Plan
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
   /**
    * Filter, which Plan to fetch.
    */
@@ -1085,6 +1297,10 @@ export type PlanFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
+  /**
    * Filter, which Plan to fetch.
    */
   where?: Prisma.PlanWhereInput
@@ -1132,6 +1348,10 @@ export type PlanFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Plan
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
   /**
    * Filter, which Plans to fetch.
    */
@@ -1181,6 +1401,10 @@ export type PlanCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
+  /**
    * The data needed to create a Plan.
    */
   data: Prisma.XOR<Prisma.PlanCreateInput, Prisma.PlanUncheckedCreateInput>
@@ -1228,6 +1452,10 @@ export type PlanUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the Plan
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
   /**
    * The data needed to update a Plan.
    */
@@ -1295,6 +1523,10 @@ export type PlanUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
+  /**
    * The filter to search for the Plan to update in case it exists.
    */
   where: Prisma.PlanWhereUniqueInput
@@ -1321,6 +1553,10 @@ export type PlanDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
+  /**
    * Filter which Plan to delete.
    */
   where: Prisma.PlanWhereUniqueInput
@@ -1341,6 +1577,30 @@ export type PlanDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * Plan.subscriptions
+ */
+export type Plan$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BusinessSubscription
+   */
+  select?: Prisma.BusinessSubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BusinessSubscription
+   */
+  omit?: Prisma.BusinessSubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BusinessSubscriptionInclude<ExtArgs> | null
+  where?: Prisma.BusinessSubscriptionWhereInput
+  orderBy?: Prisma.BusinessSubscriptionOrderByWithRelationInput | Prisma.BusinessSubscriptionOrderByWithRelationInput[]
+  cursor?: Prisma.BusinessSubscriptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BusinessSubscriptionScalarFieldEnum | Prisma.BusinessSubscriptionScalarFieldEnum[]
+}
+
+/**
  * Plan without action
  */
 export type PlanDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1352,4 +1612,8 @@ export type PlanDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the Plan
    */
   omit?: Prisma.PlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlanInclude<ExtArgs> | null
 }

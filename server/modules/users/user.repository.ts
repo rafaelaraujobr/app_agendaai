@@ -1,5 +1,6 @@
 import { prisma } from "../../utils/db";
 import type { Prisma } from "~~/prisma/generated/client";
+import { AuthProvider } from "~~/prisma/generated/enums";
 import type {
   UserCreateInput,
   UserUpdateInput,
@@ -29,11 +30,25 @@ export const userRepository = {
     });
   },
 
-  findByProviderId: async (providerId: string) => {
-    return await prisma.user.findUnique({
-      where: { providerId },
-      include: userWithRelations,
+  findByOAuthAccount: async (
+    provider: AuthProvider,
+    providerAccountId: string,
+  ) => {
+    const account = await prisma.oAuthAccount.findUnique({
+      where: {
+        provider_providerAccountId: {
+          provider,
+          providerAccountId,
+        },
+      },
+      include: {
+        user: {
+          include: userWithRelations,
+        },
+      },
     });
+
+    return account?.user ?? null;
   },
 
   update: async (id: string, data: UserUpdateInput) => {

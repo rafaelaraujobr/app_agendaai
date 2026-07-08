@@ -4,8 +4,8 @@
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>logo do sistema</q-toolbar-title>
-        <q-item clickable>
-          <q-item-section side>
+        <q-item clickable v-ripple>
+          <q-item-section>
             <q-avatar v-if="user?.avatarUrl" size="30px">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
             </q-avatar>
@@ -14,19 +14,35 @@
               color="primary"
               text-color="white"
               icon="person"
-              size="30px"
+              size="35px"
+              font-size="25px"
             />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>
-              {{ user?.firstName }} {{ user?.lastName }}
-            </q-item-label>
-            <q-item-label caption lines="2" class="text-white">
-              {{ user?.email }}
-            </q-item-label>
           </q-item-section>
           <q-menu>
             <q-list style="min-width: 200px">
+              <q-item clickable>
+                <q-item-section side>
+                  <q-avatar v-if="user?.avatarUrl" size="30px">
+                    <img :src="user?.avatarUrl" alt="Avatar do usuário" />
+                  </q-avatar>
+                  <q-avatar
+                    v-else
+                    color="primary"
+                    text-color="white"
+                    icon="person"
+                    size="35px"
+                    font-size="25px"
+                  />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>
+                    {{ user?.firstName }} {{ user?.lastName }}
+                  </q-item-label>
+                  <q-item-label caption>
+                    {{ user?.email }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
               <q-item clickable v-close-popup @click="handleLogout">
                 <q-item-section side>
                   <q-icon name="logout" />

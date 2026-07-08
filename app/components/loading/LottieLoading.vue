@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Vue3Lottie } from 'vue3-lottie'
 import loadingAnimation from '@/assets/lotties/loading.json'
 
 const props = withDefaults(defineProps<{
@@ -18,7 +17,7 @@ const normalizedSize = computed(() => {
 
 <template>
   <div class="column items-center justify-center">
-    <Vue3Lottie
+    <CommonLottieAnimation
       :animation-data="loadingAnimation"
       :width="normalizedSize"
       :height="normalizedSize"

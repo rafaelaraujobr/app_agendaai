@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center">
     <div class="row q-gutter-x-md">
+      <div class="col-12">
+        <p>Subdomain: {{ subdomain }}</p>
+      </div>
       <q-input
         v-model="text"
         color="primary"
@@ -23,6 +26,8 @@
 definePageMeta({
   middleware: ["auth"],
 });
+const subdomain = useState<string | null>("subdomain");
+
 const text = ref<string>("");
 </script>
 

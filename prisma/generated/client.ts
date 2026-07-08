@@ -47,22 +47,87 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model OAuthAccount
+ * 
+ */
+export type OAuthAccount = Prisma.OAuthAccountModel
+/**
  * Model UserPreferences
  * 
  */
 export type UserPreferences = Prisma.UserPreferencesModel
 /**
- * Model Company
+ * Model Business
  * 
  */
-export type Company = Prisma.CompanyModel
+export type Business = Prisma.BusinessModel
 /**
  * Model Plan
  * 
  */
 export type Plan = Prisma.PlanModel
 /**
+ * Model BusinessSubscription
+ * 
+ */
+export type BusinessSubscription = Prisma.BusinessSubscriptionModel
+/**
+ * Model BusinessType
+ * 
+ */
+export type BusinessType = Prisma.BusinessTypeModel
+/**
+ * Model BusinessMember
+ * 
+ */
+export type BusinessMember = Prisma.BusinessMemberModel
+/**
  * Model Service
  * 
  */
 export type Service = Prisma.ServiceModel
+/**
+ * Model ServiceIllustration
+ * 
+ */
+export type ServiceIllustration = Prisma.ServiceIllustrationModel
+/**
+ * Model ServiceAssignment
+ * 
+ */
+export type ServiceAssignment = Prisma.ServiceAssignmentModel
+/**
+ * Model Appointment
+ * 
+ */
+export type Appointment = Prisma.AppointmentModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model BusinessWorkingHour
+ * 
+ */
+export type BusinessWorkingHour = Prisma.BusinessWorkingHourModel
+/**
+ * Model BusinessLayout
+ * 
+ */
+export type BusinessLayout = Prisma.BusinessLayoutModel
+/**
+ * Model BusinessChannel
+ * 
+ */
+export type BusinessChannel = Prisma.BusinessChannelModel
+/**
+ * Model TimeBlock
+ * 
+ */
+export type TimeBlock = Prisma.TimeBlockModel
+/**
+ * Model BusinessAddress
+ * 
+ */
+export type BusinessAddress = Prisma.BusinessAddressModel

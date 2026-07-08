@@ -7,6 +7,7 @@ import type {
   RegisterSchema,
   LoginWithGoogleSchema,
 } from "./auth.schema.ts";
+import { AuthProvider } from "~~/prisma/generated/enums";
 
 const SALT_ROUNDS = 12;
 
@@ -68,7 +69,8 @@ export const authService = {
   },
 
   async loginWithGoogle(input: LoginWithGoogleSchema) {
-    const userByGoogleId = await userRepository.findByProviderId(
+    const userByGoogleId = await userRepository.findByOAuthAccount(
+      AuthProvider.GOOGLE,
       input.googleId,
     );
     if (userByGoogleId) {
@@ -86,12 +88,25 @@ export const authService = {
 
     if (userByEmail) {
       const updatedUser = await userRepository.update(userByEmail.id, {
-        provider: "google",
-        providerId: input.googleId,
         email: input.email,
         firstName: userByEmail.firstName || input.firstName,
         lastName: userByEmail.lastName || input.lastName,
         avatarUrl: input.avatarUrl,
+        authAccounts: {
+          connectOrCreate: {
+            where: {
+              provider_providerAccountId: {
+                provider: AuthProvider.GOOGLE,
+                providerAccountId: input.googleId,
+              },
+            },
+            create: {
+              provider: AuthProvider.GOOGLE,
+              providerAccountId: input.googleId,
+              providerEmail: input.email,
+            },
+          },
+        },
       });
 
       return {
@@ -108,9 +123,15 @@ export const authService = {
       firstName: input.firstName,
       lastName: input.lastName,
       email: input.email,
-      provider: "google",
-      providerId: input.googleId,
       avatarUrl: input.avatarUrl,
+      emailVerifiedAt: new Date(),
+      authAccounts: {
+        create: {
+          provider: AuthProvider.GOOGLE,
+          providerAccountId: input.googleId,
+          providerEmail: input.email,
+        },
+      },
       preferences: {
         create: {},
       },

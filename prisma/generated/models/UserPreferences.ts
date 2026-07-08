@@ -27,6 +27,10 @@ export type AggregateUserPreferences = {
 export type UserPreferencesMinAggregateOutputType = {
   id: string | null
   userId: string | null
+  language: string | null
+  timezone: string | null
+  currency: string | null
+  theme: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -34,6 +38,10 @@ export type UserPreferencesMinAggregateOutputType = {
 export type UserPreferencesMaxAggregateOutputType = {
   id: string | null
   userId: string | null
+  language: string | null
+  timezone: string | null
+  currency: string | null
+  theme: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -41,6 +49,10 @@ export type UserPreferencesMaxAggregateOutputType = {
 export type UserPreferencesCountAggregateOutputType = {
   id: number
   userId: number
+  language: number
+  timezone: number
+  currency: number
+  theme: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -50,6 +62,10 @@ export type UserPreferencesCountAggregateOutputType = {
 export type UserPreferencesMinAggregateInputType = {
   id?: true
   userId?: true
+  language?: true
+  timezone?: true
+  currency?: true
+  theme?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -57,6 +73,10 @@ export type UserPreferencesMinAggregateInputType = {
 export type UserPreferencesMaxAggregateInputType = {
   id?: true
   userId?: true
+  language?: true
+  timezone?: true
+  currency?: true
+  theme?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -64,6 +84,10 @@ export type UserPreferencesMaxAggregateInputType = {
 export type UserPreferencesCountAggregateInputType = {
   id?: true
   userId?: true
+  language?: true
+  timezone?: true
+  currency?: true
+  theme?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -144,6 +168,10 @@ export type UserPreferencesGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type UserPreferencesGroupByOutputType = {
   id: string
   userId: string
+  language: string | null
+  timezone: string | null
+  currency: string | null
+  theme: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserPreferencesCountAggregateOutputType | null
@@ -172,14 +200,22 @@ export type UserPreferencesWhereInput = {
   NOT?: Prisma.UserPreferencesWhereInput | Prisma.UserPreferencesWhereInput[]
   id?: Prisma.StringFilter<"UserPreferences"> | string
   userId?: Prisma.StringFilter<"UserPreferences"> | string
+  language?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  timezone?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  currency?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  theme?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type UserPreferencesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
+  currency?: Prisma.SortOrderInput | Prisma.SortOrder
+  theme?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -191,14 +227,22 @@ export type UserPreferencesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserPreferencesWhereInput | Prisma.UserPreferencesWhereInput[]
   OR?: Prisma.UserPreferencesWhereInput[]
   NOT?: Prisma.UserPreferencesWhereInput | Prisma.UserPreferencesWhereInput[]
+  language?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  timezone?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  currency?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
+  theme?: Prisma.StringNullableFilter<"UserPreferences"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserPreferences"> | Date | string
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
 
 export type UserPreferencesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
+  currency?: Prisma.SortOrderInput | Prisma.SortOrder
+  theme?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserPreferencesCountOrderByAggregateInput
@@ -212,34 +256,54 @@ export type UserPreferencesScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserPreferencesScalarWhereWithAggregatesInput | Prisma.UserPreferencesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"UserPreferences"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserPreferences"> | string
+  language?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  timezone?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  currency?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
+  theme?: Prisma.StringNullableWithAggregatesFilter<"UserPreferences"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserPreferences"> | Date | string
 }
 
 export type UserPreferencesCreateInput = {
   id?: string
+  language?: string | null
+  timezone?: string | null
+  currency?: string | null
+  theme?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutPreferencesInput
+  user: Prisma.UserCreateNestedOneWithoutPreferencesInput
 }
 
 export type UserPreferencesUncheckedCreateInput = {
   id?: string
   userId: string
+  language?: string | null
+  timezone?: string | null
+  currency?: string | null
+  theme?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserPreferencesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutPreferencesNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPreferencesNestedInput
 }
 
 export type UserPreferencesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -247,12 +311,20 @@ export type UserPreferencesUncheckedUpdateInput = {
 export type UserPreferencesCreateManyInput = {
   id?: string
   userId: string
+  language?: string | null
+  timezone?: string | null
+  currency?: string | null
+  theme?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserPreferencesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -260,6 +332,10 @@ export type UserPreferencesUpdateManyMutationInput = {
 export type UserPreferencesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -272,6 +348,10 @@ export type UserPreferencesNullableScalarRelationFilter = {
 export type UserPreferencesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -279,6 +359,10 @@ export type UserPreferencesCountOrderByAggregateInput = {
 export type UserPreferencesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -286,6 +370,10 @@ export type UserPreferencesMaxOrderByAggregateInput = {
 export type UserPreferencesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  language?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  theme?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -324,12 +412,20 @@ export type UserPreferencesUncheckedUpdateOneWithoutUserNestedInput = {
 
 export type UserPreferencesCreateWithoutUserInput = {
   id?: string
+  language?: string | null
+  timezone?: string | null
+  currency?: string | null
+  theme?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserPreferencesUncheckedCreateWithoutUserInput = {
   id?: string
+  language?: string | null
+  timezone?: string | null
+  currency?: string | null
+  theme?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -352,12 +448,20 @@ export type UserPreferencesUpdateToOneWithWhereWithoutUserInput = {
 
 export type UserPreferencesUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserPreferencesUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  theme?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -367,53 +471,73 @@ export type UserPreferencesUncheckedUpdateWithoutUserInput = {
 export type UserPreferencesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  language?: boolean
+  timezone?: boolean
+  currency?: boolean
+  theme?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserPreferences$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userPreferences"]>
 
 export type UserPreferencesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  language?: boolean
+  timezone?: boolean
+  currency?: boolean
+  theme?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserPreferences$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userPreferences"]>
 
 export type UserPreferencesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  language?: boolean
+  timezone?: boolean
+  currency?: boolean
+  theme?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserPreferences$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userPreferences"]>
 
 export type UserPreferencesSelectScalar = {
   id?: boolean
   userId?: boolean
+  language?: boolean
+  timezone?: boolean
+  currency?: boolean
+  theme?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["userPreferences"]>
+export type UserPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "language" | "timezone" | "currency" | "theme" | "createdAt" | "updatedAt", ExtArgs["result"]["userPreferences"]>
 export type UserPreferencesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserPreferences$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type UserPreferencesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserPreferences$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type UserPreferencesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserPreferences$userArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $UserPreferencesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserPreferences"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
+    language: string | null
+    timezone: string | null
+    currency: string | null
+    theme: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["userPreferences"]>
@@ -810,7 +934,7 @@ readonly fields: UserPreferencesFieldRefs;
  */
 export interface Prisma__UserPreferencesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserPreferences$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserPreferences$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -842,6 +966,10 @@ export interface Prisma__UserPreferencesClient<T, Null = never, ExtArgs extends 
 export interface UserPreferencesFieldRefs {
   readonly id: Prisma.FieldRef<"UserPreferences", 'String'>
   readonly userId: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly language: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly timezone: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly currency: Prisma.FieldRef<"UserPreferences", 'String'>
+  readonly theme: Prisma.FieldRef<"UserPreferences", 'String'>
   readonly createdAt: Prisma.FieldRef<"UserPreferences", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserPreferences", 'DateTime'>
 }
@@ -1242,25 +1370,6 @@ export type UserPreferencesDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many UserPreferences to delete.
    */
   limit?: number
-}
-
-/**
- * UserPreferences.user
- */
-export type UserPreferences$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

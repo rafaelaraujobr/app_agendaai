@@ -12,86 +12,401 @@ datasource db {
   provider = "postgresql"
 }
 
+enum AuthProvider {
+  GOOGLE
+  APPLE
+}
+
+enum MemberRole {
+  OWNER
+  COLLABORATOR
+}
+
+enum MemberStatus {
+  INVITED
+  ACTIVE
+  DISABLED
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum AppointmentStatus {
+  PENDING_WHATSAPP
+  CONFIRMED
+  RESCHEDULED
+  CANCELED
+  COMPLETED
+  NO_SHOW
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  TRIALING
+  PAST_DUE
+  CANCELED
+  EXPIRED
+}
+
+enum PlanCode {
+  FREE
+  PRO
+  PREMIUM
+}
+
+enum ChannelType {
+  WHATSAPP
+  TELEGRAM
+  INSTAGRAM
+  FACEBOOK
+}
+
+enum ChannelStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
-  id           String           @id @default(cuid())
-  lastName     String?
-  firstName    String?
-  email        String           @unique
-  provider     String?
-  providerId   String?          @unique
-  avatarUrl    String?
-  passwordHash String?
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  preferences  UserPreferences?
+  id              String           @id @default(cuid())
+  lastName        String?
+  firstName       String?
+  email           String           @unique
+  phone           String?
+  passwordHash    String?
+  avatarUrl       String?
+  emailVerifiedAt DateTime?
+  authAccounts    OAuthAccount[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  preferences     UserPreferences?
+  businessMembers BusinessMember[]
+  customers       Customer[]
 
   @@map("users")
+}
+
+model OAuthAccount {
+  id                String       @id @default(cuid())
+  provider          AuthProvider
+  providerAccountId String
+  providerEmail     String?
+  userId            String
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("oauth_accounts")
 }
 
 model UserPreferences {
   id        String   @id @default(cuid())
   userId    String   @unique
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language  String?  @default("pt-BR")
+  timezone  String?  @default("America/Sao_Paulo")
+  currency  String?  @default("BRL")
+  theme     String?  @default("light")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("user_preferences")
 }
 
-model Company {
-  id          String    @id @default(cuid())
-  name        String
-  slug        String    @unique
-  description String?
-  logoUrl     String?
-  bannerUrl   String?
-  phone       String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  services    Service[]
+model Business {
+  id                   String                @id @default(uuid())
+  name                 String
+  slug                 String                @unique
+  description          String?
+  logoUrl              String?
+  bannerUrl            String?
+  phone                String?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  services             Service[]
+  businessType         BusinessType?         @relation(fields: [businessTypeId], references: [id])
+  businessTypeId       String?
+  businessMembers      BusinessMember[]
+  appointments         Appointment[]
+  customers            Customer[]
+  businessSubscription BusinessSubscription?
+  timeBlocks           TimeBlock[]
+  businessWorkingHours BusinessWorkingHour[]
+  businessAddresses    BusinessAddress?
+  businessChannels     BusinessChannel[]
+  businessLayout       BusinessLayout?
 
-  @@map("companies")
-}
-
-enum PlanCode {
-  FREE
-  PRO
-  ENTERPRISE
+  @@map("businesses")
 }
 
 model Plan {
-  id                 String   @id @default(cuid())
-  code               PlanCode @unique
-  name               String
-  maxServices        Int?
-  maxColaborators    Int?
-  allowCustomDomain  Boolean  @default(false)
-  allowAdvancedTheme Boolean  @default(false)
-  allowAnalytics     Boolean  @default(false)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id                  String                 @id @default(cuid())
+  code                PlanCode               @unique
+  name                String
+  maxServices         Int?
+  maxCollaborators    Int?
+  customDomainEnabled Boolean                @default(false)
+  reportsLevel        Int                    @default(1) // 1: Basic, 2: Intermediate, 3: Advanced
+  priceMonthly        Decimal?               @db.Decimal(10, 2)
+  priceYearly         Decimal?               @db.Decimal(10, 2)
+  subscriptions       BusinessSubscription[]
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
 
   @@map("plans")
 }
 
-enum ServiceStatus {
-  ACTIVE
-  INACTIVE
-  PENDING
+model BusinessSubscription {
+  id          String             @id @default(cuid())
+  businessId  String             @unique
+  business    Business           @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  planId      String
+  plan        Plan               @relation(fields: [planId], references: [id])
+  status      SubscriptionStatus @default(ACTIVE)
+  startsAt    DateTime           @default(now())
+  endsAt      DateTime?
+  trialEndsAt DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@index([planId])
+  @@index([status])
+  @@map("business_subscriptions")
+}
+
+model BusinessType {
+  id            String                @id @default(cuid())
+  name          String
+  slug          String                @unique
+  description   String?
+  businesses    Business[]
+  illustrations ServiceIllustration[]
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  @@map("business_types")
+}
+
+model BusinessMember {
+  id                 String              @id @default(cuid())
+  businessId         String
+  business           Business            @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  userId             String
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role               MemberRole
+  status             MemberStatus        @default(ACTIVE)
+  displayName        String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  appointments       Appointment[]
+  serviceAssignments ServiceAssignment[]
+  timeBlocks         TimeBlock[]
+
+  @@unique([businessId, userId])
+  @@index([businessId])
+  @@index([userId])
+  @@index([role])
+  @@map("business_members")
 }
 
 model Service {
-  id          String        @id @default(uuid())
-  name        String
-  description String?
-  imageUrl    String?
-  videoUrl    String?
-  value       Decimal?
-  status      ServiceStatus @default(ACTIVE)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  companyId   String
-  company     Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  id                 String               @id @default(cuid())
+  businessId         String
+  business           Business             @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  illustrationId     String?
+  illustration       ServiceIllustration? @relation(fields: [illustrationId], references: [id], onDelete: SetNull)
+  name               String
+  slug               String
+  description        String?
+  imageUrl           String?
+  durationMinutes    Int
+  price              Decimal              @db.Decimal(10, 2)
+  isActive           Boolean              @default(true)
+  position           Int                  @default(0)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  serviceAssignments ServiceAssignment[]
+  appointments       Appointment[]
 
+  @@unique([businessId, slug])
+  @@index([businessId])
+  @@index([illustrationId])
   @@map("services")
+}
+
+model ServiceIllustration {
+  id             String        @id @default(cuid())
+  businessTypeId String?
+  businessType   BusinessType? @relation(fields: [businessTypeId], references: [id])
+  title          String
+  imageUrl       String
+  isActive       Boolean       @default(true)
+  services       Service[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([businessTypeId])
+  @@map("service_illustrations")
+}
+
+model ServiceAssignment {
+  id        String         @id @default(cuid())
+  serviceId String
+  service   Service        @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  memberId  String
+  member    BusinessMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@unique([serviceId, memberId])
+  @@index([serviceId])
+  @@index([memberId])
+  @@map("service_assignments")
+}
+
+model Appointment {
+  id              String            @id @default(cuid())
+  businessId      String
+  business        Business          @relation(fields: [businessId], references: [id], onDelete: Restrict)
+  serviceId       String
+  service         Service           @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  memberId        String
+  member          BusinessMember    @relation(fields: [memberId], references: [id], onDelete: Restrict)
+  customerId      String
+  customer        Customer          @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  code            String            @unique
+  status          AppointmentStatus @default(PENDING_WHATSAPP)
+  startsAt        DateTime
+  endsAt          DateTime
+  timezone        String            @default("America/Sao_Paulo")
+  notes           String?
+  priceAtBooking  Decimal           @db.Decimal(10, 2) //preço do serviço no momento da reserva
+  whatsappMessage String?
+  confirmedAt     DateTime?
+  canceledAt      DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([businessId, startsAt])
+  @@index([memberId, startsAt, endsAt])
+  @@index([serviceId])
+  @@index([customerId])
+  @@index([code])
+  @@index([businessId, status, startsAt])
+  @@map("appointments")
+}
+
+model Customer {
+  id           String        @id @default(cuid())
+  businessId   String
+  business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  userId       String?
+  user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name         String
+  phone        String
+  email        String?
+  appointments Appointment[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([businessId, phone])
+  @@index([businessId])
+  @@index([userId])
+  @@index([phone])
+  @@map("customers")
+}
+
+model BusinessWorkingHour {
+  id                String    @id @default(cuid())
+  businessId        String
+  business          Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  dayOfWeek         DayOfWeek
+  startMinutes      Int // 540 = 09:00
+  endMinutes        Int // 1080 = 18:00
+  breakStartMinutes Int? // 720 = 12:00
+  breakEndMinutes   Int? // 780 = 13:00
+  isActive          Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([businessId, dayOfWeek])
+  @@index([businessId, dayOfWeek])
+  @@map("business_working_hours")
+}
+
+model BusinessLayout {
+  id             String   @id @default(cuid())
+  businessId     String   @unique
+  business       Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  primaryColor   String?
+  secondaryColor String?
+  theme          String?
+  settings       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("business_layouts")
+}
+
+model BusinessChannel {
+  id         String        @id @default(cuid())
+  businessId String
+  business   Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  type       ChannelType
+  status     ChannelStatus @default(ACTIVE)
+  channel    String
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@unique([businessId, type])
+  @@index([businessId, type])
+  @@map("business_channels")
+}
+
+model TimeBlock {
+  id         String          @id @default(cuid())
+  businessId String
+  business   Business        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  memberId   String?
+  member     BusinessMember? @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  title      String
+  reason     String?
+  startsAt   DateTime
+  endsAt     DateTime
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@index([businessId, startsAt, endsAt])
+  @@index([memberId, startsAt, endsAt])
+  @@map("time_blocks")
+}
+
+model BusinessAddress {
+  id           String   @id @default(cuid())
+  businessId   String   @unique
+  business     Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  address      String
+  number       String?
+  complement   String?
+  neighborhood String?
+  city         String
+  state        String
+  zip          String?
+  country      String   @default("Brasil")
+  latitude     Decimal? @db.Decimal(10, 8)
+  longitude    Decimal? @db.Decimal(11, 8)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("business_addresses")
 }

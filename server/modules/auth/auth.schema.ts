@@ -27,8 +27,8 @@ export const resetPasswordSchema = z.object({
 export const loginWithGoogleSchema = z.object({
   googleId: z.string().min(1).max(100),
   email: z.email().toLowerCase(),
-  firstName: z.string().min(2).max(100),
-  lastName: z.string().min(2).max(100).optional(),
+  firstName: z.string().min(1).max(100).optional(),
+  lastName: z.string().min(1).max(100).optional(),
   avatarUrl: z.string().optional(),
 });
 

@@ -108,6 +108,9 @@
               >Criar conta</router-link
             >
           </div>
+          <div class="row items-center justify-center q-mt-md">
+            <p>Subdomain: {{ subdomain }}</p>
+          </div>
         </q-card-section>
       </q-form>
     </q-card>
@@ -117,10 +120,11 @@
 definePageMeta({
   layout: "auth",
 });
+
 import googleIcon from "~/assets/images/google.svg";
 import GoogleAnimation from "~/assets/lotties/google.json";
 import useAuth from "~/composables/useAuth";
-
+const subdomain = useState<string | null>("subdomain");
 const { loginWithGoogle, login } = useAuth();
 
 const email = ref<string>("admin@gmail.com");
