@@ -28,6 +28,9 @@ export default defineNuxtConfig({
     "nuxt-nodemailer",
   ],
   runtimeConfig: {
+    public: {
+      rootDomain: process.env.NUXT_PUBLIC_ROOT_DOMAIN || "",
+    },
     session: {
       password: process.env.NUXT_SESSION_PASSWORD,
       cookie: {
