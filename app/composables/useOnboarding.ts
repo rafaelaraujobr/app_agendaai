@@ -12,9 +12,15 @@ export type OnboardingAddress = {
 };
 
 export type OnboardingChannel = {
-  type: string;
+  type: OnboardingChannelType | "";
   value: string;
 };
+
+export type OnboardingChannelType =
+  | "whatsapp"
+  | "telegram"
+  | "instagram"
+  | "facebook";
 
 export type OnboardingDayOfWeek =
   | "MONDAY"
@@ -42,7 +48,7 @@ export type OnboardingOption = {
 export type OnboardingChannelOption = {
   name: string;
   icon: string;
-  value: string;
+  value: OnboardingChannelType;
   placeholder: string;
   color: string;
   prefix?: string;
@@ -54,8 +60,8 @@ export type CreateBusinessPayload = {
     name: string;
     slug: string;
     description: string | null;
-    businessTypeId: string | null;
-    logoFile: File | null;
+    businessTypeSlug: string | null;
+    logoUrl: string | null;
     phone: string | null;
   };
   businessLayout: {
@@ -67,8 +73,7 @@ export type CreateBusinessPayload = {
     };
   };
   businessChannels: {
-    type: string;
-    status: "ACTIVE";
+    type: Uppercase<OnboardingChannelType>;
     channel: string;
   }[];
   businessAddress: {
@@ -86,6 +91,26 @@ export type CreateBusinessPayload = {
   businessWorkingHours: OnboardingWorkingHour[];
 };
 
+type BusinessTypesResponse = {
+  businessTypes: {
+    id: string;
+    name: string;
+    slug: string;
+    description: string | null;
+  }[];
+};
+
+type UploadImageResponse = {
+  url: string;
+};
+
+type SlugAvailabilityResponse = {
+  available: boolean;
+};
+
+const createOnboardingError = (message: string, step?: number) =>
+  Object.assign(new Error(message), { step });
+
 export const useOnboarding = () => {
   const businessName = ref("");
   const businessType = ref("");
@@ -93,6 +118,13 @@ export const useOnboarding = () => {
   const slug = ref("");
   const businessDescription = ref("");
   const logoFile = ref<File | null>(null);
+  const logoUrl = ref<string | null>(null);
+  const businessTypes = ref<OnboardingOption[]>([]);
+  const isLoadingBusinessTypes = ref(false);
+  const isCreating = ref(false);
+  watch(logoFile, () => {
+    logoUrl.value = null;
+  });
   const notHaveNumber = ref(false);
   const primaryColor = ref("#1976d2");
   const secondaryColor = ref("#26a69a");
@@ -173,25 +205,6 @@ export const useOnboarding = () => {
     { type: "instagram", value: "" },
     { type: "facebook", value: "" },
   ]);
-
-  const businessTypes: OnboardingOption[] = [
-    {
-      label: "Barbearia",
-      value: "barbearia",
-    },
-    {
-      label: "Cabeleireiro",
-      value: "cabeleireiro",
-    },
-    {
-      label: "Estética",
-      value: "estetica",
-    },
-    {
-      label: "Outros",
-      value: "outros",
-    },
-  ];
 
   const states: OnboardingOption[] = [
     {
@@ -281,18 +294,11 @@ export const useOnboarding = () => {
       color: "#1877F2",
     },
     {
-      name: "Twitter",
-      icon: "mdi-twitter",
-      value: "twitter",
+      name: "Telegram",
+      icon: "mdi-send",
+      value: "telegram",
       placeholder: "@minhaloja",
-      color: "#1DA1F2",
-    },
-    {
-      name: "YouTube",
-      icon: "mdi-youtube",
-      value: "youtube",
-      placeholder: "youtube.com/@minhaloja",
-      color: "#FF0000",
+      color: "#229ED9",
     },
   ];
 
@@ -320,8 +326,8 @@ export const useOnboarding = () => {
       name: businessName.value,
       slug: slug.value,
       description: businessDescription.value || null,
-      businessTypeId: businessType.value || null,
-      logoFile: logoFile.value,
+      businessTypeSlug: businessType.value || null,
+      logoUrl: logoUrl.value,
       phone: businessPhone.value || null,
     },
     businessLayout: {
@@ -335,8 +341,7 @@ export const useOnboarding = () => {
     businessChannels: channelSelected.value
       .filter((channel) => channel.type && channel.value)
       .map((channel) => ({
-        type: channel.type.toUpperCase(),
-        status: "ACTIVE",
+        type: channel.type.toUpperCase() as Uppercase<OnboardingChannelType>,
         channel: channel.value,
       })),
     businessAddress: {
@@ -356,6 +361,135 @@ export const useOnboarding = () => {
     })),
   }));
 
+  const loadBusinessTypes = async () => {
+    isLoadingBusinessTypes.value = true;
+
+    try {
+      const response = await $fetch<BusinessTypesResponse>(
+        "/api/businesses/types",
+      );
+      businessTypes.value = response.businessTypes.map((businessType) => ({
+        label: businessType.name,
+        value: businessType.slug,
+      }));
+    } finally {
+      isLoadingBusinessTypes.value = false;
+    }
+  };
+
+  const checkSlugAvailability = async (value: string) => {
+    const response = await $fetch<SlugAvailabilityResponse>(
+      "/api/businesses/slug-availability",
+      { query: { slug: value } },
+    );
+
+    return response.available;
+  };
+
+  const validateOnboardingData = () => {
+    const payload = createBusinessPayload.value;
+    const {
+      business,
+      businessAddress,
+      businessChannels,
+      businessWorkingHours,
+    } = payload;
+
+    if (business.name.trim().length < 2) return "Informe o nome do negócio";
+    if (!business.businessTypeSlug) return "Selecione a área de atuação";
+    if (
+      business.slug.length < 2 ||
+      !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(business.slug)
+    ) {
+      return "Informe um slug válido";
+    }
+    if (!business.phone?.trim()) return "Informe o WhatsApp do negócio";
+    if (!logoFile.value && !logoUrl.value) {
+      return "Selecione o logotipo do negócio";
+    }
+    if (businessAddress.address.trim().length < 2) return "Informe o endereço";
+    if (businessAddress.city.trim().length < 2) return "Informe a cidade";
+    if (businessAddress.state.trim().length < 2) return "Informe o estado";
+
+    const channelTypes = businessChannels.map((channel) => channel.type);
+    if (new Set(channelTypes).size !== channelTypes.length) {
+      return "Não é permitido repetir canais de atendimento";
+    }
+
+    if (!businessWorkingHours.some((workingHour) => workingHour.isActive)) {
+      return "Configure pelo menos um dia de atendimento";
+    }
+
+    const hasInvalidWorkingHour = businessWorkingHours.some((workingHour) => {
+      if (!workingHour.isActive) return false;
+      if (workingHour.endMinutes <= workingHour.startMinutes) return true;
+
+      const hasBreakStart = workingHour.breakStartMinutes !== null;
+      const hasBreakEnd = workingHour.breakEndMinutes !== null;
+      if (hasBreakStart !== hasBreakEnd) return true;
+
+      return (
+        workingHour.breakStartMinutes !== null &&
+        workingHour.breakEndMinutes !== null &&
+        (workingHour.breakStartMinutes < workingHour.startMinutes ||
+          workingHour.breakEndMinutes > workingHour.endMinutes ||
+          workingHour.breakEndMinutes <= workingHour.breakStartMinutes)
+      );
+    });
+
+    if (hasInvalidWorkingHour) return "Revise os horários de funcionamento";
+
+    return null;
+  };
+
+  const uploadLogo = async () => {
+    if (logoUrl.value) return logoUrl.value;
+    if (!logoFile.value) {
+      throw createOnboardingError("Selecione o logotipo do negócio", 2);
+    }
+
+    const formData = new FormData();
+    formData.append("file", logoFile.value, logoFile.value.name);
+
+    const upload = await $fetch<UploadImageResponse>("/api/uploads/images", {
+      method: "POST",
+      body: formData,
+    });
+    logoUrl.value = upload.url;
+
+    return upload.url;
+  };
+
+  const createBusiness = async () => {
+    if (isCreating.value) return;
+
+    isCreating.value = true;
+
+    try {
+      const validationMessage = validateOnboardingData();
+      if (validationMessage) {
+        throw createOnboardingError(validationMessage);
+      }
+
+      const isSlugAvailable = await checkSlugAvailability(slug.value);
+      if (!isSlugAvailable) {
+        throw createOnboardingError(
+          "Este endereço já está em uso. Escolha outro slug.",
+          1,
+        );
+      }
+
+      await uploadLogo();
+
+      return await $fetch("/api/businesses", {
+        method: "POST",
+        body: createBusinessPayload.value,
+      });
+    } finally {
+      isCreating.value = false;
+    }
+  };
+
   return {
     address,
     businessDescription,
@@ -365,15 +499,23 @@ export const useOnboarding = () => {
     businessTypes,
     channelOptions,
     channelSelected,
+    checkSlugAvailability,
+    createBusiness,
     createBusinessPayload,
     fontFamily,
     fontOptions,
     logoFile,
+    logoUrl,
+    isCreating,
+    isLoadingBusinessTypes,
+    loadBusinessTypes,
     notHaveNumber,
     primaryColor,
     secondaryColor,
     slug,
     states,
+    uploadLogo,
+    validateOnboardingData,
     workingHours,
   };
 };

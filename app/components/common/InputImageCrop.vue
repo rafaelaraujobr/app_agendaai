@@ -1,6 +1,6 @@
 <template>
   <div class="q-mb-lg">
-    <q-card v-if="croppedPreviewUrl" flat bordered class="preview-card">
+    <q-card v-if="croppedPreviewUrl" flat class="preview-card" bordered>
       <q-card-section>
         <q-img
           :src="croppedPreviewUrl"
@@ -73,53 +73,54 @@
         </div>
       </q-card-section>
     </q-card>
-    <div class="row items-center q-my-sm">
-      <div class="col-5"><q-separator /></div>
-      <div class="col-2 text-center text-grey-6 text-subtitle2">Ou</div>
-      <div class="col-5"><q-separator /></div>
+    <div v-if="isUrlInput">
+      <div class="row items-center q-my-sm">
+        <div class="col-5"><q-separator /></div>
+        <div class="col-2 text-center text-grey-6 text-subtitle2">Ou</div>
+        <div class="col-5"><q-separator /></div>
+      </div>
+      <label class="text-weight-medium text-subtitle2 q-mb-xs">
+        URL da imagem
+      </label>
+      <q-input
+        v-model="urlImage"
+        class="q-mt-xs"
+        type="url"
+        outlined
+        bg-color="white"
+        dense
+        placeholder="https://example.com/image.png"
+        clearable
+        clear-icon="mdi-close"
+        @clear="clearUrlImage"
+      >
+        <template #append>
+          <q-btn
+            icon="mdi-content-paste"
+            dense
+            flat
+            color="primary"
+            :loading="urlLoading"
+            @click="handlePasteImage"
+          >
+            <q-tooltip>Cole a URL da imagem</q-tooltip>
+          </q-btn>
+        </template>
+        <template #after>
+          <q-btn
+            icon="mdi-link"
+            dense
+            padding="sm md"
+            color="primary"
+            :loading="urlLoading"
+            @click="handleLoadImageFromUrl"
+          >
+            <q-tooltip>Carregar imagem da URL</q-tooltip>
+          </q-btn>
+        </template>
+      </q-input>
     </div>
-    <label class="text-weight-medium text-subtitle2 q-mb-xs">
-      URL da imagem
-    </label>
-    <q-input
-      v-model="urlImage"
-      class="q-mt-xs"
-      type="url"
-      outlined
-      bg-color="white"
-      dense
-      placeholder="https://example.com/image.png"
-      clearable
-      clear-icon="mdi-close"
-      @clear="clearUrlImage"
-    >
-      <template #append>
-        <q-btn
-          icon="mdi-content-paste"
-          dense
-          flat
-          color="primary"
-          :loading="urlLoading"
-          @click="handlePasteImage"
-        >
-          <q-tooltip>Cole a URL da imagem</q-tooltip>
-        </q-btn>
-      </template>
-      <template #after>
-        <q-btn
-          icon="mdi-link"
-          dense
-          padding="sm md"
-          color="primary"
-          :loading="urlLoading"
-          @click="handleLoadImageFromUrl"
-        >
-          <q-tooltip>Carregar imagem da URL</q-tooltip>
-        </q-btn>
-      </template>
-    </q-input>
-
-    <q-dialog v-model="dialogPreview" flat bordered>
+    <q-dialog v-model="dialogPreview" flat>
       <q-card flat style="width: 640px; max-width: 95vw; max-height: 90vh">
         <q-toolbar>
           <q-toolbar-title class="text-body1">
@@ -148,7 +149,7 @@
     />
 
     <q-dialog v-model="dialogCropper" persistent>
-      <q-card style="width: 640px; max-width: 98vw" flat bordered>
+      <q-card style="width: 640px; max-width: 98vw" flat>
         <q-toolbar>
           <q-toolbar-title class="text-body1"> Ajustar imagem </q-toolbar-title>
           <q-btn icon="close" flat round dense @click="handleCancel" />
@@ -185,13 +186,9 @@ import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import { format } from "quasar";
 const { humanStorageSize } = format;
-
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"];
-
 const $q = useQuasar();
-
 const model = defineModel<File | null>({ default: null });
-
 const props = defineProps({
   aspectRatio: {
     type: Number,
@@ -204,6 +201,10 @@ const props = defineProps({
   maxFileSize: {
     type: Number,
     default: 5,
+  },
+  isUrlInput: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -407,6 +408,7 @@ const handleReCrop = () => {
 
 .preview-card
   overflow: hidden
+  min-height: 200px
 
 .preview-img
   max-height: 100px

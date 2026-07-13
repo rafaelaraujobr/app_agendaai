@@ -16,6 +16,8 @@
           v-model:slug="slug"
           v-model:business-description="businessDescription"
           :business-types="businessTypes"
+          :loading-business-types="isLoadingBusinessTypes"
+          :check-slug-availability="checkSlugAvailability"
           @next="goToNextStep"
         />
       </q-step>
@@ -28,7 +30,7 @@
         />
       </q-step>
 
-      <q-step :name="3" title="business-layout" :done="step > 3">
+      <!-- <q-step :name="3" title="business-layout" :done="step > 3">
         <FormLayout
           v-model:primary-color="primaryColor"
           v-model:secondary-color="secondaryColor"
@@ -37,9 +39,9 @@
           @previous="goToPreviousStep"
           @next="goToNextStep"
         />
-      </q-step>
+      </q-step> -->
 
-      <q-step :name="4" title="business-channels" :done="step > 4">
+      <q-step :name="3" title="business-channels" :done="step > 3">
         <FormChannels
           v-model:channels="channelSelected"
           :channel-options="channelOptions"
@@ -48,7 +50,7 @@
         />
       </q-step>
 
-      <q-step :name="5" title="business-address" :done="step > 5">
+      <q-step :name="4" title="business-address" :done="step > 4">
         <FormAddress
           v-model:address="address"
           v-model:not-have-number="notHaveNumber"
@@ -57,7 +59,7 @@
         />
       </q-step>
 
-      <q-step :name="6" title="business-working-hours" :done="step > 6">
+      <q-step :name="5" title="business-working-hours" :done="step > 5">
         <FormWorkingHours
           v-model:working-hours="workingHours"
           @previous="goToPreviousStep"
@@ -65,9 +67,10 @@
         />
       </q-step>
 
-      <q-step :name="7" title="business-review" :done="step > 7">
+      <q-step :name="6" title="business-review" :done="step > 6">
         <FormReview
           :payload="createBusinessPayload"
+          :loading="isCreating"
           @previous="goToPreviousStep"
           @submit="handleCreateBusiness"
         />
@@ -82,7 +85,7 @@ import FormAddress from "~/components/onboarding/FormAddress.vue";
 import FormBusiness from "~/components/onboarding/FormBusiness.vue";
 import FormChannels from "~/components/onboarding/FormChannels.vue";
 import FormImages from "~/components/onboarding/FormImages.vue";
-import FormLayout from "~/components/onboarding/FormLayout.vue";
+// import FormLayout from "~/components/onboarding/FormLayout.vue";
 import FormReview from "~/components/onboarding/FormReview.vue";
 import FormWorkingHours from "~/components/onboarding/FormWorkingHours.vue";
 
@@ -91,8 +94,21 @@ definePageMeta({
   middleware: ["auth"],
 });
 
+type ApiError = {
+  data?: {
+    statusCode?: number;
+    statusMessage?: string;
+    message?: string;
+  };
+  statusCode?: number;
+  statusMessage?: string;
+  message?: string;
+};
+
 const step = ref(1);
 const stepperRef = ref<InstanceType<typeof QStepper>>();
+const $q = useQuasar();
+const { fetch: refreshSession } = useUserSession();
 
 const {
   address,
@@ -103,16 +119,32 @@ const {
   businessTypes,
   channelOptions,
   channelSelected,
+  checkSlugAvailability,
+  createBusiness,
   createBusinessPayload,
-  fontFamily,
-  fontOptions,
+  // fontFamily,
+  // fontOptions,
   logoFile,
   notHaveNumber,
-  primaryColor,
-  secondaryColor,
+  // primaryColor,
+  // secondaryColor,
   slug,
+  isCreating,
+  isLoadingBusinessTypes,
+  loadBusinessTypes,
   workingHours,
 } = useOnboarding();
+
+onMounted(async () => {
+  try {
+    await loadBusinessTypes();
+  } catch (error) {
+    $q.notify({
+      type: "negative",
+      message: getErrorMessage(error),
+    });
+  }
+});
 
 const goToNextStep = () => {
   stepperRef.value?.next();
@@ -122,8 +154,44 @@ const goToPreviousStep = () => {
   stepperRef.value?.previous();
 };
 
-const handleCreateBusiness = () => {
-  console.log("createBusinessPayload", createBusinessPayload.value);
+const getErrorMessage = (error: unknown) => {
+  const apiError = error as ApiError;
+  const statusCode = apiError.data?.statusCode ?? apiError.statusCode;
+
+  if (statusCode === 409) {
+    return "Este endereço acabou de ser utilizado. Volte e escolha outro slug.";
+  }
+
+  return (
+    apiError.data?.statusMessage ??
+    apiError.data?.message ??
+    apiError.statusMessage ??
+    apiError.message ??
+    "Não foi possível criar o negócio"
+  );
+};
+
+const handleCreateBusiness = async () => {
+  try {
+    await createBusiness();
+    await refreshSession();
+
+    $q.notify({
+      type: "positive",
+      message: "Negócio criado com sucesso",
+    });
+    await navigateTo("/", { replace: true });
+  } catch (error) {
+    const onboardingError = error as ApiError & { step?: number };
+    if (onboardingError.step) {
+      step.value = onboardingError.step;
+    }
+
+    $q.notify({
+      type: "negative",
+      message: getErrorMessage(error),
+    });
+  }
 };
 </script>
 

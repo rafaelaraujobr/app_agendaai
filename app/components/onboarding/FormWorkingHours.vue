@@ -5,6 +5,30 @@
     :animation-data="WorkingHoursAnimation"
   >
     <q-form ref="formRef" @submit.prevent="handleSubmit">
+      <div class="q-gutter-y-sm q-mb-md">
+        <div class="text-caption text-grey-7">
+          Escolha um modelo rápido. Se precisar, toque em um dia para ajustar.
+        </div>
+        <div class="row q-col-gutter-sm">
+          <div
+            v-for="preset in workingHourPresets"
+            :key="preset.value"
+            class="col-12 col-sm-4"
+          >
+            <q-btn
+              class="full-width"
+              :label="preset.label"
+              outline
+              no-caps
+              dense
+              padding="sm"
+              color="primary"
+              @click="applyPreset(preset.value)"
+            />
+          </div>
+        </div>
+      </div>
+
       <q-list bordered separator class="rounded-borders bg-white">
         <q-item
           v-for="(workingHour, index) in workingHours"
@@ -260,6 +284,7 @@ type MinuteField =
   | "endMinutes"
   | "breakStartMinutes"
   | "breakEndMinutes";
+type WorkingHourPreset = "weekdays" | "saturday" | "everyday";
 
 const emit = defineEmits<{
   next: [];
@@ -292,6 +317,12 @@ const dayLabels: Record<OnboardingDayOfWeek, string> = {
   SATURDAY: "Sábado",
   SUNDAY: "Domingo",
 };
+
+const workingHourPresets: { label: string; value: WorkingHourPreset }[] = [
+  { label: "Seg a sex", value: "weekdays" },
+  { label: "Seg a sáb", value: "saturday" },
+  { label: "Todos os dias", value: "everyday" },
+];
 
 const minutesToTime = (minutes: number | null) => {
   if (minutes === null) return "";
@@ -379,6 +410,42 @@ const toggleBreak = (
 ) => {
   workingHour.breakStartMinutes = shouldHaveBreak ? 720 : null;
   workingHour.breakEndMinutes = shouldHaveBreak ? 780 : null;
+};
+
+const applyPreset = (preset: WorkingHourPreset) => {
+  const activeDaysByPreset: Record<WorkingHourPreset, OnboardingDayOfWeek[]> = {
+    weekdays: ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"],
+    saturday: [
+      "MONDAY",
+      "TUESDAY",
+      "WEDNESDAY",
+      "THURSDAY",
+      "FRIDAY",
+      "SATURDAY",
+    ],
+    everyday: [
+      "MONDAY",
+      "TUESDAY",
+      "WEDNESDAY",
+      "THURSDAY",
+      "FRIDAY",
+      "SATURDAY",
+      "SUNDAY",
+    ],
+  };
+  const activeDays = activeDaysByPreset[preset];
+
+  workingHours.value = workingHours.value.map((workingHour) => ({
+    ...workingHour,
+    startMinutes: 540,
+    endMinutes:
+      preset === "saturday" && workingHour.dayOfWeek === "SATURDAY"
+        ? 780
+        : 1080,
+    breakStartMinutes: null,
+    breakEndMinutes: null,
+    isActive: activeDays.includes(workingHour.dayOfWeek),
+  }));
 };
 
 const openEditDialog = (index: number) => {

@@ -83,6 +83,7 @@
         dense
         padding="sm lg"
         color="primary"
+        :disable="loading"
         @click="$emit('previous')"
       />
       <q-btn
@@ -92,6 +93,7 @@
         dense
         padding="sm lg"
         color="primary"
+        :loading="loading"
         @click="$emit('submit')"
       />
     </template>
@@ -105,6 +107,7 @@ import OnboardingStepCard from "./OnboardingStepCard.vue";
 
 const props = defineProps<{
   payload: CreateBusinessPayload;
+  loading?: boolean;
 }>();
 
 defineEmits<{
@@ -131,17 +134,5 @@ const formattedAddress = computed(() => {
     .join(", ");
 });
 
-const payloadPreview = computed(() => {
-  return JSON.stringify(
-    {
-      ...props.payload,
-      business: {
-        ...props.payload.business,
-        logoFile: props.payload.business.logoFile?.name ?? null,
-      },
-    },
-    null,
-    2,
-  );
-});
+const payloadPreview = computed(() => JSON.stringify(props.payload, null, 2));
 </script>

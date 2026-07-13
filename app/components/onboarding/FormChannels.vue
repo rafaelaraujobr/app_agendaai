@@ -11,7 +11,7 @@
         <label class="text-weight-medium text-subtitle2 q-mb-xs">
           Seus canais
         </label>
-        <div class="scroll-y q-gutter-y-sm" style="max-height: 300px">
+        <div class="scroll-y q-gutter-y-sm q-mb-md" style="max-height: 300px">
           <div
             v-for="(channel, index) in channels"
             :key="index"
@@ -181,13 +181,13 @@ const availableChannelOptions = (index: number) => {
 };
 
 const removeChannel = (index: number) => {
-  if (channels.value.length === 1) {
-    $q.notify({
-      type: "negative",
-      message: "Você deve adicionar pelo menos um canal de divulgação",
-    });
-    return;
-  }
+  // if (channels.value.length === 1) {
+  //   $q.notify({
+  //     type: "negative",
+  //     message: "Você deve adicionar pelo menos um canal de divulgação",
+  //   });
+  //   return;
+  // }
   channels.value.splice(index, 1);
 };
 

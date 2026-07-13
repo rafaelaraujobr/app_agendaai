@@ -66,7 +66,7 @@
                 v-model="notHaveNumber"
                 class="text-subtitle2"
                 left-label
-                size="sm"
+                dense
                 label="Sem número"
               />
             </template>

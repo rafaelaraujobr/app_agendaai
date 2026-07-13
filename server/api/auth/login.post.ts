@@ -50,6 +50,7 @@ export default defineEventHandler(async (event) => {
       lastName: user.lastName ?? "",
       avatarUrl: user.avatarUrl ?? "",
       preferences: user.preferences ?? {},
+      business: user.business ?? {},
     },
     secure: {
       userId: user.id,

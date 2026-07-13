@@ -4,6 +4,9 @@
       <div class="col-12">
         <p>Subdomain: {{ subdomain }}</p>
       </div>
+      <div class="col-12">
+        <pre>{{ user }}</pre>
+      </div>
       <q-input
         v-model="text"
         color="primary"
@@ -27,8 +30,13 @@ definePageMeta({
   middleware: ["auth"],
 });
 const subdomain = useState<string | null>("subdomain");
-
+const { user } = useUserSession();
 const text = ref<string>("");
+
+onMounted(() => {
+  const businessSlug = user.value?.business?.slug;
+  if (!businessSlug) { navigateTo('/onboarding'); }
+});
 </script>
 
 <style lang="sass" scoped></style>

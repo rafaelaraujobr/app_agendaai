@@ -65,6 +65,7 @@ export const authService = {
       email: user.email,
       avatarUrl: user.avatarUrl ?? "",
       preferences: user.preferences,
+      business: user.businessMembers[0]?.business ?? null,
     };
   },
 

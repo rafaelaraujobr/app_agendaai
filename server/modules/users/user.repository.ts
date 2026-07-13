@@ -8,6 +8,50 @@ import type {
 
 const userWithRelations = {
   preferences: true,
+  businessMembers: {
+    take: 1,
+    orderBy: {
+      createdAt: "asc",
+    },
+    include: {
+      business: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          businessType: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          businessChannels: {
+            select: {
+              id: true,
+              type: true,
+              channel: true,
+            },
+          },
+          businessWorkingHours: {
+            select: {
+              id: true,
+              dayOfWeek: true,
+              startMinutes: true,
+              endMinutes: true,
+            },
+          },
+          businessLayout: {
+            select: {
+              id: true,
+              primaryColor: true,
+              secondaryColor: true,
+              theme: true,
+            },
+          },
+        },
+      },
+    },
+  },
 } as const;
 
 type UserWithRelations = Prisma.UserGetPayload<{
@@ -21,7 +65,6 @@ export const userRepository = {
       include: userWithRelations,
     });
   },
-
 
   findByEmail: async (email: string) => {
     return await prisma.user.findUnique({

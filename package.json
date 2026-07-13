@@ -21,6 +21,7 @@
     "@tsparticles/slim": "^4.2.1",
     "@tsparticles/vue3": "^4.2.1",
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.10.0",
     "eslint": "^10.5.0",
     "handlebars": "^4.7.9",
     "nuxt": "^4.4.8",
@@ -36,6 +37,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/node": "^26.1.1",
     "@types/pg": "^8.20.0",
     "@typescript-eslint/parser": "^8.62.1",
     "dotenv": "^17.4.2",

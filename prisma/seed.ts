@@ -113,6 +113,60 @@ async function main() {
     },
   });
 
+  const additionalBusinessTypes = [
+    {
+      name: "Clínica de estética",
+      slug: "clinica-de-estetica",
+      description: "Procedimentos estéticos faciais e corporais.",
+    },
+    {
+      name: "Esmalteria",
+      slug: "esmalteria",
+      description: "Manicure, pedicure e cuidados com as unhas.",
+    },
+    {
+      name: "Estúdio de tatuagem",
+      slug: "estudio-de-tatuagem",
+      description: "Tatuagens, piercings e procedimentos relacionados.",
+    },
+    {
+      name: "Massoterapia",
+      slug: "massoterapia",
+      description: "Massagens terapêuticas, relaxantes e esportivas.",
+    },
+    {
+      name: "Pet shop",
+      slug: "pet-shop",
+      description: "Banho, tosa e cuidados para animais de estimação.",
+    },
+    {
+      name: "Podologia",
+      slug: "podologia",
+      description: "Tratamentos e cuidados especializados com os pés.",
+    },
+    {
+      name: "Spa",
+      slug: "spa",
+      description: "Bem-estar, relaxamento e tratamentos corporais.",
+    },
+    {
+      name: "Personal trainer",
+      slug: "personal-trainer",
+      description: "Treinos personalizados e acompanhamento físico.",
+    },
+  ];
+
+  for (const businessType of additionalBusinessTypes) {
+    await prisma.businessType.upsert({
+      where: { slug: businessType.slug },
+      update: {
+        name: businessType.name,
+        description: businessType.description,
+      },
+      create: businessType,
+    });
+  }
+
   const haircutIllustration = await prisma.serviceIllustration.upsert({
     where: { id: "seed-haircut-illustration" },
     update: {

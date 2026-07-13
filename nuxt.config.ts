@@ -28,6 +28,11 @@ export default defineNuxtConfig({
     "nuxt-nodemailer",
   ],
   runtimeConfig: {
+    cloudinary: {
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
+      apiKey: process.env.CLOUDINARY_API_KEY || "",
+      apiSecret: process.env.CLOUDINARY_API_SECRET || "",
+    },
     public: {
       rootDomain: process.env.NUXT_PUBLIC_ROOT_DOMAIN || "",
     },
