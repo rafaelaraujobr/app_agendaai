@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center bg-grey-1 q-px-md q-py-lg">
+  <q-page class="flex flex-center bg-grey-1 q-pa-md">
     <q-stepper
       ref="stepperRef"
       v-model="step"
@@ -7,6 +7,7 @@
       color="primary"
       flat
       animated
+      class="q-pa-sm"
     >
       <q-step :name="1" title="presentation" :done="step > 1">
         <OnboardingPresentation @next="goToNextStep" />
@@ -112,7 +113,7 @@ type ApiError = {
   message?: string;
 };
 
-const step = ref(6);
+const step = ref(1);
 const stepperRef = ref<InstanceType<typeof QStepper>>();
 const $q = useQuasar();
 const { fetch: refreshSession } = useUserSession();
@@ -205,4 +206,7 @@ const handleCreateBusiness = async () => {
 <style lang="sass" scoped>
 :deep(.q-stepper__header)
   display: none
+
+:deep(.q-stepper__step-inner)
+  padding: 0
 </style>
