@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page>
     <div class="row q-gutter-x-md">
       <div class="col-12">
         <p>Subdomain: {{ subdomain }}</p>
