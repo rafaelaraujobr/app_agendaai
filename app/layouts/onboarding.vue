@@ -2,14 +2,8 @@
   <q-layout view="hHh Lpr lff">
     <q-header reveal :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
       <q-toolbar>
-        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>
-          <q-img
-            :src="logoImage"
-            alt="Logo do sistema"
-            style="height: 40px"
-            fit="contain"
-          />
+          <q-img :src="logoImage" alt="Logo do sistema" style="height: 40px;" fit="contain" />
         </q-toolbar-title>
         <q-item clickable v-ripple>
           <q-item-section>
@@ -61,29 +55,6 @@
         </q-item>
       </q-toolbar>
     </q-header>
-    <q-drawer
-      v-model="drawer"
-      show-if-above
-      :mini="miniState"
-      @mouseenter="miniState = false"
-      @mouseleave="miniState = true"
-      :mini-width="70"
-      :width="250"
-      :breakpoint="500"
-      bordered
-      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
-    >
-      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
-        <q-list>
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="home" />
-            </q-item-section>
-            <q-item-section> Inicio </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-area>
-    </q-drawer>
     <q-page-container>
       <slot />
     </q-page-container>
@@ -92,11 +63,8 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import logoImage from "~/assets/images/logo.png";
+import logoImage from "~/assets/images/logo.svg";
 const { logout, user } = useAuth();
-
-const drawer = ref(false);
-const miniState = ref(true);
 
 const handleLogout = async () => {
   Loading.show();
@@ -108,6 +76,7 @@ const handleLogout = async () => {
   }
 };
 </script>
+
 
 <style scoped lang="sass">
 

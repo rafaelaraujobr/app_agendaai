@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center bg-grey-1 q-pa-md">
+  <q-page class="flex flex-center column bg-grey-1 q-pa-md">
     <q-stepper
       ref="stepperRef"
       v-model="step"
@@ -98,7 +98,7 @@ import FormWorkingHours from "~/components/onboarding/FormWorkingHours.vue";
 import OnboardingPresentation from "~/components/onboarding/OnboardingPresentation.vue";
 
 definePageMeta({
-  layout: "auth",
+  layout: "onboarding",
   middleware: ["auth"],
 });
 
