@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center bg-grey-1">
+  <q-page class="flex flex-center bg-grey-1 q-px-md q-py-lg">
     <q-stepper
       ref="stepperRef"
       v-model="step"
@@ -112,7 +112,7 @@ type ApiError = {
   message?: string;
 };
 
-const step = ref(1);
+const step = ref(6);
 const stepperRef = ref<InstanceType<typeof QStepper>>();
 const $q = useQuasar();
 const { fetch: refreshSession } = useUserSession();

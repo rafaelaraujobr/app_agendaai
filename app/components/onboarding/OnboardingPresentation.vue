@@ -6,31 +6,7 @@
     :animation-height="300"
     :animation-width="300"
   >
-    <div class="column q-gutter-y-md">
-      <q-banner rounded class="bg-primary text-white">
-        <template #avatar>
-          <q-icon name="mdi-rocket-launch-outline" />
-        </template>
-        Tenha as informações do seu negócio e sua logo por perto.
-      </q-banner>
-
-      <q-list bordered separator class="rounded-borders">
-        <q-item v-for="item in presentationItems" :key="item.title">
-          <q-item-section avatar>
-            <q-avatar color="primary" text-color="white" :icon="item.icon" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label class="text-weight-medium">
-              {{ item.title }}
-            </q-item-label>
-            <q-item-label caption>
-              {{ item.description }}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-
+    <div class="column q-gutter-y-md justify-center items-center">
       <div class="row items-center text-caption text-grey-7">
         <q-icon name="mdi-clock-outline" size="sm" class="q-mr-sm" />
         Leva apenas alguns minutos.
@@ -39,8 +15,7 @@
 
     <template #actions>
       <q-btn
-        label="Começar configuração"
-        icon-right="mdi-arrow-right"
+        label="Começar"
         unelevated
         no-caps
         dense

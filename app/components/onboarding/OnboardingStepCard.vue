@@ -3,7 +3,7 @@
     <q-card-section horizontal class="no-wrap full-height">
       <q-card flat class="col-6 flex flex-center gt-xs">
         <ClientOnly>
-          <CommonLottieAnimation
+          <Vue3Lottie
             :animation-data="animationData"
             :height="animationHeight"
             :width="animationWidth"

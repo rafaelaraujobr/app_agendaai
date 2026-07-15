@@ -6,27 +6,19 @@
   >
     <q-form ref="formRef" @submit.prevent="handleSubmit">
       <div class="q-gutter-y-sm q-mb-md">
-        <div class="text-caption text-grey-7">
-          Escolha um modelo rápido. Se precisar, toque em um dia para ajustar.
-        </div>
-        <div class="row q-col-gutter-sm">
-          <div
-            v-for="preset in workingHourPresets"
-            :key="preset.value"
-            class="col-12 col-sm-4"
-          >
-            <q-btn
-              class="full-width"
-              :label="preset.label"
-              outline
-              no-caps
-              dense
-              padding="sm"
-              color="primary"
-              @click="applyPreset(preset.value)"
-            />
-          </div>
-        </div>
+        <q-btn-toggle
+          v-model="selectedPreset"
+          class="full-width"
+          :options="workingHourPresets"
+          spread
+          no-caps
+          unelevated
+          toggle-color="primary"
+          toggle-text-color="white"
+          color="grey-2"
+          text-color="primary"
+          @update:model-value="applyPreset"
+        />
       </div>
 
       <q-list bordered separator class="rounded-borders bg-white">
@@ -36,30 +28,45 @@
           clickable
           @click="openEditDialog(index)"
         >
-        <q-item-section>
-          <q-item-label>
-            <div class="row items-center q-gutter-sm no-wrap">
+          <q-item-section>
+            <q-item-label class="row items-center justify-between no-wrap">
               <span class="text-weight-bold">
                 {{ dayLabels[workingHour.dayOfWeek] }}
               </span>
-              <span class="text-weight-medium">
-                {{ getWorkingHourLabel(workingHour) }}
-              </span>
-            </div>
-          </q-item-label>
-          <q-item-label v-if="hasBreak(workingHour)" caption>
-            Intervalo: {{ minutesToTime(workingHour.breakStartMinutes) }} às
-            {{ minutesToTime(workingHour.breakEndMinutes) }}
-          </q-item-label>
-        </q-item-section>
+            </q-item-label>
 
-        <q-item-section side>
-          <div class="row items-center q-gutter-sm no-wrap">
+            <q-item-label
+              v-if="workingHour.isActive"
+              class="text-weight-medium q-mt-xs"
+            >
+              <q-icon name="mdi-clock-outline" class="q-mr-xs" />
+              {{ getWorkingHourLabel(workingHour) }}
+            </q-item-label>
+            <q-item-label v-else caption class="q-mt-xs">
+              Sem atendimento
+            </q-item-label>
+
+            <q-item-label v-if="hasBreak(workingHour)" caption>
+              Intervalo: {{ minutesToTime(workingHour.breakStartMinutes) }} às
+              {{ minutesToTime(workingHour.breakEndMinutes) }}
+            </q-item-label>
+          </q-item-section>
+          <q-item-section side>
             <q-badge
               :color="workingHour.isActive ? 'positive' : 'grey-6'"
               outline
             >
               {{ workingHour.isActive ? "Aberto" : "Fechado" }}
+            </q-badge>
+          </q-item-section>
+
+          <q-item-section side>
+            <q-badge
+              v-if="validateWorkingHour(workingHour)"
+              color="negative"
+              rounded
+            >
+              !
             </q-badge>
             <q-btn
               icon="mdi-pencil-outline"
@@ -69,14 +76,13 @@
               color="primary"
               @click.stop="openEditDialog(index)"
             />
-          </div>
-        </q-item-section>
+          </q-item-section>
         </q-item>
       </q-list>
     </q-form>
 
-    <q-dialog v-model="isEditDialogOpen">
-      <q-card class="full-width">
+    <q-dialog v-model="isEditDialogOpen" :maximized="$q.screen.lt.sm">
+      <q-card class="full-width" style="max-width: 560px">
         <q-card-section>
           <div class="text-h6">
             {{ dayLabels[editingWorkingHour.dayOfWeek] }}
@@ -299,6 +305,7 @@ const $q = useQuasar();
 const formRef = ref<QForm | null>(null);
 const isEditDialogOpen = ref(false);
 const editingIndex = ref<number | null>(null);
+const selectedPreset = ref<WorkingHourPreset | null>("weekdays");
 const editingWorkingHour = ref<OnboardingWorkingHour>({
   dayOfWeek: "MONDAY",
   startMinutes: 540,
@@ -319,9 +326,9 @@ const dayLabels: Record<OnboardingDayOfWeek, string> = {
 };
 
 const workingHourPresets: { label: string; value: WorkingHourPreset }[] = [
-  { label: "Seg a sex", value: "weekdays" },
-  { label: "Seg a sáb", value: "saturday" },
-  { label: "Todos os dias", value: "everyday" },
+  { label: "Seg–Sex", value: "weekdays" },
+  { label: "Seg–Sáb", value: "saturday" },
+  { label: "Todos", value: "everyday" },
 ];
 
 const minutesToTime = (minutes: number | null) => {
@@ -473,6 +480,7 @@ const saveWorkingHour = () => {
   }
 
   workingHours.value[editingIndex.value] = { ...editingWorkingHour.value };
+  selectedPreset.value = null;
   closeEditDialog();
 };
 

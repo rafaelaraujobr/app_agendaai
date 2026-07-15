@@ -9,7 +9,7 @@
         <label class="text-weight-medium text-subtitle2 q-mb-xs">
           Logotipo
         </label>
-        <InputImageCrop v-model="logoFile" :aspect-ratio="3" />
+        <InputImageCrop v-model="logoFile" />
       </div>
 
       <q-banner v-if="logoError" rounded class="bg-red-1 text-negative">

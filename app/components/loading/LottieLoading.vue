@@ -17,12 +17,14 @@ const normalizedSize = computed(() => {
 
 <template>
   <div class="column items-center justify-center">
-    <CommonLottieAnimation
-      :animation-data="loadingAnimation"
-      :width="normalizedSize"
-      :height="normalizedSize"
-      :loop="true"
-      :auto-play="true"
-    />
+    <ClientOnly>
+      <Vue3Lottie
+        :animation-data="loadingAnimation"
+        :width="normalizedSize"
+        :height="normalizedSize"
+        :loop="true"
+        :auto-play="true"
+      />
+    </ClientOnly>
   </div>
 </template>

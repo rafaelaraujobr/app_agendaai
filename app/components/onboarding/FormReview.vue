@@ -61,10 +61,10 @@
               :options="{ scrollWheelZoom: false }"
             >
               <LTileLayer
-                url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                 attribution="&copy; OpenStreetMap contributors &copy; CARTO"
                 layer-type="base"
-                name="CARTO Voyager"
+                name="CARTO Positron"
               />
               <LMarker v-if="hasCoordinates" :lat-lng="mapCenter">
                 <LIcon

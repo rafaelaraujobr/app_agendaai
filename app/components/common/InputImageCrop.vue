@@ -159,7 +159,7 @@
             ref="cropperRef"
             class="cropper"
             :src="imgSrc"
-            :stencil-props="{ aspectRatio: props.aspectRatio }"
+            :stencil-props="stencilProps"
             image-restriction="stencil"
             @change="handleCropChange"
           />
@@ -192,7 +192,7 @@ const model = defineModel<File | null>({ default: null });
 const props = defineProps({
   aspectRatio: {
     type: Number,
-    default: 3,
+    default: 0,
   },
   label: {
     type: String,
@@ -207,6 +207,12 @@ const props = defineProps({
     default: false,
   },
 });
+
+const normalizeAspectRatio = (aspectRatio: number) => {
+  return Number.isFinite(aspectRatio) && aspectRatio > 0
+    ? aspectRatio
+    : undefined;
+};
 
 const maxSize = computed(() => {
   return props.maxFileSize * 1024 * 1024;
@@ -223,6 +229,24 @@ const cropperRef = ref<InstanceType<typeof Cropper> | null>(null);
 const croppedPreviewUrl = ref<string>("");
 const urlImage = ref<string>("");
 const urlLoading = ref(false);
+const selectedAspectRatio = ref<number | undefined>(
+  normalizeAspectRatio(props.aspectRatio),
+);
+const stencilProps = computed(() =>
+  selectedAspectRatio.value
+    ? { aspectRatio: selectedAspectRatio.value }
+    : {
+        minAspectRatio: 1,
+        maxAspectRatio: 4,
+      },
+);
+
+watch(
+  () => props.aspectRatio,
+  (aspectRatio) => {
+    selectedAspectRatio.value = normalizeAspectRatio(aspectRatio);
+  },
+);
 
 let croppedCanvas: HTMLCanvasElement | null = null;
 let currentObjectUrl: string | null = null;

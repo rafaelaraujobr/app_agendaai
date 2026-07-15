@@ -17,9 +17,7 @@
             dense
             maxlength="9"
             :loading="isLoadingZipCode"
-            :rules="[
-              (val) => (val && val.length > 0) || 'CEP é obrigatório',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'CEP é obrigatório']"
             @blur="getAddressByZipCode(address.zipCode)"
           />
         </div>
@@ -91,11 +89,8 @@
           />
         </div>
 
-        <div v-if="locationConfirmed" class="col-12">
+        <div v-if="locationConfirmed" class="col-12 q-mt-md">
           <q-banner rounded class="bg-green-1 text-green-10">
-            <template #avatar>
-              <q-icon name="mdi-map-marker-check-outline" />
-            </template>
             Localização confirmada.
             <template #action>
               <q-btn
@@ -103,6 +98,7 @@
                 flat
                 dense
                 no-caps
+                padding="sm lg"
                 color="green-10"
                 @click="isMapDialogOpen = true"
               />
@@ -150,11 +146,8 @@
       class="full-width rounded-borders overflow-hidden"
       style="max-width: 700px"
     >
-      <q-toolbar class="bg-primary text-white">
-        <q-avatar color="secondary" text-color="primary">
-          <q-icon name="mdi-map-marker-radius-outline" />
-        </q-avatar>
-        <q-toolbar-title class="text-subtitle1 text-weight-bold">
+      <q-toolbar>
+        <q-toolbar-title class="text-subtitle1">
           Confirme a localização
         </q-toolbar-title>
         <q-space />
@@ -163,7 +156,7 @@
           flat
           round
           dense
-          color="white"
+          color="primary"
           aria-label="Fechar mapa"
           @click="isMapDialogOpen = false"
         />
@@ -171,10 +164,14 @@
 
       <q-banner class="bg-grey-1 text-grey-8">
         <template #avatar>
-          <q-icon name="mdi-cursor-move" color="primary" />
+          <q-icon
+            name="mdi-cursor-move"
+            color="primary"
+            size="sm"
+            class="q-mt-xs"
+          />
         </template>
-        Se a posição não estiver correta, arraste o pin e posicione-o no local
-        exato do seu negócio.
+        Caso necessário, arraste o pin até o local correto do seu negócio.
       </q-banner>
 
       <q-banner
@@ -201,21 +198,16 @@
             }"
           >
             <LTileLayer
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               attribution="&copy; OpenStreetMap contributors &copy; CARTO"
               layer-type="base"
-              name="CARTO Voyager"
+              name="CARTO Positron"
             />
             <LMarker
               :lat-lng="candidatePosition"
               draggable
               @moveend="handleMarkerMove"
             >
-              <LIcon
-                :icon-url="markerIconUrl"
-                :icon-size="[42, 42]"
-                :icon-anchor="[21, 42]"
-              />
               <LTooltip
                 :options="{
                   permanent: true,
@@ -255,7 +247,7 @@
           @click="isMapDialogOpen = false"
         />
         <q-btn
-          label="Confirmar localização"
+          label="Confirmar"
           padding="sm lg"
           dense
           unelevated
@@ -329,19 +321,6 @@ const candidatePosition = ref<[number, number] | null>(null);
 const locationConfirmed = ref(false);
 const isMapDialogOpen = ref(false);
 const locationError = ref("");
-const markerIconUrl = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-    <path
-      fill="#0E0B16"
-      stroke="#FFFFFF"
-      stroke-width="2"
-      d="M24 2C15.16 2 8 9.16 8 18c0 12 16 28 16 28s16-16 16-28C40 9.16 32.84 2 24 2z"
-    />
-    <circle cx="24" cy="18" r="7" fill="#F59E0B" />
-    <circle cx="24" cy="18" r="3" fill="#0E0B16" />
-  </svg>
-`)}`;
-
 const markerLabel = computed(() => {
   return (
     [address.value.street, address.value.number].filter(Boolean).join(", ") ||
@@ -385,7 +364,10 @@ const getAddressByZipCode = async (zipCode: string) => {
   } catch (error) {
     $q.notify({
       type: "negative",
-      message: error instanceof Error ? error.message : "Não foi possível consultar o CEP",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Não foi possível consultar o CEP",
     });
   } finally {
     isLoadingZipCode.value = false;
@@ -424,21 +406,18 @@ const geocodeAddress = async () => {
   locationConfirmed.value = false;
 
   try {
-    const response = await $fetch<GeocodingResponse>(
-      "/api/geocoding/address",
-      {
-        method: "POST",
-        body: {
-          street: address.value.street,
-          number: notHaveNumber.value ? "" : address.value.number,
-          neighborhood: address.value.neighborhood,
-          city: address.value.city,
-          state: address.value.state,
-          zipCode: address.value.zipCode,
-          country: address.value.country,
-        },
+    const response = await $fetch<GeocodingResponse>("/api/geocoding/address", {
+      method: "POST",
+      body: {
+        street: address.value.street,
+        number: notHaveNumber.value ? "" : address.value.number,
+        neighborhood: address.value.neighborhood,
+        city: address.value.city,
+        state: address.value.state,
+        zipCode: address.value.zipCode,
+        country: address.value.country,
       },
-    );
+    });
 
     geocodingResult.value = response.location;
     candidatePosition.value = [
@@ -500,7 +479,18 @@ const handleSubmit = async () => {
   if (!isValid) return;
 
   if (!candidatePosition.value) {
-    await geocodeAddress();
+    try {
+      Loading.show();
+      await geocodeAddress();
+    } catch (error) {
+      $q.notify({
+        type: "negative",
+        message: "Não foi possível localizar o endereço",
+      });
+    } finally {
+      Loading.hide();
+    }
+    return;
   }
 
   if (!candidatePosition.value) return;
