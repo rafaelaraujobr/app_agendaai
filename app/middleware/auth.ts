@@ -1,9 +1,17 @@
-export default defineNuxtRouteMiddleware(() => {
+export default defineNuxtRouteMiddleware((to) => {
   const { loggedIn, user } = useUserSession();
+
   if (!loggedIn.value) {
-    return navigateTo("/auth/login");
-  } else {
-    const businessSlug = user.value?.business?.slug;
-    if (!businessSlug) navigateTo("/onboarding");
+    if (to.path !== "/auth/login") return navigateTo("/auth/login");
+    return;
   }
+
+  const businessSlug = user.value?.business?.slug;
+
+  if (!businessSlug) {
+    if (to.path !== "/onboarding") return navigateTo("/onboarding");
+    return;
+  }
+
+  if (to.path === "/onboarding") return navigateTo("/");
 });
