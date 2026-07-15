@@ -24,6 +24,7 @@
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.10.0",
     "eslint": "^10.5.0",
+    "grid-layout-plus": "^1.1.1",
     "handlebars": "^4.7.9",
     "nuxt": "^4.4.8",
     "nuxt-auth-utils": "0.5.29",

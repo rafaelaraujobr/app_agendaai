@@ -97,7 +97,7 @@
         </q-banner>
       </q-card>
 
-      <q-expansion-item
+      <q-expansion-item v-if="isDevelopmentMode"
         dense
         expand-separator
         label="Ver payload do endpoint"
@@ -161,6 +161,10 @@ const channelIcons: Record<BusinessChannelType, string> = {
   INSTAGRAM: "mdi-instagram",
   FACEBOOK: "mdi-facebook",
 };
+
+const isDevelopmentMode = computed(() => {
+  return process.env.NODE_ENV === "development";
+});
 
 const channelLabels: Record<BusinessChannelType, string> = {
   WHATSAPP: "WhatsApp",

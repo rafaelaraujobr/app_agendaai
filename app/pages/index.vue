@@ -1,31 +1,105 @@
 <template>
   <q-page padding>
-    <div class="row q-gutter-x-md">
-      <!-- <q-input
-        v-model="text"
-        color="primary"
-        bg-color="grey-1"
-        class="border-grey-2 prepend-custom"
-        dense
-        outlined
+    <client-only>
+      <GridLayout
+        v-model:layout="layout"
+        :responsive-layouts="presetLayouts"
+        :row-height="30"
+        responsive
+        @breakpoint-changed="breakpointChangedEvent"
       >
-        <template #prepend>
-          <q-icon name="mdi-plus" />
+        <template #item="{ item }">
+          <span class="text">{{ item.i }}</span>
         </template>
-        <template #append>
-          <q-icon name="mdi-ab-testing" />
-        </template>
-      </q-input> -->
-    </div>
+      </GridLayout>
+    </client-only>
   </q-page>
 </template>
 <script setup lang="ts">
+import {
+  GridLayout,
+  type Breakpoint,
+  type Layout,
+} from "grid-layout-plus";
+
 definePageMeta({
   middleware: ["auth"],
 });
-const subdomain = useState<string | null>("subdomain");
-const { user } = useUserSession();
-const text = ref<string>("");
+const presetLayouts = reactive({
+  md: [
+    { x: 0, y: 0, w: 2, h: 2, i: "0" },
+    { x: 2, y: 0, w: 2, h: 4, i: "1" },
+    { x: 4, y: 0, w: 2, h: 5, i: "2" },
+    { x: 6, y: 0, w: 2, h: 3, i: "3" },
+    { x: 2, y: 4, w: 2, h: 3, i: "4" },
+    { x: 4, y: 5, w: 2, h: 3, i: "5" },
+    { x: 0, y: 2, w: 2, h: 5, i: "6" },
+    { x: 2, y: 7, w: 2, h: 5, i: "7" },
+    { x: 4, y: 8, w: 2, h: 5, i: "8" },
+    { x: 6, y: 3, w: 2, h: 4, i: "9" },
+    { x: 0, y: 7, w: 2, h: 4, i: "10" },
+    { x: 2, y: 19, w: 2, h: 4, i: "11" },
+    { x: 0, y: 14, w: 2, h: 5, i: "12" },
+    { x: 2, y: 14, w: 2, h: 5, i: "13" },
+    { x: 4, y: 13, w: 2, h: 4, i: "14" },
+    { x: 6, y: 7, w: 2, h: 4, i: "15" },
+    { x: 0, y: 19, w: 2, h: 5, i: "16" },
+    { x: 8, y: 0, w: 2, h: 2, i: "17" },
+    { x: 0, y: 11, w: 2, h: 3, i: "18" },
+    { x: 2, y: 12, w: 2, h: 2, i: "19" },
+  ],
+  lg: [
+    { x: 0, y: 0, w: 2, h: 2, i: "0" },
+    { x: 2, y: 0, w: 2, h: 4, i: "1" },
+    { x: 4, y: 0, w: 2, h: 5, i: "2" },
+    { x: 6, y: 0, w: 2, h: 3, i: "3" },
+    { x: 8, y: 0, w: 2, h: 3, i: "4" },
+    { x: 10, y: 0, w: 2, h: 3, i: "5" },
+    { x: 0, y: 5, w: 2, h: 5, i: "6" },
+    { x: 2, y: 5, w: 2, h: 5, i: "7" },
+    { x: 4, y: 5, w: 2, h: 5, i: "8" },
+    { x: 6, y: 4, w: 2, h: 4, i: "9" },
+    { x: 8, y: 4, w: 2, h: 4, i: "10" },
+    { x: 10, y: 4, w: 2, h: 4, i: "11" },
+    { x: 0, y: 10, w: 2, h: 5, i: "12" },
+    { x: 2, y: 10, w: 2, h: 5, i: "13" },
+    { x: 4, y: 8, w: 2, h: 4, i: "14" },
+    { x: 6, y: 8, w: 2, h: 4, i: "15" },
+    { x: 8, y: 10, w: 2, h: 5, i: "16" },
+    { x: 10, y: 4, w: 2, h: 2, i: "17" },
+    { x: 0, y: 9, w: 2, h: 3, i: "18" },
+    { x: 2, y: 6, w: 2, h: 2, i: "19" },
+  ],
+});
+
+const layout = ref(presetLayouts.lg);
+
+function breakpointChangedEvent(newBreakpoint: Breakpoint, newLayout: Layout) {
+  console.info(
+    "BREAKPOINT CHANGED breakpoint=",
+    newBreakpoint,
+    ", layout: ",
+    newLayout,
+  );
+}
 </script>
 
-<style lang="sass" scoped></style>
+<style scoped lang="sass">
+.vgl-layout
+  background-color: #eee
+
+
+:deep(.vgl-item:not(.vgl-item--placeholder))
+  background-color: #ccc
+  border: 1px solid #000
+
+
+:deep(.vgl-item--resizing)
+  opacity: 90%
+
+
+:deep(.vgl-item--static)
+  background-color: #cce
+
+
+</style>
