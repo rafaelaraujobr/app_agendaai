@@ -15,9 +15,9 @@
             color="primary"
             icon="mdi-bell-outline"
             dense
-            padding="sm md"
+            padding="sm"
           />
-          <q-btn color="primary" dense padding="sm md">
+          <q-btn color="primary" dense padding="sm">
             <q-avatar v-if="user?.avatarUrl" size="30px">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
             </q-avatar>
