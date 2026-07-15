@@ -1,8 +1,7 @@
 <template>
   <q-card
     flat
-    class="column items-center justify-center q-pa-lg"
-    style="width: 900px; max-width: 100%; min-height: 520px"
+    class="presentation-card column items-center justify-center q-pa-md"
   >
     <q-card-section class="full-width column items-center q-pa-none">
       <ClientOnly>
@@ -59,3 +58,16 @@ defineEmits<{
   next: [];
 }>();
 </script>
+
+<style scoped lang="sass">
+@use "@/assets/styles/quasar-variables" as v
+
+.presentation-card
+  width: 900px
+  min-height: 520px
+
+@media (max-width: v.$breakpoint-xs)
+  .presentation-card
+    width: 100%
+    min-height: auto
+</style>
