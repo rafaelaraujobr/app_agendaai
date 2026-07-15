@@ -338,12 +338,17 @@ export const useOnboarding = () => {
         fontFamily: fontFamily.value,
       },
     },
-    businessChannels: channelSelected.value
-      .filter((channel) => channel.type && channel.value)
-      .map((channel) => ({
-        type: channel.type.toUpperCase() as Uppercase<OnboardingChannelType>,
-        channel: channel.value,
-      })),
+    businessChannels: channelSelected.value.flatMap((channel) => {
+      const value = channel.value.trim();
+      if (!channel.type || !value) return [];
+
+      return [
+        {
+          type: channel.type.toUpperCase() as Uppercase<OnboardingChannelType>,
+          channel: value,
+        },
+      ];
+    }),
     businessAddress: {
       address: address.value.street,
       number: notHaveNumber.value ? null : address.value.number || null,
@@ -445,7 +450,7 @@ export const useOnboarding = () => {
   const uploadLogo = async () => {
     if (logoUrl.value) return logoUrl.value;
     if (!logoFile.value) {
-      throw createOnboardingError("Selecione o logotipo do negócio", 2);
+      throw createOnboardingError("Selecione o logotipo do negócio", 3);
     }
 
     const formData = new FormData();
@@ -475,7 +480,7 @@ export const useOnboarding = () => {
       if (!isSlugAvailable) {
         throw createOnboardingError(
           "Este endereço já está em uso. Escolha outro slug.",
-          1,
+          2,
         );
       }
 

@@ -16,6 +16,7 @@
             placeholder="Ex: 12345-678"
             dense
             maxlength="9"
+            :loading="isLoadingZipCode"
             :rules="[
               (val) => (val && val.length > 0) || 'CEP é obrigatório',
             ]"
@@ -54,12 +55,14 @@
             placeholder="Ex: 1234"
             dense
             maxlength="10"
+            :readonly="notHaveNumber"
             :rules="[
               (val) =>
                 notHaveNumber ||
                 (val && val.length > 0) ||
                 'Número é obrigatório',
             ]"
+            @blur="geocodeAddress"
           >
             <template #append>
               <q-checkbox
@@ -68,6 +71,7 @@
                 left-label
                 dense
                 label="Sem número"
+                @update:model-value="handleNoNumberChange"
               />
             </template>
           </q-input>
@@ -85,6 +89,34 @@
             placeholder="Ex: Apt. 101"
             dense
           />
+        </div>
+
+        <div v-if="locationConfirmed" class="col-12">
+          <q-banner rounded class="bg-green-1 text-green-10">
+            <template #avatar>
+              <q-icon name="mdi-map-marker-check-outline" />
+            </template>
+            Localização confirmada.
+            <template #action>
+              <q-btn
+                label="Revisar"
+                flat
+                dense
+                no-caps
+                color="green-10"
+                @click="isMapDialogOpen = true"
+              />
+            </template>
+          </q-banner>
+        </div>
+
+        <div v-if="locationError" class="col-12">
+          <q-banner rounded class="bg-red-1 text-negative">
+            <template #avatar>
+              <q-icon name="mdi-alert-circle-outline" />
+            </template>
+            {{ locationError }}
+          </q-banner>
         </div>
       </div>
     </q-form>
@@ -107,10 +139,133 @@
         dense
         padding="sm lg"
         color="primary"
+        :loading="isGeocoding"
         @click="handleSubmit"
       />
     </template>
   </OnboardingStepCard>
+
+  <q-dialog v-model="isMapDialogOpen" persistent>
+    <q-card
+      class="full-width rounded-borders overflow-hidden"
+      style="max-width: 700px"
+    >
+      <q-toolbar class="bg-primary text-white">
+        <q-avatar color="secondary" text-color="primary">
+          <q-icon name="mdi-map-marker-radius-outline" />
+        </q-avatar>
+        <q-toolbar-title class="text-subtitle1 text-weight-bold">
+          Confirme a localização
+        </q-toolbar-title>
+        <q-space />
+        <q-btn
+          icon="mdi-close"
+          flat
+          round
+          dense
+          color="white"
+          aria-label="Fechar mapa"
+          @click="isMapDialogOpen = false"
+        />
+      </q-toolbar>
+
+      <q-banner class="bg-grey-1 text-grey-8">
+        <template #avatar>
+          <q-icon name="mdi-cursor-move" color="primary" />
+        </template>
+        Se a posição não estiver correta, arraste o pin e posicione-o no local
+        exato do seu negócio.
+      </q-banner>
+
+      <q-banner
+        v-if="!geocodingResult?.exact"
+        dense
+        class="bg-warning-light text-grey-9"
+      >
+        <template #avatar>
+          <q-icon name="mdi-map-marker-alert-outline" color="secondary" />
+        </template>
+        A Geoapify retornou uma localização aproximada.
+      </q-banner>
+
+      <ClientOnly>
+        <div v-if="candidatePosition" style="height: 360px">
+          <LMap
+            :zoom="17"
+            :center="candidatePosition"
+            :use-global-leaflet="false"
+            :options="{
+              scrollWheelZoom: false,
+              zoomControl: true,
+              attributionControl: true,
+            }"
+          >
+            <LTileLayer
+              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+              attribution="&copy; OpenStreetMap contributors &copy; CARTO"
+              layer-type="base"
+              name="CARTO Voyager"
+            />
+            <LMarker
+              :lat-lng="candidatePosition"
+              draggable
+              @moveend="handleMarkerMove"
+            >
+              <LIcon
+                :icon-url="markerIconUrl"
+                :icon-size="[42, 42]"
+                :icon-anchor="[21, 42]"
+              />
+              <LTooltip
+                :options="{
+                  permanent: true,
+                  direction: 'top',
+                  offset: [0, -38],
+                  opacity: 1,
+                }"
+              >
+                {{ markerLabel }}
+              </LTooltip>
+            </LMarker>
+          </LMap>
+        </div>
+
+        <template #fallback>
+          <q-skeleton height="360px" square />
+        </template>
+      </ClientOnly>
+
+      <q-card-section
+        v-if="geocodingResult?.formattedAddress"
+        class="text-caption text-grey-7"
+      >
+        {{ geocodingResult.formattedAddress }}
+      </q-card-section>
+
+      <q-separator />
+
+      <q-card-actions align="right" class="q-pa-md">
+        <q-btn
+          label="Cancelar"
+          flat
+          no-caps
+          color="primary"
+          padding="sm lg"
+          dense
+          @click="isMapDialogOpen = false"
+        />
+        <q-btn
+          label="Confirmar localização"
+          padding="sm lg"
+          dense
+          unelevated
+          no-caps
+          color="primary"
+          @click="confirmLocation"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">
@@ -131,6 +286,30 @@ type ViaCepResponse = {
   erro?: boolean;
 };
 
+type GeocodingResult = {
+  latitude: number;
+  longitude: number;
+  formattedAddress: string | null;
+  exact: boolean;
+  confidence: number | null;
+  buildingConfidence: number | null;
+  matchType: string | null;
+  resultType: string | null;
+};
+
+type GeocodingResponse = {
+  location: GeocodingResult;
+};
+
+type MarkerMoveEvent = {
+  target: {
+    getLatLng: () => {
+      lat: number;
+      lng: number;
+    };
+  };
+};
+
 const emit = defineEmits<{
   next: [];
   previous: [];
@@ -142,29 +321,195 @@ const notHaveNumber = defineModel<boolean>("notHaveNumber", {
   required: true,
 });
 const numberAddressRef = ref<FocusableInput | null>(null);
+const $q = useQuasar();
+const isLoadingZipCode = ref(false);
+const isGeocoding = ref(false);
+const geocodingResult = ref<GeocodingResult | null>(null);
+const candidatePosition = ref<[number, number] | null>(null);
+const locationConfirmed = ref(false);
+const isMapDialogOpen = ref(false);
+const locationError = ref("");
+const markerIconUrl = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+    <path
+      fill="#0E0B16"
+      stroke="#FFFFFF"
+      stroke-width="2"
+      d="M24 2C15.16 2 8 9.16 8 18c0 12 16 28 16 28s16-16 16-28C40 9.16 32.84 2 24 2z"
+    />
+    <circle cx="24" cy="18" r="7" fill="#F59E0B" />
+    <circle cx="24" cy="18" r="3" fill="#0E0B16" />
+  </svg>
+`)}`;
+
+const markerLabel = computed(() => {
+  return (
+    [address.value.street, address.value.number].filter(Boolean).join(", ") ||
+    "Seu negócio"
+  );
+});
+
+const invalidateLocation = () => {
+  geocodingResult.value = null;
+  candidatePosition.value = null;
+  locationConfirmed.value = false;
+  isMapDialogOpen.value = false;
+  locationError.value = "";
+  address.value.latitude = 0;
+  address.value.longitude = 0;
+};
 
 const getAddressByZipCode = async (zipCode: string) => {
   const sanitizedZipCode = zipCode.replace(/\D/g, "");
   if (sanitizedZipCode.length !== 8) return;
 
-  const response = await fetch(
-    `https://viacep.com.br/ws/${sanitizedZipCode}/json/`,
-  );
-  const data = (await response.json()) as ViaCepResponse;
-  if (data.erro) return;
+  isLoadingZipCode.value = true;
+  locationError.value = "";
 
-  address.value.street = data.logradouro ?? "";
-  address.value.neighborhood = data.bairro ?? "";
-  address.value.city = data.localidade ?? "";
-  address.value.state = data.uf ?? "";
-  address.value.country = "Brasil";
-  address.value.zipCode = sanitizedZipCode;
-  numberAddressRef.value?.focus();
+  try {
+    const response = await fetch(
+      `https://viacep.com.br/ws/${sanitizedZipCode}/json/`,
+    );
+    if (!response.ok) throw new Error("Falha ao consultar o CEP");
+
+    const data = (await response.json()) as ViaCepResponse;
+    if (data.erro) throw new Error("CEP não encontrado");
+
+    address.value.street = data.logradouro ?? "";
+    address.value.neighborhood = data.bairro ?? "";
+    address.value.city = data.localidade ?? "";
+    address.value.state = data.uf ?? "";
+    address.value.country = "Brasil";
+    address.value.zipCode = sanitizedZipCode;
+    numberAddressRef.value?.focus();
+  } catch (error) {
+    $q.notify({
+      type: "negative",
+      message: error instanceof Error ? error.message : "Não foi possível consultar o CEP",
+    });
+  } finally {
+    isLoadingZipCode.value = false;
+  }
 };
+
+const getApiErrorMessage = (error: unknown) => {
+  const apiError = error as {
+    data?: { statusMessage?: string; message?: string };
+    statusMessage?: string;
+    message?: string;
+  };
+
+  return (
+    apiError.data?.statusMessage ??
+    apiError.data?.message ??
+    apiError.statusMessage ??
+    apiError.message ??
+    "Não foi possível localizar o endereço"
+  );
+};
+
+const geocodeAddress = async () => {
+  if (
+    !address.value.street.trim() ||
+    !address.value.city.trim() ||
+    !address.value.state.trim() ||
+    !address.value.zipCode.trim() ||
+    (!notHaveNumber.value && !address.value.number.trim())
+  ) {
+    return;
+  }
+
+  isGeocoding.value = true;
+  locationError.value = "";
+  locationConfirmed.value = false;
+
+  try {
+    const response = await $fetch<GeocodingResponse>(
+      "/api/geocoding/address",
+      {
+        method: "POST",
+        body: {
+          street: address.value.street,
+          number: notHaveNumber.value ? "" : address.value.number,
+          neighborhood: address.value.neighborhood,
+          city: address.value.city,
+          state: address.value.state,
+          zipCode: address.value.zipCode,
+          country: address.value.country,
+        },
+      },
+    );
+
+    geocodingResult.value = response.location;
+    candidatePosition.value = [
+      response.location.latitude,
+      response.location.longitude,
+    ];
+    isMapDialogOpen.value = true;
+  } catch (error) {
+    geocodingResult.value = null;
+    candidatePosition.value = null;
+    locationError.value = getApiErrorMessage(error);
+  } finally {
+    isGeocoding.value = false;
+  }
+};
+
+const handleMarkerMove = (event: MarkerMoveEvent) => {
+  const { lat, lng } = event.target.getLatLng();
+  candidatePosition.value = [lat, lng];
+  locationConfirmed.value = false;
+};
+
+const confirmLocation = () => {
+  if (!candidatePosition.value) return;
+
+  address.value.latitude = candidatePosition.value[0];
+  address.value.longitude = candidatePosition.value[1];
+  locationConfirmed.value = true;
+  isMapDialogOpen.value = false;
+  locationError.value = "";
+};
+
+const handleNoNumberChange = (value: boolean) => {
+  if (!value) {
+    invalidateLocation();
+    return;
+  }
+
+  address.value.number = "";
+  nextTick(() => {
+    void geocodeAddress();
+  });
+};
+
+watch(
+  () => [
+    address.value.street,
+    address.value.number,
+    address.value.neighborhood,
+    address.value.city,
+    address.value.state,
+    address.value.zipCode,
+  ],
+  invalidateLocation,
+);
 
 const handleSubmit = async () => {
   const isValid = await formRef.value?.validate();
   if (!isValid) return;
+
+  if (!candidatePosition.value) {
+    await geocodeAddress();
+  }
+
+  if (!candidatePosition.value) return;
+
+  if (!locationConfirmed.value) {
+    isMapDialogOpen.value = true;
+    locationError.value = "";
+    return;
+  }
 
   emit("next");
 };

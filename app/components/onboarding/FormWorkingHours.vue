@@ -48,7 +48,7 @@
             </div>
           </q-item-label>
           <q-item-label v-if="hasBreak(workingHour)" caption>
-            Pausa: {{ minutesToTime(workingHour.breakStartMinutes) }} às
+            Intervalo: {{ minutesToTime(workingHour.breakStartMinutes) }} às
             {{ minutesToTime(workingHour.breakEndMinutes) }}
           </q-item-label>
         </q-item-section>
@@ -136,7 +136,7 @@
             <q-card-section class="q-gutter-y-md">
               <q-item dense class="q-px-none">
                 <q-item-section>
-                  <q-item-label>Pausa</q-item-label>
+                  <q-item-label>Intervalo</q-item-label>
                   <q-item-label caption lines="2"
                     >Configure intervalo, almoço ou descanso.</q-item-label
                   >
@@ -214,7 +214,7 @@
                 v-if="hasBreak(editingWorkingHour)"
                 class="text-caption text-grey-7"
               >
-                Pausa:
+                Intervalo:
                 {{ minutesToTime(editingWorkingHour.breakStartMinutes) }} às
                 {{ minutesToTime(editingWorkingHour.breakEndMinutes) }}
               </div>
@@ -387,14 +387,14 @@ const validateWorkingHour = (workingHour: OnboardingWorkingHour) => {
   if (breakStartMinutes === null || breakEndMinutes === null) return "";
 
   if (breakStartMinutes >= breakEndMinutes) {
-    return "O início da pausa precisa ser antes do fim da pausa.";
+    return "O início do intervalo precisa ser antes do fim do intervalo.";
   }
 
   if (
     breakStartMinutes <= workingHour.startMinutes ||
     breakEndMinutes >= workingHour.endMinutes
   ) {
-    return "A pausa precisa ficar dentro do horário de funcionamento.";
+    return "O intervalo precisa ficar dentro do horário de funcionamento.";
   }
 
   return "";

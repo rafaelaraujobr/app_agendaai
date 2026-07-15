@@ -26,12 +26,16 @@ export default defineNuxtConfig({
     "nuxt-quasar-ui",
     "nuxt-auth-utils",
     "nuxt-nodemailer",
+    "@nuxtjs/leaflet",
   ],
   runtimeConfig: {
     cloudinary: {
       cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
       apiKey: process.env.CLOUDINARY_API_KEY || "",
       apiSecret: process.env.CLOUDINARY_API_SECRET || "",
+    },
+    geoapify: {
+      apiKey: process.env.GEOAPIFY_API_KEY || "",
     },
     public: {
       rootDomain: process.env.NUXT_PUBLIC_ROOT_DOMAIN || "",

@@ -20,8 +20,7 @@
         dropdown-icon="mdi-chevron-down"
         dense
         :rules="[
-          (val) =>
-            (val && val.length > 0) || 'Tipo de negócio é obrigatório',
+          (val) => (val && val.length > 0) || 'Tipo de negócio é obrigatório',
         ]"
       />
 
@@ -39,7 +38,9 @@
         ]"
       />
 
-      <label class="text-weight-medium text-subtitle2 q-mb-xs"> Whatsapp </label>
+      <label class="text-weight-medium text-subtitle2 q-mb-xs">
+        Whatsapp
+      </label>
       <q-input
         v-model="businessPhone"
         outlined
@@ -106,6 +107,16 @@
 
     <template #actions>
       <q-btn
+        label="Voltar"
+        unelevated
+        no-caps
+        dense
+        padding="sm lg"
+        color="primary"
+        flat
+        @click="$emit('previous')"
+      />
+      <q-btn
         label="Avançar"
         unelevated
         no-caps
@@ -134,6 +145,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   next: [];
+  previous: [];
 }>();
 
 const formRef = ref<QForm | null>(null);

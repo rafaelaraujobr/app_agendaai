@@ -11,7 +11,7 @@
         </ClientOnly>
       </q-card>
 
-      <q-card-section class="col-12 col-sm-6">
+      <q-card-section class="col-12 col-sm-6 q-px-none">
         <q-card flat class="full-height column">
           <q-card-section>
             <div class="text-h6">{{ title }}</div>

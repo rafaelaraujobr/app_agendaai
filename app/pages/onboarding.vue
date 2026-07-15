@@ -8,7 +8,11 @@
       flat
       animated
     >
-      <q-step :name="1" title="business-data" :done="step > 1">
+      <q-step :name="1" title="presentation" :done="step > 1">
+        <OnboardingPresentation @next="goToNextStep" />
+      </q-step>
+
+      <q-step :name="2" title="business-data" :done="step > 2">
         <FormBusiness
           v-model:business-name="businessName"
           v-model:business-phone="businessPhone"
@@ -18,11 +22,12 @@
           :business-types="businessTypes"
           :loading-business-types="isLoadingBusinessTypes"
           :check-slug-availability="checkSlugAvailability"
+          @previous="goToPreviousStep"
           @next="goToNextStep"
         />
       </q-step>
 
-      <q-step :name="2" title="business-images" :done="step > 2">
+      <q-step :name="3" title="business-images" :done="step > 3">
         <FormImages
           v-model:logo-file="logoFile"
           @previous="goToPreviousStep"
@@ -41,7 +46,7 @@
         />
       </q-step> -->
 
-      <q-step :name="3" title="business-channels" :done="step > 3">
+      <q-step :name="4" title="business-channels" :done="step > 4">
         <FormChannels
           v-model:channels="channelSelected"
           :channel-options="channelOptions"
@@ -50,7 +55,7 @@
         />
       </q-step>
 
-      <q-step :name="4" title="business-address" :done="step > 4">
+      <q-step :name="5" title="business-address" :done="step > 5">
         <FormAddress
           v-model:address="address"
           v-model:not-have-number="notHaveNumber"
@@ -59,7 +64,7 @@
         />
       </q-step>
 
-      <q-step :name="5" title="business-working-hours" :done="step > 5">
+      <q-step :name="6" title="business-working-hours" :done="step > 6">
         <FormWorkingHours
           v-model:working-hours="workingHours"
           @previous="goToPreviousStep"
@@ -67,9 +72,10 @@
         />
       </q-step>
 
-      <q-step :name="6" title="business-review" :done="step > 6">
+      <q-step :name="7" title="business-review" :done="step > 7">
         <FormReview
           :payload="createBusinessPayload"
+          :logo-file="logoFile"
           :loading="isCreating"
           @previous="goToPreviousStep"
           @submit="handleCreateBusiness"
@@ -88,6 +94,7 @@ import FormImages from "~/components/onboarding/FormImages.vue";
 // import FormLayout from "~/components/onboarding/FormLayout.vue";
 import FormReview from "~/components/onboarding/FormReview.vue";
 import FormWorkingHours from "~/components/onboarding/FormWorkingHours.vue";
+import OnboardingPresentation from "~/components/onboarding/OnboardingPresentation.vue";
 
 definePageMeta({
   layout: "auth",
