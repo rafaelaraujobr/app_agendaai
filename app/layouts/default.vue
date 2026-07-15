@@ -7,7 +7,7 @@
           <q-img
             :src="logoImage"
             alt="Logo do sistema"
-            style="height: 40px"
+            style="height: 30px"
             fit="contain"
           />
         </q-toolbar-title>
@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import logoImage from "~/assets/images/logo.png";
+import logoImage from "~/assets/images/logo.svg";
 const { logout, user } = useAuth();
 
 const drawer = ref(false);
