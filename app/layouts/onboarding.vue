@@ -56,6 +56,7 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
+      <pre>{{ user }}</pre>
       <slot />
     </q-page-container>
   </q-layout>

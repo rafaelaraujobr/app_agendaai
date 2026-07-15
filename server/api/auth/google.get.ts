@@ -12,6 +12,7 @@ export default defineOAuthGoogleEventHandler({
     });
     const appUser = await authService.loginWithGoogle(payload);
 
+    await clearUserSession(event);
     await setUserSession(event, {
       user: {
         id: appUser.id,
@@ -20,6 +21,7 @@ export default defineOAuthGoogleEventHandler({
         email: appUser.email,
         avatarUrl: appUser.avatarUrl ?? "",
         preferences: appUser.preferences ?? {},
+        business: appUser.business ?? {},
       },
       secure: {
         userId: appUser.id,

@@ -34,6 +34,18 @@
                 </div>
               </template>
             </q-btn>
+
+            <q-btn
+              no-caps
+              unelevated
+              dense
+              label="Continuar com apple"
+              icon="mdi-apple"
+              padding="sm md"
+              disabled
+              class="bg-white full-width border-xs-grey-3 text-primary"
+              @click="handleGoogleLogin"
+            />
           </div>
           <div class="row items-center q-mt-md">
             <div class="col-5"><q-separator /></div>

@@ -82,6 +82,7 @@ export const authService = {
         email: userByGoogleId.email,
         avatarUrl: userByGoogleId.avatarUrl,
         preferences: userByGoogleId.preferences,
+        business: userByGoogleId.businessMembers[0]?.business ?? null,
       };
     }
 
@@ -117,6 +118,7 @@ export const authService = {
         email: updatedUser.email,
         avatarUrl: updatedUser.avatarUrl,
         preferences: updatedUser.preferences,
+        business: updatedUser.businessMembers[0]?.business ?? null,
       };
     }
 
@@ -145,6 +147,7 @@ export const authService = {
       email: createdUser.email,
       avatarUrl: createdUser.avatarUrl,
       preferences: createdUser.preferences,
+      business: createdUser.businessMembers[0]?.business ?? null,
     };
   },
 };

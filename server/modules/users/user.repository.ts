@@ -7,7 +7,15 @@ import type {
 } from "~~/prisma/generated/models/User";
 
 const userWithRelations = {
-  preferences: true,
+  preferences: {
+    select: {
+      id: true,
+      theme: true,
+      currency: true,
+      timezone: true,
+      language: true,
+    },
+  },
   businessMembers: {
     take: 1,
     orderBy: {
