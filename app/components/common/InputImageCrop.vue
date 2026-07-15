@@ -4,9 +4,9 @@
       <q-card-section>
         <q-img
           :src="croppedPreviewUrl"
-          class="cursor-pointer rounded-borders bg-grey-2"
+          class="preview-img cursor-pointer rounded-borders bg-grey-2"
           fit="contain"
-          style="width: 100%; height: 100%"
+          style="width: 100%"
           @click="dialogPreview = true"
         >
           <div class="preview-overlay absolute-full flex flex-center">
@@ -435,7 +435,7 @@ const handleReCrop = () => {
   min-height: 200px
 
 .preview-img
-  max-height: 100px
+  max-height: 200px
 
 .preview-overlay
   opacity: 0

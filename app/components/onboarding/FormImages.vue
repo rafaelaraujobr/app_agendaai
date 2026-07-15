@@ -9,6 +9,9 @@
         <label class="text-weight-medium text-subtitle2 q-mb-xs">
           Logotipo
         </label>
+        <div class="text-caption text-grey-7">
+          Prefira no formato png ou svg.
+        </div>
         <InputImageCrop v-model="logoFile" />
       </div>
 
