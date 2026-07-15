@@ -7,15 +7,14 @@
     <div class="column q-gutter-md">
       <q-card flat bordered class="rounded-borders overflow-hidden">
         <q-toolbar class="bg-primary text-white">
-          <q-img
-            v-if="logoPreviewUrl"
-            :src="logoPreviewUrl"
-            :alt="`Logo de ${payload.business.name}`"
-            :ratio="3"
-            fit="contain"
-            class="col-4"
-          />
-
+          <q-toolbar-title v-if="logoPreviewUrl">
+            <q-img
+              :src="logoPreviewUrl"
+              :alt="`Logo de ${payload.business.name}`"
+              fit="contain"
+              style="max-height: 40px; max-width: 120px"
+            />
+          </q-toolbar-title>
           <q-toolbar-title v-else class="text-subtitle1 text-weight-bold">
             {{ payload.business.name || "Seu negócio" }}
           </q-toolbar-title>
@@ -67,11 +66,6 @@
                 name="CARTO Positron"
               />
               <LMarker v-if="hasCoordinates" :lat-lng="mapCenter">
-                <LIcon
-                  :icon-url="markerIconUrl"
-                  :icon-size="[42, 42]"
-                  :icon-anchor="[21, 42]"
-                />
                 <LTooltip
                   :options="{
                     permanent: true,
@@ -175,19 +169,6 @@ const channelLabels: Record<BusinessChannelType, string> = {
   FACEBOOK: "Facebook",
 };
 
-const markerIconUrl = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-    <path
-      fill="#0E0B16"
-      stroke="#FFFFFF"
-      stroke-width="2"
-      d="M24 2C15.16 2 8 9.16 8 18c0 12 16 28 16 28s16-16 16-28C40 9.16 32.84 2 24 2z"
-    />
-    <circle cx="24" cy="18" r="7" fill="#F59E0B" />
-    <circle cx="24" cy="18" r="3" fill="#0E0B16" />
-  </svg>
-`)}`;
-
 const markerLabel = computed(() => {
   const address = props.payload.businessAddress;
   return [address.address, address.number].filter(Boolean).join(", ");
@@ -258,3 +239,9 @@ const formattedAddress = computed(() => {
 
 const payloadPreview = computed(() => JSON.stringify(props.payload, null, 2));
 </script>
+
+<style scoped lang="sass">
+:deep(.q-img__image)
+ width: auto !important
+</style>
+s

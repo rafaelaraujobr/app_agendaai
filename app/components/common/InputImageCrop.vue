@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mb-lg">
+  <div class="q-mb-sm">
     <q-card v-if="croppedPreviewUrl" flat class="preview-card" bordered>
       <q-card-section>
         <q-img

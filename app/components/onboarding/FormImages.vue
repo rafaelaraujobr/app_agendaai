@@ -1,7 +1,7 @@
 <template>
   <OnboardingStepCard
-    title="Imagens de divulgação"
-    subtitle="Imagens que serão usadas para divulgar seu negócio."
+    title="Logo do negócio"
+    subtitle="Adicione uma imagem para representar sua marca."
     :animation-data="ImageAnimation"
   >
     <q-form ref="formRef" @submit.prevent="handleSubmit">
@@ -9,10 +9,10 @@
         <label class="text-weight-medium text-subtitle2 q-mb-xs">
           Logotipo
         </label>
-        <div class="text-caption text-grey-7">
-          Prefira no formato png ou svg.
-        </div>
         <InputImageCrop v-model="logoFile" />
+        <div class="text-caption text-grey-7">
+          Prefira PNG ou SVG com fundo transparente..
+        </div>
       </div>
 
       <q-banner v-if="logoError" rounded class="bg-red-1 text-negative">

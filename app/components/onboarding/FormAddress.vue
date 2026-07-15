@@ -312,13 +312,30 @@ const address = defineModel<OnboardingAddress>("address", { required: true });
 const notHaveNumber = defineModel<boolean>("notHaveNumber", {
   required: true,
 });
+const initialPosition: [number, number] | null =
+  address.value.latitude !== 0 && address.value.longitude !== 0
+    ? [address.value.latitude, address.value.longitude]
+    : null;
 const numberAddressRef = ref<FocusableInput | null>(null);
 const $q = useQuasar();
 const isLoadingZipCode = ref(false);
 const isGeocoding = ref(false);
-const geocodingResult = ref<GeocodingResult | null>(null);
-const candidatePosition = ref<[number, number] | null>(null);
-const locationConfirmed = ref(false);
+const geocodingResult = ref<GeocodingResult | null>(
+  initialPosition
+    ? {
+        latitude: initialPosition[0],
+        longitude: initialPosition[1],
+        formattedAddress: null,
+        exact: true,
+        confidence: null,
+        buildingConfidence: null,
+        matchType: null,
+        resultType: null,
+      }
+    : null,
+);
+const candidatePosition = ref<[number, number] | null>(initialPosition);
+const locationConfirmed = ref(Boolean(initialPosition));
 const isMapDialogOpen = ref(false);
 const locationError = ref("");
 const markerLabel = computed(() => {
