@@ -7,13 +7,13 @@
           <q-img
             :src="logoImage"
             alt="Logo do sistema"
-            style="height: 40px"
+            style="height: 50px"
             fit="contain"
           />
         </q-toolbar-title>
         <q-item clickable v-ripple>
           <q-item-section>
-            <q-avatar v-if="user?.avatarUrl" size="30px">
+            <q-avatar v-if="user?.avatarUrl" size="40px">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
             </q-avatar>
             <q-avatar
