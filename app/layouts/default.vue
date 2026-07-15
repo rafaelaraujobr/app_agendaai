@@ -67,7 +67,6 @@
       :mini="miniState"
       @mouseenter="miniState = false"
       @mouseleave="miniState = true"
-      :mini-width="70"
       :width="250"
       :breakpoint="500"
       bordered
@@ -76,10 +75,34 @@
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
         <q-list>
           <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="home" />
+            <q-item-section side>
+              <q-icon name="mdi-view-dashboard-outline" />
             </q-item-section>
-            <q-item-section> Inicio </q-item-section>
+            <q-item-section> Dashboard </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple>
+            <q-item-section side>
+              <q-icon name="mdi-calendar-outline" />
+            </q-item-section>
+            <q-item-section> Agendamentos </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple>
+            <q-item-section side>
+              <q-icon name="mdi-briefcase-outline" />
+            </q-item-section>
+            <q-item-section> Serviços </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple>
+            <q-item-section side>
+              <q-icon name="mdi-account-group-outline" />
+            </q-item-section>
+            <q-item-section> Clientes </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple>
+            <q-item-section side>
+              <q-icon name="mdi-cog-outline" />
+            </q-item-section>
+            <q-item-section> Configurações </q-item-section>
           </q-item>
         </q-list>
       </q-scroll-area>
@@ -92,7 +115,7 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import logoImage from "~/assets/images/logo.svg";
+import logoImage from "~/assets/images/logo-white.svg";
 const { logout, user } = useAuth();
 
 const drawer = ref(false);

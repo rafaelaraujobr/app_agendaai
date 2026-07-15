@@ -1,10 +1,10 @@
 <template>
-  <q-page>
+  <q-page padding>
     <div class="row q-gutter-x-md">
       <div class="col-12">
         <p>Subdomain: {{ subdomain }}</p>
       </div>
-      <q-input
+      <!-- <q-input
         v-model="text"
         color="primary"
         bg-color="grey-1"
@@ -18,7 +18,7 @@
         <template #append>
           <q-icon name="mdi-ab-testing" />
         </template>
-      </q-input>
+      </q-input> -->
     </div>
   </q-page>
 </template>

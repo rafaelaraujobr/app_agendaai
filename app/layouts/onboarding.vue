@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import logoImage from "~/assets/images/logo.svg";
+import logoImage from "~/assets/images/logo-white.svg";
 const { logout, user } = useAuth();
 
 const handleLogout = async () => {
