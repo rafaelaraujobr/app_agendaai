@@ -32,11 +32,6 @@ definePageMeta({
 const subdomain = useState<string | null>("subdomain");
 const { user } = useUserSession();
 const text = ref<string>("");
-
-onMounted(() => {
-  const businessSlug = user.value?.business?.slug;
-  if (!businessSlug) { navigateTo('/onboarding'); }
-});
 </script>
 
 <style lang="sass" scoped></style>
