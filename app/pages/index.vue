@@ -1,9 +1,6 @@
 <template>
   <q-page padding>
     <div class="row q-gutter-x-md">
-      <div class="col-12">
-        <p>Subdomain: {{ subdomain }}</p>
-      </div>
       <!-- <q-input
         v-model="text"
         color="primary"
