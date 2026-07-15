@@ -7,7 +7,7 @@
           <q-img
             :src="logoImage"
             alt="Logo do sistema"
-            style="height: 30px"
+            style="height: 40px"
             fit="contain"
           />
         </q-toolbar-title>

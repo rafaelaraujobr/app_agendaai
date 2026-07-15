@@ -3,7 +3,7 @@
     <q-header reveal :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
       <q-toolbar>
         <q-toolbar-title>
-          <q-img :src="logoImage" alt="Logo do sistema" style="height: 30px;" fit="contain" />
+          <q-img :src="logoImage" alt="Logo do sistema" style="height: 40px;" fit="contain" />
         </q-toolbar-title>
         <q-item clickable v-ripple>
           <q-item-section>
