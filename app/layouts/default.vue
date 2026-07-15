@@ -1,59 +1,66 @@
 <template>
   <q-layout view="hHh Lpr lff">
     <q-header reveal :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
-      <q-toolbar>
-        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-        <q-toolbar-title>
-          agendaih
-        </q-toolbar-title>
-        <q-item clickable v-ripple>
-          <q-item-section>
-            <q-avatar v-if="user?.avatarUrl" size="40px">
+      <q-toolbar class="q-px-sm">
+        <q-btn
+          flat
+          @click="drawer = !drawer"
+          dense
+          icon="menu"
+          padding="sm md"
+        />
+        <q-toolbar-title> agendaih </q-toolbar-title>
+        <div class="q-gutter-x-sm">
+          <q-btn
+            color="primary"
+            icon="mdi-bell-outline"
+            dense
+            padding="sm md"
+          />
+          <q-btn color="primary" dense padding="sm md">
+            <q-avatar v-if="user?.avatarUrl" size="30px">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
             </q-avatar>
-            <q-avatar
-              v-else
-              color="primary"
-              text-color="white"
-              icon="person"
-              size="35px"
-              font-size="25px"
-            />
-          </q-item-section>
-          <q-menu>
-            <q-list style="min-width: 200px">
-              <q-item clickable>
-                <q-item-section side>
-                  <q-avatar v-if="user?.avatarUrl" size="30px">
-                    <img :src="user?.avatarUrl" alt="Avatar do usuário" />
-                  </q-avatar>
-                  <q-avatar
-                    v-else
-                    color="primary"
-                    text-color="white"
-                    icon="person"
-                    size="35px"
-                    font-size="25px"
-                  />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label>
-                    {{ user?.firstName }} {{ user?.lastName }}
-                  </q-item-label>
-                  <q-item-label caption>
-                    {{ user?.email }}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup @click="handleLogout">
-                <q-item-section side>
-                  <q-icon name="logout" />
-                </q-item-section>
-                <q-item-section>Sair</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-item>
+            <div v-else>
+              {{ user?.firstName?.charAt(0) }}{{ user?.lastName?.charAt(0) }}
+            </div>
+            <q-menu>
+              <q-list style="min-width: 200px">
+                <q-item clickable>
+                  <q-item-section side>
+                    <q-avatar v-if="user?.avatarUrl" size="40px">
+                      <img :src="user?.avatarUrl" alt="Avatar do usuário" />
+                    </q-avatar>
+                    <q-avatar
+                      v-else
+                      color="primary"
+                      text-color="white"
+                      font-size="20px"
+                      size="40px"
+                    >
+                      {{ user?.firstName?.charAt(0)
+                      }}{{ user?.lastName?.charAt(0) }}
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>
+                      {{ user?.firstName }} {{ user?.lastName }}
+                    </q-item-label>
+                    <q-item-label caption>
+                      {{ user?.email }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="handleLogout">
+                  <q-item-section side>
+                    <q-icon name="logout" />
+                  </q-item-section>
+                  <q-item-section>Sair</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
       </q-toolbar>
     </q-header>
     <q-drawer
@@ -62,10 +69,11 @@
       :mini="miniState"
       @mouseenter="miniState = false"
       @mouseleave="miniState = true"
+      :mini-width="70"
       :width="250"
       :breakpoint="500"
       bordered
-      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-1'"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
         <q-list>
