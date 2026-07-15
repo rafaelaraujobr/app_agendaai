@@ -4,12 +4,7 @@
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>
-          <q-img
-            :src="logoImage"
-            alt="Logo do sistema"
-            style="height: 50px"
-            fit="contain"
-          />
+          agendaih
         </q-toolbar-title>
         <q-item clickable v-ripple>
           <q-item-section>
@@ -115,7 +110,6 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import logoImage from "~/assets/images/logo-white.svg";
 const { logout, user } = useAuth();
 
 const drawer = ref(false);
