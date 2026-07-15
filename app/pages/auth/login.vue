@@ -117,11 +117,9 @@
               to="/auth/register"
               class="text-primary text-weight-medium text-subtitle2"
               style="text-decoration: none"
-              >Criar conta</router-link
             >
-          </div>
-          <div class="row items-center justify-center q-mt-md">
-            <p>Subdomain: {{ subdomain }}</p>
+              Criar conta
+            </router-link>
           </div>
         </q-card-section>
       </q-form>
