@@ -4,9 +4,6 @@
       <div class="col-12">
         <p>Subdomain: {{ subdomain }}</p>
       </div>
-      <div class="col-12">
-        <pre>{{ user }}</pre>
-      </div>
       <q-input
         v-model="text"
         color="primary"
