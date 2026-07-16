@@ -2,12 +2,7 @@
   <q-page class="institutional-page">
     <header class="institutional-header">
       <q-toolbar class="wrapper header-toolbar q-px-md">
-        <q-img
-          :src="logo"
-          alt="AgendaAI"
-          fit="contain"
-          class="institutional-logo"
-        />
+        <q-toolbar-title class="text-weight-bold"> agendaih </q-toolbar-title>
         <q-space />
         <q-btn
           label="Conheça os recursos"
@@ -18,8 +13,9 @@
         />
         <q-btn
           label="Acessar plataforma"
-          icon-right="mdi-arrow-right"
           color="primary"
+          dense
+          padding="sm md"
           no-caps
           unelevated
           :href="adminUrl"
@@ -51,7 +47,8 @@
                 label="Começar agora"
                 icon-right="mdi-arrow-right"
                 color="primary"
-                size="lg"
+                dense
+                padding="sm md"
                 no-caps
                 unelevated
                 :href="adminUrl"
@@ -60,7 +57,8 @@
                 label="Ver como funciona"
                 href="#como-funciona"
                 color="primary"
-                size="lg"
+                dense
+                padding="sm md"
                 no-caps
                 outline
               />
@@ -70,9 +68,8 @@
           <div class="hero-preview">
             <q-card flat bordered class="preview-card">
               <q-toolbar class="bg-primary text-white">
-                <q-avatar color="white" text-color="primary" icon="mdi-store" />
                 <q-toolbar-title class="text-subtitle1 text-weight-bold">
-                  Seu negócio
+                  Seu logo
                 </q-toolbar-title>
                 <q-btn icon="mdi-instagram" flat round dense />
                 <q-btn icon="mdi-whatsapp" flat round dense />
@@ -125,8 +122,8 @@
               Tudo para simplificar sua rotina
             </h2>
             <p class="text-body1 text-grey-7">
-              Ferramentas integradas para apresentar, organizar e desenvolver
-              o seu negócio.
+              Ferramentas integradas para apresentar, organizar e desenvolver o
+              seu negócio.
             </p>
           </div>
 
@@ -205,10 +202,10 @@
             </p>
             <q-btn
               label="Acessar a plataforma"
-              icon-right="mdi-arrow-right"
               color="white"
               text-color="primary"
-              size="lg"
+              dense
+              padding="sm md"
               no-caps
               unelevated
               :href="adminUrl"
@@ -223,12 +220,8 @@
       <div class="wrapper q-px-md">
         <q-separator />
         <div class="row items-center justify-between q-py-lg q-gutter-md">
-          <q-img
-            :src="logo"
-            alt="AgendaAI"
-            fit="contain"
-            class="footer-logo"
-          />
+          <!-- <q-img :src="logo" alt="AgendaAI" fit="contain" class="footer-logo" /> -->
+          <q-toolbar-title class="text-weight-bold"> agendaih </q-toolbar-title>
           <div class="text-caption text-grey-7">
             © {{ currentYear }} AgendaAI. Todos os direitos reservados.
           </div>
@@ -239,7 +232,7 @@
 </template>
 
 <script setup lang="ts">
-import logo from "~/assets/images/logo.svg";
+// import logo from "~/assets/images/logo.svg";
 
 const config = useRuntimeConfig();
 const requestUrl = useRequestURL();
