@@ -13,10 +13,20 @@ export default defineNuxtRouteMiddleware(() => {
 
   if (host.endsWith(".localhost")) subdomain = host.replace(".localhost", "");
 
-  if (subdomain && reservedSubdomains.includes(subdomain)) subdomain = null;
+  const accessContext = subdomain
+    ? reservedSubdomains.includes(subdomain)
+      ? "admin"
+      : "showcase"
+    : "institutional";
 
   const currentSubdomain = useState<string | null>("subdomain", () => null);
-  currentSubdomain.value = subdomain;
+  currentSubdomain.value = accessContext === "showcase" ? subdomain : null;
+
+  const currentAccessContext = useState<"institutional" | "admin" | "showcase">(
+    "access-context",
+    () => "institutional",
+  );
+  currentAccessContext.value = accessContext;
 });
 
 const normalizeHostname = (value: unknown) => {

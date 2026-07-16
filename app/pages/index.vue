@@ -1,5 +1,7 @@
 <template>
-  <q-page class="showcase-page">
+  <InstitutionalHome v-if="accessContext === 'institutional'" />
+
+  <q-page v-else class="showcase-page">
     <q-inner-loading
       :showing="status === 'pending'"
       label="Carregando informações da loja..."
@@ -363,6 +365,7 @@
 </template>
 
 <script setup lang="ts">
+import InstitutionalHome from "~/components/institutional/InstitutionalHome.vue";
 import type {
   PublicBusiness,
   PublicBusinessChannelType,
@@ -372,8 +375,10 @@ import type {
 definePageMeta({
   layout: "showcase",
   middleware: () => {
-    const currentSubdomain = useState<string | null>("subdomain", () => null);
-    if (currentSubdomain.value) return;
+    const currentAccessContext = useState<
+      "institutional" | "admin" | "showcase"
+    >("access-context", () => "institutional");
+    if (currentAccessContext.value !== "admin") return;
 
     const { loggedIn } = useUserSession();
     return navigateTo(loggedIn.value ? "/dashboard" : "/auth/login", {
@@ -382,6 +387,10 @@ definePageMeta({
   },
 });
 
+const accessContext = useState<"institutional" | "admin" | "showcase">(
+  "access-context",
+  () => "institutional",
+);
 const subdomain = useState<string | null>("subdomain", () => null);
 const showcaseBusiness = useState<PublicBusiness | null>(
   "showcase-business",
@@ -392,14 +401,14 @@ const { data, error, status, refresh } =
   await useAsyncData<PublicBusinessResponse | null>(
     "public-business",
     async () => {
-      if (!subdomain.value) return null;
+      if (accessContext.value !== "showcase" || !subdomain.value) return null;
 
       return await $fetch<PublicBusinessResponse>("/api/businesses", {
         query: { slug: subdomain.value },
       });
     },
     {
-      watch: [subdomain],
+      watch: [accessContext, subdomain],
     },
   );
 
@@ -431,16 +440,26 @@ onBeforeUnmount(() => {
 
 useSeoMeta({
   title: () =>
-    business.value
+    accessContext.value === "institutional"
+      ? "AgendaAI | Gestão e agendamento online"
+      : business.value
       ? `${business.value.name} | Agendamento online`
       : "Loja não encontrada",
   description: () =>
-    business.value?.description ||
-    (business.value
-      ? `Conheça os serviços e agende seu horário com ${business.value.name}.`
-      : "Página pública para agendamento online."),
-  ogTitle: () => business.value?.name || "Agendamento online",
-  ogDescription: () => business.value?.description || "",
+    accessContext.value === "institutional"
+      ? "Crie uma página personalizada, receba agendamentos online e gerencie seu negócio em um só lugar."
+      : business.value?.description ||
+        (business.value
+          ? `Conheça os serviços e agende seu horário com ${business.value.name}.`
+          : "Página pública para agendamento online."),
+  ogTitle: () =>
+    accessContext.value === "institutional"
+      ? "AgendaAI"
+      : business.value?.name || "Agendamento online",
+  ogDescription: () =>
+    accessContext.value === "institutional"
+      ? "Gestão e agendamento online para o seu negócio."
+      : business.value?.description || "",
   ogImage: () =>
     business.value?.bannerUrl || business.value?.logoUrl || undefined,
 });
