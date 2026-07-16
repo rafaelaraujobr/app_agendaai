@@ -9,7 +9,9 @@
           icon="menu"
           padding="sm md"
         />
-        <q-toolbar-title> agendaih </q-toolbar-title>
+        <q-toolbar-title @click="navigateTo('/')" class="cursor-pointer">
+          agendaih
+        </q-toolbar-title>
         <div class="q-gutter-x-sm">
           <q-btn color="primary" icon="mdi-bell-outline" dense padding="sm" />
           <q-btn color="primary" dense padding="sm">
@@ -102,7 +104,7 @@
             </q-item-section>
             <q-item-section> Marketing </q-item-section>
             <q-item-section side>
-              <q-icon name="mdi-lock-outline" size="xs"/>
+              <q-icon name="mdi-lock-outline" size="xs" />
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple disabled>
@@ -111,7 +113,7 @@
             </q-item-section>
             <q-item-section> Financeiro </q-item-section>
             <q-item-section side>
-              <q-icon name="mdi-lock-outline" size="xs"/>
+              <q-icon name="mdi-lock-outline" size="xs" />
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple to="/settings">
