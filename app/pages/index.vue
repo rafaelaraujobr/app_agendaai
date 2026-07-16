@@ -12,22 +12,29 @@
       class="empty-state column items-center justify-center text-center q-pa-lg"
     >
       <q-icon
-        :name="error ? 'mdi-store-alert-outline' : 'mdi-store-search-outline'"
+        :name="
+          isBusinessNotFound
+            ? 'mdi-store-search-outline'
+            : 'mdi-alert-circle-outline'
+        "
         color="grey-6"
         size="80px"
       />
       <h1 class="text-h5 text-weight-bold q-mb-sm">
-        {{ error ? "Loja não encontrada" : "Endereço da loja não informado" }}
+        {{
+          isBusinessNotFound
+            ? "Loja não encontrada"
+            : "Não foi possível carregar a loja"
+        }}
       </h1>
       <p class="text-body1 text-grey-7 q-mt-none">
         {{
-          error
-            ? "Confira o endereço acessado ou tente novamente."
-            : "Acesse esta página utilizando o endereço público de uma loja."
+          isBusinessNotFound
+            ? "Não encontramos uma loja cadastrada neste endereço."
+            : "Ocorreu um erro ao carregar as informações. Tente novamente."
         }}
       </p>
       <q-btn
-        v-if="error"
         label="Tentar novamente"
         icon="mdi-refresh"
         color="primary"
@@ -364,6 +371,15 @@ import type {
 
 definePageMeta({
   layout: "showcase",
+  middleware: () => {
+    const currentSubdomain = useState<string | null>("subdomain", () => null);
+    if (currentSubdomain.value) return;
+
+    const { loggedIn } = useUserSession();
+    return navigateTo(loggedIn.value ? "/dashboard" : "/auth/login", {
+      replace: true,
+    });
+  },
 });
 
 const subdomain = useState<string | null>("subdomain", () => null);
@@ -388,6 +404,10 @@ const { data, error, status, refresh } =
   );
 
 const business = computed(() => data.value?.business ?? null);
+const isBusinessNotFound = computed(() => {
+  const requestError = error.value as { statusCode?: number } | null;
+  return requestError?.statusCode === 404;
+});
 const primaryColor = computed(
   () => business.value?.businessLayout?.primaryColor || "#1976d2",
 );
