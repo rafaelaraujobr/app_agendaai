@@ -16,11 +16,7 @@
   </q-page>
 </template>
 <script setup lang="ts">
-import {
-  GridLayout,
-  type Breakpoint,
-  type Layout,
-} from "grid-layout-plus";
+import { GridLayout, type Breakpoint, type Layout } from "grid-layout-plus";
 
 definePageMeta({
   middleware: ["auth"],
@@ -85,13 +81,15 @@ function breakpointChangedEvent(newBreakpoint: Breakpoint, newLayout: Layout) {
 </script>
 
 <style scoped lang="sass">
-.vgl-layout
-  background-color: #eee
+@use '@/assets/styles/colors.sass' as *
 
+.vgl-layout
+  background-color: #fff
 
 :deep(.vgl-item:not(.vgl-item--placeholder))
-  background-color: #ccc
-  border: 1px solid #000
+  background-color: $grey-1
+  border: 1px solid $grey-3
+  border-radius: $generic-border-radius
 
 
 :deep(.vgl-item--resizing)
@@ -100,6 +98,4 @@ function breakpointChangedEvent(newBreakpoint: Breakpoint, newLayout: Layout) {
 
 :deep(.vgl-item--static)
   background-color: #cce
-
-
 </style>
