@@ -6,7 +6,8 @@
           :business-name="business.name"
           :primary-color="primaryColor"
           :formatted-address="formattedAddress"
-          :maps-url="mapsUrl"
+          :google-maps-url="googleMapsUrl"
+          :waze-maps-url="wazeMapsUrl"
           :has-coordinates="hasCoordinates"
           :map-center="mapCenter"
         />
@@ -36,7 +37,8 @@ defineProps<{
   primaryColor: string;
   sortedWorkingHours: PublicBusiness["businessWorkingHours"];
   formattedAddress: string;
-  mapsUrl: string;
+  googleMapsUrl: string;
+  wazeMapsUrl: string;
   hasCoordinates: boolean;
   mapCenter: [number, number];
 }>();

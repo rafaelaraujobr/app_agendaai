@@ -117,10 +117,10 @@ export const usePublicBusiness = () => {
     const address = business.value?.businessAddress;
     return Boolean(
       address &&
-        address.latitude !== null &&
-        address.longitude !== null &&
-        address.latitude !== 0 &&
-        address.longitude !== 0,
+      address.latitude !== null &&
+      address.longitude !== null &&
+      address.latitude !== 0 &&
+      address.longitude !== 0,
     );
   });
 
@@ -139,11 +139,18 @@ export const usePublicBusiness = () => {
     return [street, district, city, address.zip].filter(Boolean).join(" · ");
   });
 
-  const mapsUrl = computed(() => {
+  const googleMapsUrl = computed(() => {
     const query = hasCoordinates.value
       ? mapCenter.value.join(",")
       : formattedAddress.value;
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  });
+
+  const wazeMapsUrl = computed(() => {
+    const query = hasCoordinates.value
+      ? mapCenter.value.join(",")
+      : formattedAddress.value;
+    return `https://www.waze.com/ul?q=${encodeURIComponent(query)}`;
   });
 
   return {
@@ -157,6 +164,7 @@ export const usePublicBusiness = () => {
     hasCoordinates,
     mapCenter,
     formattedAddress,
-    mapsUrl,
+    googleMapsUrl,
+    wazeMapsUrl,
   };
 };

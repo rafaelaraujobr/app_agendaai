@@ -2,26 +2,33 @@
   <q-card flat bordered class="full-height overflow-hidden rounded-borders">
     <q-card-section class="q-pa-lg">
       <div class="row items-start no-wrap q-gutter-md">
-        <q-avatar
-          icon="mdi-map-marker-outline"
-          text-color="white"
-          :style="{ backgroundColor: primaryColor }"
-        />
         <div class="col">
           <div class="text-h6 text-weight-bold">Onde estamos</div>
           <div class="text-body2 text-grey-7">{{ formattedAddress }}</div>
         </div>
         <q-btn
-          icon="mdi-open-in-new"
+          icon="mdi-google-maps"
           aria-label="Abrir endereço no mapa"
           flat
           round
           color="primary"
-          :href="mapsUrl"
+          :href="googleMapsUrl"
           target="_blank"
           rel="noopener noreferrer"
         >
           <q-tooltip>Abrir no mapa</q-tooltip>
+        </q-btn>
+        <q-btn
+          icon="mdi-waze"
+          aria-label="Abrir endereço no Waze"
+          flat
+          round
+          color="primary"
+          :href="wazeMapsUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <q-tooltip>Abrir no Google Maps</q-tooltip>
         </q-btn>
       </div>
     </q-card-section>
@@ -75,7 +82,8 @@ defineProps<{
   businessName: string;
   primaryColor: string;
   formattedAddress: string;
-  mapsUrl: string;
+  googleMapsUrl: string;
+  wazeMapsUrl: string;
   hasCoordinates: boolean;
   mapCenter: [number, number];
 }>();

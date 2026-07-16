@@ -27,7 +27,8 @@
         :primary-color="primaryColor"
         :sorted-working-hours="sortedWorkingHours"
         :formatted-address="formattedAddress"
-        :maps-url="mapsUrl"
+        :google-maps-url="googleMapsUrl"
+        :waze-maps-url="wazeMapsUrl"
         :has-coordinates="hasCoordinates"
         :map-center="mapCenter"
       />
@@ -65,7 +66,8 @@ const {
   hasCoordinates,
   mapCenter,
   formattedAddress,
-  mapsUrl,
+  googleMapsUrl,
+  wazeMapsUrl,
 } = usePublicBusiness();
 
 const { getServiceWhatsappUrl } = useShowcaseWhatsapp(business);
