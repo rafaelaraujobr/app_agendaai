@@ -35,7 +35,7 @@
               </template>
             </q-btn>
 
-            <q-btn
+            <!-- <q-btn
               no-caps
               unelevated
               dense
@@ -45,7 +45,7 @@
               disabled
               class="bg-white full-width border-xs-grey-3 text-primary"
               @click="handleGoogleLogin"
-            />
+            /> -->
           </div>
           <div class="row items-center q-mt-md">
             <div class="col-5"><q-separator /></div>
