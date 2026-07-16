@@ -89,6 +89,96 @@ export type CurrentBusiness = Prisma.BusinessGetPayload<{
   select: typeof currentBusinessSelect;
 }>;
 
+const publicBusinessSelect = {
+  id: true,
+  name: true,
+  slug: true,
+  description: true,
+  logoUrl: true,
+  bannerUrl: true,
+  phone: true,
+  businessType: {
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+    },
+  },
+  businessLayout: {
+    select: {
+      primaryColor: true,
+      secondaryColor: true,
+      theme: true,
+      settings: true,
+    },
+  },
+  businessChannels: {
+    where: {
+      status: ChannelStatus.ACTIVE,
+    },
+    select: {
+      type: true,
+      channel: true,
+    },
+    orderBy: {
+      type: "asc",
+    },
+  },
+  businessAddresses: {
+    select: {
+      address: true,
+      number: true,
+      complement: true,
+      neighborhood: true,
+      city: true,
+      state: true,
+      zip: true,
+      country: true,
+      latitude: true,
+      longitude: true,
+    },
+  },
+  businessWorkingHours: {
+    select: {
+      dayOfWeek: true,
+      startMinutes: true,
+      endMinutes: true,
+      breakStartMinutes: true,
+      breakEndMinutes: true,
+      isActive: true,
+    },
+    orderBy: {
+      dayOfWeek: "asc",
+    },
+  },
+  services: {
+    where: {
+      isActive: true,
+    },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      description: true,
+      imageUrl: true,
+      durationMinutes: true,
+      price: true,
+      position: true,
+      illustration: {
+        select: {
+          title: true,
+          imageUrl: true,
+        },
+      },
+    },
+    orderBy: [{ position: "asc" }, { name: "asc" }],
+  },
+} satisfies Prisma.BusinessSelect;
+
+export type PublicBusiness = Prisma.BusinessGetPayload<{
+  select: typeof publicBusinessSelect;
+}>;
+
 export type UpdateCurrentBusinessResult =
   | { kind: "not_found" }
   | { kind: "forbidden" }
@@ -112,6 +202,13 @@ export const businessRepository = {
     return await prisma.business.findUnique({
       where: { slug },
       select: { id: true },
+    });
+  },
+
+  findPublicBySlug: async (slug: string) => {
+    return await prisma.business.findUnique({
+      where: { slug },
+      select: publicBusinessSelect,
     });
   },
 

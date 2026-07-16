@@ -1,12 +1,13 @@
 import { z } from "zod";
-import { checkBusinessSlugSchema } from "../../modules/business/business.schema";
+import { getPublicBusinessSchema } from "../../modules/business/business.schema";
 import { businessService } from "../../modules/business/business.service";
 
 defineRouteMeta({
   openAPI: {
     tags: ["Negócios"] as string[],
-    summary: "Verificar disponibilidade do slug",
-    description: "Verifica se um slug pode ser utilizado por um novo negócio.",
+    summary: "Consultar negócio público pelo slug",
+    description:
+      "Retorna os dados públicos de um negócio, incluindo identidade visual, endereço, canais, horários e serviços.",
     parameters: [
       {
         in: "query",
@@ -22,16 +23,7 @@ defineRouteMeta({
 });
 
 export default defineEventHandler(async (event) => {
-  const session = await getUserSession(event);
-
-  if (!session.secure?.userId) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: "Autenticação necessária",
-    });
-  }
-
-  const result = checkBusinessSlugSchema.safeParse(getQuery(event));
+  const result = getPublicBusinessSchema.safeParse(getQuery(event));
 
   if (!result.success) {
     throw createError({
@@ -41,10 +33,9 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const available = await businessService.isSlugAvailable(result.data.slug);
+  const business = await businessService.getPublicBySlug(result.data.slug);
 
   return {
-    slug: result.data.slug,
-    available,
+    business,
   };
 });

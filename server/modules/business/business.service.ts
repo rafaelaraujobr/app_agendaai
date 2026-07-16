@@ -1,6 +1,7 @@
 import {
   businessRepository,
   type CurrentBusiness,
+  type PublicBusiness,
 } from "./business.repository";
 import type {
   CreateBusinessSchema,
@@ -34,6 +35,37 @@ const formatCurrentBusiness = (business: CurrentBusiness) => ({
   businessWorkingHours: business.businessWorkingHours,
 });
 
+const formatPublicBusiness = (business: PublicBusiness) => ({
+  id: business.id,
+  name: business.name,
+  slug: business.slug,
+  description: business.description,
+  logoUrl: business.logoUrl,
+  bannerUrl: business.bannerUrl,
+  phone: business.phone,
+  businessType: business.businessType,
+  businessLayout: business.businessLayout,
+  businessChannels: business.businessChannels,
+  businessAddress: business.businessAddresses
+    ? {
+        ...business.businessAddresses,
+        latitude:
+          business.businessAddresses.latitude === null
+            ? null
+            : Number(business.businessAddresses.latitude),
+        longitude:
+          business.businessAddresses.longitude === null
+            ? null
+            : Number(business.businessAddresses.longitude),
+      }
+    : null,
+  businessWorkingHours: business.businessWorkingHours,
+  services: business.services.map((service) => ({
+    ...service,
+    price: Number(service.price),
+  })),
+});
+
 export const businessService = {
   async listBusinessTypes() {
     return await businessRepository.findBusinessTypes();
@@ -42,6 +74,19 @@ export const businessService = {
   async isSlugAvailable(slug: string) {
     const business = await businessRepository.findBySlug(slug);
     return business === null;
+  },
+
+  async getPublicBySlug(slug: string) {
+    const business = await businessRepository.findPublicBySlug(slug);
+
+    if (!business) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: "Negócio não encontrado",
+      });
+    }
+
+    return formatPublicBusiness(business);
   },
 
   async create(userId: string, payload: CreateBusinessSchema) {

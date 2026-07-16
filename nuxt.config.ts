@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
     "nuxt-nodemailer",
     "@nuxtjs/leaflet",
+    "nuxt-qrcode",
   ],
   fonts: {
     defaults: {

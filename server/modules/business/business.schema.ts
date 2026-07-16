@@ -21,6 +21,10 @@ export const checkBusinessSlugSchema = z.object({
   slug: businessSlugSchema,
 });
 
+export const getPublicBusinessSchema = z.object({
+  slug: businessSlugSchema,
+});
+
 const workingHourSchema = z
   .object({
     dayOfWeek: z.enum(DayOfWeek),

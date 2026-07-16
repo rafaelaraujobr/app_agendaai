@@ -13,8 +13,24 @@
           agendaih
         </q-toolbar-title>
         <div class="q-gutter-x-sm">
-          <q-btn color="primary" icon="mdi-bell-outline" dense padding="sm" />
-          <q-btn color="primary" dense padding="sm">
+          <q-btn
+            color="primary"
+            icon="mdi-share-variant"
+            dense
+            padding="sm"
+            @click="shareViaWhatsApp"
+          >
+            <q-tooltip>Compartilhar via WhatsApp</q-tooltip>
+          </q-btn>
+          <q-btn color="primary" icon="mdi-content-copy" dense padding="sm" @click="copyLinkToClipboard">
+            <q-tooltip>Copiar link de acesso</q-tooltip>
+          </q-btn>
+          <q-btn
+            color="primary"
+            dense
+            padding="sm"
+            @click="copyLinkToClipboard"
+          >
             <q-avatar v-if="user?.avatarUrl" size="30px">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
             </q-avatar>
@@ -146,6 +162,23 @@ const handleLogout = async () => {
   } finally {
     Loading.hide();
   }
+};
+const url = computed(
+  () => `https://${user.value?.business?.slug}.roostec.com.br`,
+);
+const shareViaWhatsApp = () => {
+  const message = `Agende seu horário conosco!\n\nAcesse: ${url.value}`;
+  const whatsappUrl = `https://api.whatsapp.com/send/?text=${encodeURIComponent(message)}&type=custom_url&app_absent=0`;
+  window.open(whatsappUrl, "_blank");
+};
+const copyLinkToClipboard = () => {
+  navigator.clipboard.writeText(url.value);
+  Notify.create({
+    message: "Link copiado para a área de transferência",
+    color: "primary",
+    icon: "mdi-content-copy",
+    timeout: 2000,
+  });
 };
 </script>
 

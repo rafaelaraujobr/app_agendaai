@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { geocodeAddressSchema } from "../../modules/geocoding/geocoding.schema";
 import { geocodingService } from "../../modules/geocoding/geocoding.service";
 
@@ -25,7 +26,7 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 422,
       statusMessage: "Endereço inválido",
-      data: result.error.flatten(),
+      data: z.flattenError(result.error),
     });
   }
 

@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { updateCurrentBusinessSchema } from "../../modules/business/business.schema";
 import { businessService } from "../../modules/business/business.service";
 
@@ -44,7 +45,7 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 422,
       statusMessage: "Dados do negócio inválidos",
-      data: result.error.flatten(),
+      data: z.flattenError(result.error),
     });
   }
 
