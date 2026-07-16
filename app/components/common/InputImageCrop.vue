@@ -4,7 +4,7 @@
       <q-card-section>
         <q-img
           :src="croppedPreviewUrl"
-          class="preview-img cursor-pointer rounded-borders bg-grey-2"
+          class="preview-img cursor-pointer rounded-borders text-center bg-grey-1"
           fit="contain"
           style="width: 100%"
           @click="dialogPreview = true"

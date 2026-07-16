@@ -143,3 +143,9 @@ export const createBusinessSchema = z
   });
 
 export type CreateBusinessSchema = z.infer<typeof createBusinessSchema>;
+
+export const updateCurrentBusinessSchema = createBusinessSchema;
+
+export type UpdateCurrentBusinessSchema = z.infer<
+  typeof updateCurrentBusinessSchema
+>;

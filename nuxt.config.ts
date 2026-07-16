@@ -12,10 +12,7 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
-      include: [
-        "vue-advanced-cropper",
-        "vue3-lottie",
-      ],
+      include: ["vue-advanced-cropper", "vue3-lottie"],
     },
   },
   css: ["@/assets/styles/custom.sass", "@/assets/styles/colors.sass"],
@@ -28,6 +25,35 @@ export default defineNuxtConfig({
     "nuxt-nodemailer",
     "@nuxtjs/leaflet",
   ],
+  fonts: {
+    defaults: {
+      weights: [400, 500, 700],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+    },
+    families: [
+      {
+        name: "Montserrat",
+        provider: "google",
+        global: true,
+      },
+      {
+        name: "Roboto",
+        provider: "google",
+        global: true,
+      },
+      {
+        name: "Poppins",
+        provider: "google",
+        global: true,
+      },
+      {
+        name: "Inter",
+        provider: "google",
+        global: true,
+      },
+    ],
+  },
   runtimeConfig: {
     cloudinary: {
       cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
