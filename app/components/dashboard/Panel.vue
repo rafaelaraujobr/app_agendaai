@@ -1,5 +1,5 @@
 <template>
-  <q-toolbar>
+  <q-toolbar class="gt-xs">
     <q-toolbar-title>
       <q-icon name="mdi-view-dashboard" />
       Dashboard
@@ -61,8 +61,6 @@
       </GridItem>
     </GridLayout>
   </client-only>
-  {{ breakpoint }}
-  <pre>{{ layout }}</pre>
 </template>
 <script setup lang="ts">
 import {

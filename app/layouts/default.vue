@@ -72,7 +72,7 @@
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
         <q-list>
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple to="/">
             <q-item-section side>
               <q-icon name="mdi-view-dashboard-outline" />
             </q-item-section>
@@ -114,7 +114,7 @@
               <q-icon name="mdi-lock-outline" size="xs"/>
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple to="/settings">
             <q-item-section side>
               <q-icon name="mdi-cog-outline" />
             </q-item-section>
