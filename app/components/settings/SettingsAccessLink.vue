@@ -6,16 +6,11 @@
     :loading="loading"
     @save="$emit('save')"
   >
-    <q-banner rounded class="bg-blue-1 text-primary q-mb-lg">
-      <template #avatar>
-        <q-icon name="mdi-information-outline" />
-      </template>
-      Alterar este endereço fará com que o link anterior deixe de funcionar.
-    </q-banner>
-
+    <q-label class="text-weight-medium text-subtitle2 q-mb-xs">
+      Endereço público(slug)
+    </q-label>
     <q-input
       :model-value="model.slug"
-      label="Endereço público"
       outlined
       bg-color="grey-1"
       dense
@@ -28,18 +23,12 @@
         <span class="text-body2">https://</span>
       </template>
     </q-input>
-
-    <q-item class="q-px-none">
-      <q-item-section avatar>
-        <q-icon name="mdi-open-in-new" color="primary" />
-      </q-item-section>
-      <q-item-section>
-        <q-item-label>Pré-visualização</q-item-label>
-        <q-item-label caption>
-          https://{{ model.slug || "seu-negocio" }}.roostec.com.br
-        </q-item-label>
-      </q-item-section>
-    </q-item>
+    <q-banner rounded class="bg-grey-1 text-grey-8 q-mt-lg">
+      <template #avatar>
+        <q-icon name="mdi-information-outline" />
+      </template>
+      Alterar este endereço fará com que o link anterior deixe de funcionar.
+    </q-banner>
   </SettingsSectionCard>
 </template>
 

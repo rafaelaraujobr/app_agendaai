@@ -54,13 +54,11 @@
             <div class="text-h6">Our Changing Planet</div>
             <div class="text-subtitle2">by John Doe</div>
           </q-card-section>
-          <q-card-section class="no-drag">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
-          </q-card-section>
         </q-card>
       </GridItem>
     </GridLayout>
   </client-only>
+
 </template>
 <script setup lang="ts">
 import {
@@ -72,54 +70,54 @@ import {
 
 const presetLayouts = reactive({
   lg: [
-    { x: 0, y: 0, w: 3, h: 4, i: "0", moved: false },
-    { x: 0, y: 17, w: 12, h: 5, i: "1", moved: false },
-    { x: 3, y: 0, w: 3, h: 4, i: "2", moved: false },
-    { x: 6, y: 0, w: 3, h: 4, i: "3", moved: false },
-    { x: 7, y: 10, w: 5, h: 7, i: "4", moved: false },
-    { x: 9, y: 0, w: 3, h: 4, i: "5", moved: false },
-    { x: 0, y: 4, w: 7, h: 13, i: "6", moved: false },
-    { x: 7, y: 4, w: 5, h: 6, i: "7", moved: false },
+    { x: 0, y: 0, w: 3, h: 3, i: "0", moved: false },
+    { x: 0, y: 12, w: 12, h: 3, i: "1", moved: false },
+    { x: 3, y: 0, w: 3, h: 3, i: "2", moved: false },
+    { x: 6, y: 0, w: 3, h: 3, i: "3", moved: false },
+    { x: 7, y: 7, w: 5, h: 5, i: "4", moved: false },
+    { x: 9, y: 0, w: 3, h: 3, i: "5", moved: false },
+    { x: 0, y: 3, w: 7, h: 9, i: "6", moved: false },
+    { x: 7, y: 3, w: 5, h: 4, i: "7", moved: false },
   ],
   md: [
-    { x: 0, y: 0, w: 5, h: 4, i: "0" },
-    { x: 5, y: 0, w: 5, h: 4, i: "2" },
-    { x: 0, y: 4, w: 5, h: 4, i: "3" },
-    { x: 5, y: 4, w: 5, h: 4, i: "5" },
-    { x: 0, y: 8, w: 6, h: 13, i: "6" },
-    { x: 6, y: 8, w: 4, h: 6, i: "7" },
-    { x: 6, y: 14, w: 4, h: 7, i: "4" },
-    { x: 0, y: 21, w: 10, h: 5, i: "1" },
+    { x: 0, y: 0, w: 5, h: 3, i: "0" },
+    { x: 5, y: 0, w: 5, h: 3, i: "2" },
+    { x: 0, y: 3, w: 5, h: 3, i: "3" },
+    { x: 5, y: 3, w: 5, h: 3, i: "5" },
+    { x: 0, y: 6, w: 6, h: 8, i: "6" },
+    { x: 6, y: 6, w: 4, h: 4, i: "7" },
+    { x: 6, y: 10, w: 4, h: 4, i: "4" },
+    { x: 0, y: 14, w: 10, h: 3, i: "1" },
   ],
   sm: [
-    { x: 0, y: 0, w: 3, h: 4, i: "0" },
-    { x: 3, y: 0, w: 3, h: 4, i: "2" },
-    { x: 0, y: 4, w: 3, h: 4, i: "3" },
-    { x: 3, y: 4, w: 3, h: 4, i: "5" },
-    { x: 0, y: 8, w: 6, h: 13, i: "6" },
-    { x: 0, y: 21, w: 3, h: 7, i: "4" },
-    { x: 3, y: 21, w: 3, h: 7, i: "7" },
-    { x: 0, y: 28, w: 6, h: 5, i: "1" },
+    { x: 0, y: 0, w: 3, h: 3, i: "0" },
+    { x: 3, y: 0, w: 3, h: 3, i: "2" },
+    { x: 0, y: 3, w: 3, h: 3, i: "3" },
+    { x: 3, y: 3, w: 3, h: 3, i: "5" },
+    { x: 0, y: 6, w: 6, h: 7, i: "6" },
+    { x: 0, y: 13, w: 3, h: 4, i: "7" },
+    { x: 3, y: 13, w: 3, h: 4, i: "4" },
+    { x: 0, y: 17, w: 6, h: 3, i: "1" },
   ],
   xs: [
-    { x: 0, y: 0, w: 2, h: 4, i: "0" },
-    { x: 2, y: 0, w: 2, h: 4, i: "2" },
-    { x: 0, y: 4, w: 2, h: 4, i: "3" },
-    { x: 2, y: 4, w: 2, h: 4, i: "5" },
-    { x: 0, y: 8, w: 4, h: 13, i: "6" },
-    { x: 0, y: 21, w: 4, h: 6, i: "7" },
-    { x: 0, y: 27, w: 4, h: 7, i: "4" },
-    { x: 0, y: 34, w: 4, h: 5, i: "1" },
+    { x: 0, y: 0, w: 2, h: 2, i: "0" },
+    { x: 2, y: 0, w: 2, h: 2, i: "2" },
+    { x: 0, y: 2, w: 2, h: 2, i: "3" },
+    { x: 2, y: 2, w: 2, h: 2, i: "5" },
+    { x: 0, y: 4, w: 4, h: 6, i: "6" },
+    { x: 0, y: 10, w: 4, h: 3, i: "7" },
+    { x: 0, y: 13, w: 4, h: 4, i: "4" },
+    { x: 0, y: 17, w: 4, h: 3, i: "1" },
   ],
   xxs: [
-    { x: 0, y: 0, w: 2, h: 4, i: "0" },
-    { x: 0, y: 4, w: 2, h: 4, i: "2" },
-    { x: 0, y: 8, w: 2, h: 4, i: "3" },
-    { x: 0, y: 12, w: 2, h: 4, i: "5" },
-    { x: 0, y: 16, w: 2, h: 13, i: "6" },
-    { x: 0, y: 29, w: 2, h: 6, i: "7" },
-    { x: 0, y: 35, w: 2, h: 7, i: "4" },
-    { x: 0, y: 42, w: 2, h: 5, i: "1" },
+    { x: 0, y: 0, w: 2, h: 2, i: "0" },
+    { x: 0, y: 2, w: 2, h: 2, i: "2" },
+    { x: 0, y: 4, w: 2, h: 2, i: "3" },
+    { x: 0, y: 6, w: 2, h: 2, i: "5" },
+    { x: 0, y: 8, w: 2, h: 5, i: "6" },
+    { x: 0, y: 13, w: 2, h: 3, i: "7" },
+    { x: 0, y: 16, w: 2, h: 3, i: "4" },
+    { x: 0, y: 19, w: 2, h: 2, i: "1" },
   ],
 });
 

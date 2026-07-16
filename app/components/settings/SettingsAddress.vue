@@ -6,11 +6,11 @@
     :loading="loading"
     @save="$emit('save')"
   >
-    <q-form class="row q-col-gutter-md">
+    <q-form class="row q-col-gutter-x-md">
       <div class="col-12 col-sm-4">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs"> CEP </label>
         <q-input
           v-model="model.address.zipCode"
-          label="CEP"
           mask="#####-###"
           outlined
           bg-color="grey-1"
@@ -22,9 +22,11 @@
         />
       </div>
       <div class="col-12 col-sm-8">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs">
+          Rua/Avenida
+        </label>
         <q-input
           v-model="model.address.street"
-          label="Rua/Avenida"
           outlined
           bg-color="grey-1"
           dense
@@ -33,10 +35,12 @@
           @update:model-value="invalidateLocation"
         />
       </div>
-      <div class="col-12 col-sm-4">
+      <div class="col-12 col-sm-3">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs">
+          Número
+        </label>
         <q-input
           v-model="model.address.number"
-          label="Número"
           outlined
           bg-color="grey-1"
           dense
@@ -52,28 +56,36 @@
             <div class="text-subtitle2">
               <q-checkbox
                 v-model="model.notHaveNumber"
-                label="Sem número"
+                label="S/N"
                 dense
                 @update:model-value="handleNoNumber"
-              />
+              >
+                <q-tooltip>
+                  <span class="text-caption">Sem número</span>
+                </q-tooltip>
+              </q-checkbox>
             </div>
           </template>
         </q-input>
       </div>
-      <div class="col-12 col-sm-8">
+      <div class="col-12 col-sm-5">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs">
+          Complemento
+        </label>
         <q-input
           v-model="model.address.complement"
-          label="Complemento"
           outlined
           bg-color="grey-1"
           dense
           maxlength="150"
         />
       </div>
-      <div class="col-12 col-sm-6">
+      <div class="col-12 col-sm-4">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs">
+          Bairro
+        </label>
         <q-input
           v-model="model.address.neighborhood"
-          label="Bairro"
           outlined
           bg-color="grey-1"
           dense
@@ -81,10 +93,12 @@
           @update:model-value="invalidateLocation"
         />
       </div>
-      <div class="col-12 col-sm-6">
+      <div class="col-12 col-sm-5">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs">
+          Cidade
+        </label>
         <q-input
           v-model="model.address.city"
-          label="Cidade"
           outlined
           bg-color="grey-1"
           dense
@@ -93,23 +107,29 @@
           @update:model-value="invalidateLocation"
         />
       </div>
-      <div class="col-12 col-sm-4">
-        <q-input
-          :model-value="model.address.state"
-          label="Estado"
+      <div class="col-12 col-sm-3">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs">
+          Estado
+        </label>
+        <q-select
+          v-model="model.address.state"
+          :options="statesOptions"
           outlined
           bg-color="grey-1"
           dense
-          maxlength="2"
+          emit-value
+          map-options
+          dropdown-icon="mdi-chevron-down"
           :rules="[(value) => String(value ?? '').length === 2 || 'Use a UF']"
           @update:model-value="updateState"
         />
       </div>
-      <div class="col-12 col-sm-8">
+      <div class="col-12 col-sm-4">
+        <label class="text-weight-medium text-subtitle2 q-mb-xs"> País </label>
         <q-input
           v-model="model.address.country"
-          label="País"
           outlined
+          disable
           bg-color="grey-1"
           dense
           maxlength="100"
@@ -138,7 +158,7 @@
 
         <q-card flat bordered class="rounded-borders overflow-hidden">
           <ClientOnly>
-            <div v-if="mapCenter" style="height: 360px">
+            <div v-if="mapCenter" style="height: 260px">
               <LMap
                 :zoom="17"
                 :center="mapCenter"
@@ -308,6 +328,69 @@ const findLocation = async () => {
     isGeocoding.value = false;
   }
 };
+
+const statesOptions = ref<{ label: string; value: string }[]>([
+  {
+    label: "Rio de Janeiro",
+    value: "RJ",
+  },
+  {
+    label: "São Paulo",
+    value: "SP",
+  },
+  {
+    label: "Minas Gerais",
+    value: "MG",
+  },
+  {
+    label: "Bahia",
+    value: "BA",
+  },
+  {
+    label: "Ceará",
+    value: "CE",
+  },
+  {
+    label: "Paraná",
+    value: "PR",
+  },
+  {
+    label: "Rio Grande do Sul",
+    value: "RS",
+  },
+  {
+    label: "Mato Grosso do Sul",
+    value: "MS",
+  },
+  {
+    label: "Mato Grosso",
+    value: "MT",
+  },
+  {
+    label: "Goiás",
+    value: "GO",
+  },
+  {
+    label: "Distrito Federal",
+    value: "DF",
+  },
+  {
+    label: "Espírito Santo",
+    value: "ES",
+  },
+  {
+    label: "Rio Grande do Norte",
+    value: "RN",
+  },
+  {
+    label: "Pernambuco",
+    value: "PE",
+  },
+  {
+    label: "Alagoas",
+    value: "AL",
+  },
+]);
 
 const handleMarkerMove = (event: MarkerMoveEvent) => {
   const { lat, lng } = event.target.getLatLng();
