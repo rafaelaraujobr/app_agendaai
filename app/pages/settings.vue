@@ -20,7 +20,11 @@
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="company" class="q-pa-none">
-        <q-splitter v-model="splitterModel" style="height: 250px">
+        <q-splitter
+          v-model="splitterModel"
+          class="settings-splitter"
+          :horizontal="$q.screen.lt.md"
+        >
           <template v-slot:before>
             <q-tabs
               v-model="innerTab"
@@ -93,10 +97,24 @@ definePageMeta({
 const tab = ref("company");
 const innerTab = ref("innerCompany");
 const splitterModel = ref(20);
+const $q = useQuasar();
+
+watch(
+  () => $q.screen.lt.md,
+  (isMobile) => {
+    splitterModel.value = isMobile ? 38 : 20;
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped lang="sass">
+.settings-splitter
+  height: 250px
+
 .settings-nav-tabs
+  width: 100%
+
   :deep(.q-tab)
     justify-content: flex-start
 
@@ -104,4 +122,9 @@ const splitterModel = ref(20);
     width: 100%
     justify-content: flex-start
     text-align: left
+
+@media (max-width: 1023px)
+  .settings-splitter
+    height: calc(100dvh - 190px)
+    min-height: 520px
 </style>
