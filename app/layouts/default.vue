@@ -11,12 +11,7 @@
         />
         <q-toolbar-title> agendaih </q-toolbar-title>
         <div class="q-gutter-x-sm">
-          <q-btn
-            color="primary"
-            icon="mdi-bell-outline"
-            dense
-            padding="sm"
-          />
+          <q-btn color="primary" icon="mdi-bell-outline" dense padding="sm" />
           <q-btn color="primary" dense padding="sm">
             <q-avatar v-if="user?.avatarUrl" size="30px">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
@@ -100,6 +95,24 @@
               <q-icon name="mdi-account-group-outline" />
             </q-item-section>
             <q-item-section> Clientes </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple disable>
+            <q-item-section side>
+              <q-icon name="mdi-bullhorn-outline" />
+            </q-item-section>
+            <q-item-section> Marketing </q-item-section>
+            <q-item-section side>
+              <q-icon name="mdi-lock-outline" size="xs"/>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple disabled>
+            <q-item-section side>
+              <q-icon name="mdi-finance" />
+            </q-item-section>
+            <q-item-section> Financeiro </q-item-section>
+            <q-item-section side>
+              <q-icon name="mdi-lock-outline" size="xs"/>
+            </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
             <q-item-section side>
