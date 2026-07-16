@@ -33,7 +33,7 @@
       </div>
 
       <div class="col-12 col-md-8">
-        <div class="row q-col-gutter-md">
+        <div class="row q-col-gutter-x-md">
           <div class="col-12 col-sm-6">
             <label class="text-weight-medium text-subtitle2 q-mb-xs">
               Área de atuação
@@ -98,7 +98,7 @@
                   borderless
                   type="textarea"
                   rows="3"
-                  maxlength="920"
+                  maxlength="240"
                   placeholder="Ex: Oferecemos cortes de cabelo e barba de alta qualidade"
                   counter
                 />

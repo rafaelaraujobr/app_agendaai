@@ -5,8 +5,8 @@
     :animation-data="LayoutAnimation"
   >
     <q-form ref="formRef" @submit.prevent="handleSubmit">
-      <div class="row q-col-gutter-md">
-        <div class="col-6">
+      <div class="row q-col-gutter-x-md">
+        <div class="col-12 col-sm-6">
           <label class="text-weight-medium text-subtitle2 q-mb-xs">
             Cor primária
           </label>
@@ -22,7 +22,7 @@
           />
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
           <label class="text-weight-medium text-subtitle2 q-mb-xs">
             Cor secundária
           </label>
@@ -52,9 +52,7 @@
             emit-value
             dropdown-icon="mdi-chevron-down"
             dense
-            :rules="[
-              (val) => (val && val.length > 0) || 'Fonte é obrigatória',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'Fonte é obrigatória']"
           />
         </div>
       </div>

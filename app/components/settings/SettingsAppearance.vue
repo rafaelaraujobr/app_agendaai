@@ -8,7 +8,7 @@
   >
     <div class="row q-col-gutter-lg">
       <div class="col-12 col-md-7">
-        <div class="row q-col-gutter-md">
+        <div class="row q-col-gutter-x-md">
           <div class="col-12 col-sm-6">
             <label class="text-weight-medium text-subtitle2 q-mb-xs">
               Cor primária
@@ -147,6 +147,9 @@
             <q-btn
               label="Agendar horário"
               unelevated
+              class="full-width"
+              dense
+              padding="sm md"
               no-caps
               text-color="white"
               :style="{ backgroundColor: model.secondaryColor }"
