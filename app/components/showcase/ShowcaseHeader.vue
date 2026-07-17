@@ -1,6 +1,6 @@
 <template>
-  <q-header class="text-white" :style="{ backgroundColor: primaryColor }">
-    <q-toolbar class="wrapper q-px-md" style="min-height: 72px">
+  <q-header :style="{ backgroundColor: primaryColor }">
+    <q-toolbar class="wrapper q-px-md" style="min-height: 51px">
       <q-toolbar-title class="row items-center no-wrap">
         <q-img
           v-if="business.logoUrl"

@@ -2,11 +2,6 @@
   <q-card flat bordered class="full-height rounded-borders">
     <q-card-section class="q-pa-lg">
       <div class="row items-center no-wrap q-gutter-md">
-        <q-avatar
-          icon="mdi-clock-outline"
-          text-color="white"
-          :style="{ backgroundColor: primaryColor }"
-        />
         <div>
           <div class="text-h6 text-weight-bold">Horário de atendimento</div>
           <div class="text-body2 text-grey-7">Confira nossos horários</div>
