@@ -147,10 +147,17 @@ export const usePublicBusiness = () => {
   });
 
   const wazeMapsUrl = computed(() => {
-    const query = hasCoordinates.value
-      ? mapCenter.value.join(",")
-      : formattedAddress.value;
-    return `https://www.waze.com/ul?q=${encodeURIComponent(query)}`;
+    if (hasCoordinates.value) {
+      const [latitude, longitude] = mapCenter.value;
+
+      return `https://waze.com/ul?ll=${encodeURIComponent(
+        `${latitude},${longitude}`,
+      )}&navigate=yes`;
+    }
+
+    return `https://waze.com/ul?q=${encodeURIComponent(
+      formattedAddress.value,
+    )}&navigate=yes`;
   });
 
   return {
