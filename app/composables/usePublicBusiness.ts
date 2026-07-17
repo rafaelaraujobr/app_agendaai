@@ -130,9 +130,17 @@ export const usePublicBusiness = () => {
     const address = business.value?.businessAddress;
     if (!address) return "";
     const street = [address.address, address.number].filter(Boolean).join(", ");
-    const district = address.neighborhood || "";
-    const city = [address.city, address.state].filter(Boolean).join(" - ");
-    return [street, district, city, address.zip].filter(Boolean).join(" · ");
+    const location = [
+      address.neighborhood,
+      [address.city, address.state].filter(Boolean).join("/"),
+    ]
+      .filter(Boolean)
+      .join(" · ");
+
+    const zipCode = address.zip
+      ? `CEP ${address.zip.replace(/^(\d{5})(\d{3})$/, "$1-$2")}`
+      : "";
+    return [street, location, zipCode].filter(Boolean).join("\n");
   });
 
   const googleMapsUrl = computed(() => {

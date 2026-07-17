@@ -1,6 +1,9 @@
 <template>
   <q-layout view="hHh Lpr lff">
-    <q-header reveal :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
+    <q-header
+      bordered
+      :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-white text-black'"
+    >
       <q-toolbar class="q-px-sm">
         <q-btn
           flat
@@ -14,24 +17,26 @@
         </q-toolbar-title>
         <div class="q-gutter-x-sm">
           <q-btn
-            color="primary"
+            outline
             icon="mdi-share-variant"
             dense
             padding="sm"
+            flat
             @click="shareViaWhatsApp"
           >
             <q-tooltip>Compartilhar via WhatsApp</q-tooltip>
           </q-btn>
-          <q-btn color="primary" icon="mdi-content-copy" dense padding="sm" @click="copyLinkToClipboard">
-            <q-tooltip>Copiar link de acesso</q-tooltip>
-          </q-btn>
           <q-btn
-            color="primary"
+            icon="mdi-content-copy"
             dense
+            flat
             padding="sm"
             @click="copyLinkToClipboard"
           >
-            <q-avatar v-if="user?.avatarUrl" size="30px">
+            <q-tooltip>Copiar link de acesso</q-tooltip>
+          </q-btn>
+          <q-btn dense padding="sm" flat>
+            <q-avatar v-if="user?.avatarUrl" size="30px" bg-color="grey-3">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
             </q-avatar>
             <div v-else>
@@ -138,6 +143,34 @@
             </q-item-section>
             <q-item-section> Configurações </q-item-section>
           </q-item>
+          <q-list class="absolute-bottom">
+            <q-item>
+              <q-item-section side v-if="miniState">
+                <q-avatar color="primary" text-color="white" icon="bluetooth" />
+              </q-item-section>
+              <q-item-section class="q-gutter-y-sm">
+                <div>
+                  <div class="row items-center justify-between">
+                    <q-item-label class="text-caption">Serviços</q-item-label>
+                    <q-item-label class="text-caption">20/10</q-item-label>
+                  </div>
+                  <q-linear-progress size="10px" :value="progressServices" />
+                </div>
+                <div>
+                  <div class="row items-center justify-between">
+                    <q-item-label class="text-caption"
+                      >Colaboradores</q-item-label
+                    >
+                    <q-item-label class="text-caption">1/1</q-item-label>
+                  </div>
+                  <q-linear-progress
+                    size="10px"
+                    :value="progressCollaborators"
+                  />
+                </div>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -153,7 +186,9 @@ const { logout, user } = useAuth();
 
 const drawer = ref(false);
 const miniState = ref(true);
-
+const progressServices = ref<number>(0.2);
+const progressClients = ref<number>(0.7);
+const progressCollaborators = ref<number>(1);
 const handleLogout = async () => {
   Loading.show();
   try {

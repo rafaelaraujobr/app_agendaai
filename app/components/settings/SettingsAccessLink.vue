@@ -36,17 +36,11 @@
         </q-btn>
       </template>
     </q-input>
-    <q-card flat bordered class="share-card q-mt-md">
+    <q-card flat class="share-card q-mt-md">
       <q-card-section class="q-pa-lg">
         <div class="row items-center q-col-gutter-xl">
           <div class="col-12 col-md-7">
             <div class="row items-start no-wrap q-gutter-md q-mb-md">
-              <q-avatar
-                color="primary"
-                text-color="white"
-                icon="mdi-qrcode"
-                size="44px"
-              />
               <div>
                 <div class="text-h6">Compartilhe seu link</div>
                 <div class="text-body2 text-grey-7">
@@ -125,7 +119,6 @@ const copyUrl = () => {
     timeout: 2000,
   });
 };
-
 
 const shareViaWhatsApp = () => {
   const message = `Agende seu horário conosco!\n\nAcesse: ${url.value}`;

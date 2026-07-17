@@ -146,11 +146,11 @@
             </div>
           </div>
           <q-btn
-            label="Localizar endereço"
-            icon="mdi-crosshairs-gps"
-            color="primary"
-            outline
+            label="Localizar com endereço"
             no-caps
+            dense
+            padding="sm md"
+            class="border-xs-grey-4"
             :loading="isGeocoding"
             @click="findLocation"
           />

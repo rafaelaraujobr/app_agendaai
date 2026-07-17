@@ -250,7 +250,7 @@ export const useSettings = () => {
     isLoading.value = true;
     try {
       const [settingsResponse, typesResponse] = await Promise.all([
-        $fetch<SettingsResponse>("/api/businesses/current"),
+        $fetch<SettingsResponse>("/api/businesses/me"),
         $fetch<BusinessTypesResponse>("/api/businesses/types"),
       ]);
       businessTypes.value = typesResponse.businessTypes.map((type) => ({
@@ -269,14 +269,14 @@ export const useSettings = () => {
   const validateSection = (section: SettingsSection) => {
     const value = form.value;
     if (section === "profile") {
-      if (value.businessName.trim().length < 2) return "Informe o nome do negócio";
+      if (value.businessName.trim().length < 2)
+        return "Informe o nome do negócio";
       if (!value.businessType) return "Selecione a área de atuação";
       if (!value.businessPhone.trim()) return "Informe o WhatsApp do negócio";
     }
     if (
       section === "access" &&
-      (value.slug.length < 2 ||
-        !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.slug))
+      (value.slug.length < 2 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.slug))
     ) {
       return "Informe um link de acesso válido";
     }
@@ -289,7 +289,10 @@ export const useSettings = () => {
       const completed = value.channels.filter(
         (channel) => channel.type && channel.value.trim(),
       );
-      if (new Set(completed.map((channel) => channel.type)).size !== completed.length) {
+      if (
+        new Set(completed.map((channel) => channel.type)).size !==
+        completed.length
+      ) {
         return "Não é permitido repetir canais";
       }
     }
@@ -384,7 +387,9 @@ export const useSettings = () => {
     }),
     businessAddress: {
       address: form.value.address.street,
-      number: form.value.notHaveNumber ? null : form.value.address.number || null,
+      number: form.value.notHaveNumber
+        ? null
+        : form.value.address.number || null,
       complement: form.value.address.complement || null,
       neighborhood: form.value.address.neighborhood || null,
       city: form.value.address.city,
@@ -418,13 +423,16 @@ export const useSettings = () => {
       }
       await uploadLogo();
       if (section === "address") await geocodeAddressIfNeeded();
-      const response = await $fetch<SettingsResponse>("/api/businesses/current", {
+      const response = await $fetch<SettingsResponse>("/api/businesses", {
         method: "PATCH",
         body: createPayload(),
       });
       hydrateForm(response.business);
       await refreshSession();
-      $q.notify({ type: "positive", message: "Configurações salvas com sucesso" });
+      $q.notify({
+        type: "positive",
+        message: "Configurações salvas com sucesso",
+      });
       return true;
     } catch (error) {
       $q.notify({ type: "negative", message: getErrorMessage(error) });

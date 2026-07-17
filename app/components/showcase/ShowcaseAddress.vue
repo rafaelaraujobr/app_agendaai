@@ -4,31 +4,35 @@
       <div class="row items-start no-wrap q-gutter-md">
         <div class="col">
           <div class="text-h6 text-weight-bold">Onde estamos</div>
-          <div class="text-body2 text-grey-7">{{ formattedAddress }}</div>
+          <div
+            v-html="formattedAddress"
+            class="text-body2 text-grey-7"
+            style="white-space: pre-line"
+          />
         </div>
         <q-btn
           icon="mdi-google-maps"
           aria-label="Abrir endereço no mapa"
-          flat
-          round
-          color="primary"
+          dense
+          outline
+          padding="sm md"
           :href="googleMapsUrl"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <q-tooltip>Abrir no mapa</q-tooltip>
+          <q-tooltip>Abrir no Google Maps</q-tooltip>
         </q-btn>
         <q-btn
           icon="mdi-waze"
           aria-label="Abrir endereço no Waze"
-          flat
-          round
-          color="primary"
+          dense
+          padding="sm md"
+          outline
           :href="wazeMapsUrl"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <q-tooltip>Abrir no Google Maps</q-tooltip>
+          <q-tooltip>Abrir no Waze</q-tooltip>
         </q-btn>
       </div>
     </q-card-section>
