@@ -112,7 +112,6 @@ export const usePublicBusiness = () => {
         dayOrder.indexOf(first.dayOfWeek) - dayOrder.indexOf(second.dayOfWeek),
     ),
   );
-
   const hasCoordinates = computed(() => {
     const address = business.value?.businessAddress;
     return Boolean(
@@ -123,16 +122,13 @@ export const usePublicBusiness = () => {
       address.longitude !== 0,
     );
   });
-
   const mapCenter = computed<[number, number]>(() => [
     business.value?.businessAddress?.latitude || -14.235,
     business.value?.businessAddress?.longitude || -51.9253,
   ]);
-
   const formattedAddress = computed(() => {
     const address = business.value?.businessAddress;
     if (!address) return "";
-
     const street = [address.address, address.number].filter(Boolean).join(", ");
     const district = address.neighborhood || "";
     const city = [address.city, address.state].filter(Boolean).join(" - ");
