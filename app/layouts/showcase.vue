@@ -1,10 +1,10 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="bg-grey-1" :style="{ fontFamily }">
+  <q-layout view="hHh lpR fFf" class="bg-white" :style="{ fontFamily }">
     <ShowcaseHeader v-if="business" :business="business" />
     <q-page-container>
       <slot />
+      <ShowcaseFooter v-if="business" :business-name="business.name" />
     </q-page-container>
-    <ShowcaseFooter v-if="business" :business-name="business.name" />
   </q-layout>
 </template>
 

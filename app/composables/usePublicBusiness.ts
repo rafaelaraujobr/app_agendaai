@@ -83,9 +83,9 @@ export const usePublicBusiness = () => {
       async () => {
         if (accessContext.value !== "showcase" || !subdomain.value) return null;
 
-        return await $fetch<PublicBusinessResponse>("/api/businesses", {
-          query: { slug: subdomain.value },
-        });
+        return await $fetch<PublicBusinessResponse>(
+          `/api/businesses/public/${encodeURIComponent(subdomain.value)}`,
+        );
       },
       {
         watch: [accessContext, subdomain],

@@ -10,7 +10,7 @@ defineRouteMeta({
       "Retorna os dados públicos de um negócio, incluindo identidade visual, endereço, canais, horários e serviços.",
     parameters: [
       {
-        in: "query",
+        in: "path",
         name: "slug",
         required: true,
         schema: {
@@ -23,12 +23,14 @@ defineRouteMeta({
 });
 
 export default defineEventHandler(async (event) => {
-  const result = getPublicBusinessSchema.safeParse(getQuery(event));
+  const result = getPublicBusinessSchema.safeParse({
+    slug: getRouterParam(event, "slug"),
+  });
 
   if (!result.success) {
     throw createError({
       statusCode: 422,
-      statusMessage: "Slug inválido",
+      message: "Slug inválido",
       data: z.flattenError(result.error),
     });
   }
