@@ -5,6 +5,17 @@ defineRouteMeta({
     tags: ["Uploads"] as string[],
     summary: "Upload de imagem",
     description: "Upload de imagem para o negócio.",
+    parameters: [
+      {
+        in: "query",
+        name: "scope",
+        schema: {
+          type: "string",
+          enum: ["business-logo", "service-image"],
+          default: "business-logo",
+        },
+      },
+    ],
     requestBody: {
       content: {
         "multipart/form-data": {
@@ -44,6 +55,10 @@ export default defineEventHandler(async (event) => {
 
   const formData = await readMultipartFormData(event);
   const file = formData?.find((field) => field.name === "file");
+  const scope =
+    getQuery(event).scope === "service-image"
+      ? "service-image"
+      : "business-logo";
 
   if (!file?.filename || !file.data.length) {
     throw createError({
@@ -68,7 +83,10 @@ export default defineEventHandler(async (event) => {
 
   const result = await uploadsService.uploadImage({
     data: file.data,
-    folder: "agendaai/business-logos",
+    folder:
+      scope === "service-image"
+        ? `agendaai/service-images/${userId}`
+        : `agendaai/business-logos/${userId}`,
   });
 
   setResponseStatus(event, 201);

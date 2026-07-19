@@ -461,22 +461,69 @@ async function main() {
     },
   });
 
-  await prisma.serviceAssignment.upsert({
-    where: {
-      serviceId_memberId: {
-        serviceId: haircutService.id,
-        memberId: ownerMember.id,
+  const additionalServices = await Promise.all(
+    [
+      {
+        name: "Barba tradicional",
+        slug: "barba-tradicional",
+        description: "Modelagem e acabamento completo da barba.",
+        durationMinutes: 30,
+        price: "35.00",
+        position: 2,
       },
-    },
-    update: {
-      isActive: true,
-    },
-    create: {
-      serviceId: haircutService.id,
-      memberId: ownerMember.id,
-      isActive: true,
-    },
-  });
+      {
+        name: "Corte e barba",
+        slug: "corte-e-barba",
+        description: "Combo completo de corte masculino e barba.",
+        durationMinutes: 75,
+        price: "80.00",
+        position: 3,
+      },
+    ].map((service) =>
+      prisma.service.upsert({
+        where: {
+          businessId_slug: {
+            businessId: business.id,
+            slug: service.slug,
+          },
+        },
+        update: {
+          name: service.name,
+          description: service.description,
+          illustrationId: haircutIllustration.id,
+          durationMinutes: service.durationMinutes,
+          price: service.price,
+          isActive: true,
+          position: service.position,
+        },
+        create: {
+          businessId: business.id,
+          illustrationId: haircutIllustration.id,
+          ...service,
+          isActive: true,
+        },
+      }),
+    ),
+  );
+
+  for (const service of [haircutService, ...additionalServices]) {
+    await prisma.serviceAssignment.upsert({
+      where: {
+        serviceId_memberId: {
+          serviceId: service.id,
+          memberId: ownerMember.id,
+        },
+      },
+      update: {
+        isActive: true,
+      },
+      create: {
+        serviceId: service.id,
+        memberId: ownerMember.id,
+        isActive: true,
+      },
+    });
+  }
 
   console.log(
     `Created/updated user: ${adminUser.firstName} ${adminUser.lastName}`,

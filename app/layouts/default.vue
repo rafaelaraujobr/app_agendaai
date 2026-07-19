@@ -107,7 +107,7 @@
             </q-item-section>
             <q-item-section> Agendamentos </q-item-section>
           </q-item>
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple to="/services">
             <q-item-section side>
               <q-icon name="mdi-briefcase-outline" />
             </q-item-section>

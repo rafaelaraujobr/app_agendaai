@@ -12,7 +12,12 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ["vue-advanced-cropper", "vue3-lottie"],
+      include: [
+        "vue-advanced-cropper",
+        "vue3-lottie",
+        "vue-qrcode-reader",
+        "vuedraggable",
+      ],
     },
   },
   css: ["@/assets/styles/custom.sass", "@/assets/styles/colors.sass"],
