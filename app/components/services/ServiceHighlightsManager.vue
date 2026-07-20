@@ -4,7 +4,7 @@
       <div class="col">
         <div class="row items-center q-gutter-sm">
           <q-icon name="mdi-view-carousel-outline" color="primary" size="24px" />
-          <div class="text-h6">Carrossel de promoções</div>
+          <div class="text-h6">Itens em destaque</div>
           <q-badge
             :label="`${highlights.length}/${maxHighlights}`"
             color="grey-3"
@@ -12,7 +12,7 @@
           />
         </div>
         <div class="text-body2 text-grey-7">
-          Escolha até cinco serviços para destacar na página pública.
+          Escolha até cinco serviços para exibir como destaque na página pública.
         </div>
       </div>
       <div class="col-auto">
@@ -120,7 +120,7 @@
       <q-icon name="mdi-view-carousel-outline" size="52px" color="grey-5" />
       <div class="text-subtitle1 q-mt-sm">Nenhum destaque configurado</div>
       <div class="text-body2">
-        Adicione serviços para exibi-los no carrossel da página pública.
+        Adicione serviços para exibi-los como destaque na página pública.
       </div>
     </q-card-section>
 
@@ -304,7 +304,7 @@ const handleSave = async () => {
 const confirmDelete = (highlight: ServiceHighlight) => {
   $q.dialog({
     title: "Remover destaque",
-    message: `Deseja remover “${highlight.title}” do carrossel?`,
+    message: `Deseja remover “${highlight.title}” dos destaques?`,
     cancel: { label: "Cancelar", flat: true, noCaps: true },
     ok: { label: "Remover", color: "negative", noCaps: true },
   }).onOk(() => deleteHighlight(highlight));

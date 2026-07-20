@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { createBusinessSchema } from "../../modules/business/business.schema";
 import { businessService } from "../../modules/business/business.service";
+import { mapSessionUser } from "../../modules/auth/session-user.mapper";
+import { userRepository } from "../../modules/users/user.repository";
 
 defineRouteMeta({
   openAPI: {
@@ -49,22 +51,22 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const business = await businessService.create(userId, result.data);
+  await businessService.create(userId, result.data);
 
   if (session.user) {
-    await setUserSession(event, {
-      ...session,
-      user: {
-        ...session.user,
-        business,
-      },
-    });
+    const dbUser = await userRepository.findById(userId);
+
+    if (dbUser) {
+      await setUserSession(event, {
+        ...session,
+        user: mapSessionUser(dbUser),
+      });
+    }
   }
 
   setResponseStatus(event, 201);
 
   return {
     message: "Negócio criado com sucesso",
-    business,
   };
 });

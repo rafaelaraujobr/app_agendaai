@@ -5,13 +5,6 @@
       :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-white text-black'"
     >
       <q-toolbar class="q-px-sm">
-        <q-btn
-          flat
-          @click="drawer = !drawer"
-          dense
-          icon="menu"
-          padding="sm md"
-        />
         <q-toolbar-title @click="navigateTo('/')" class="cursor-pointer">
           agendaih
         </q-toolbar-title>
@@ -83,15 +76,14 @@
     </q-header>
     <q-drawer
       v-model="drawer"
-      show-if-above
       :mini="miniState"
-      @mouseenter="miniState = false"
-      @mouseleave="miniState = true"
       :mini-width="70"
       :width="250"
-      :breakpoint="500"
-      bordered
-      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-1'"
+      show-if-above
+      overlay
+      @mouseenter="onMainDrawerMouseEnter"
+      @mouseleave="onMainDrawerMouseLeave"
+      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-w'"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
         <q-list>
@@ -137,39 +129,30 @@
               <q-icon name="mdi-lock-outline" size="xs" />
             </q-item-section>
           </q-item>
-          <q-expansion-item
-            icon="mdi-cog-outline"
-            label="Configurações"
-          >
-            <q-item clickable v-ripple to="/settings">
-              <q-item-section side>
-                <q-icon name="mdi-account-outline" />
-              </q-item-section>
-              <q-item-section>Minha loja</q-item-section>
-            </q-item>
-            <q-item clickable v-ripple to="/settings">
-              <q-item-section side>
-                <q-icon name="mdi-account-outline" />
-              </q-item-section>
-              <q-item-section>Meu perfil</q-item-section>
-            </q-item>
-            <q-item clickable v-ripple to="/settings">
-              <q-item-section side>
-                <q-icon name="mdi-account-outline" />
-              </q-item-section>
-              <q-item-section> Planos e Assinaturas</q-item-section>
-            </q-item>
-          </q-expansion-item>
+          <q-item clickable v-ripple to="/settings">
+            <q-item-section avatar>
+              <q-icon name="mdi-account-outline" />
+            </q-item-section>
+            <q-item-section> Planos e Assinaturas</q-item-section>
+          </q-item>
+          <q-item clickable v-ripple to="/settings">
+            <q-item-section avatar>
+              <q-icon name="mdi-cog-outline" />
+            </q-item-section>
+            <q-item-section> Configurações </q-item-section>
+          </q-item>
           <q-list class="absolute-bottom">
             <q-item>
-              <q-item-section side v-if="miniState">
+              <q-item-section avatar v-if="miniState">
                 <q-avatar color="primary" text-color="white" icon="bluetooth" />
               </q-item-section>
               <q-item-section class="q-gutter-y-sm">
                 <div>
                   <div class="row items-center justify-between">
                     <q-item-label class="text-caption">Serviços</q-item-label>
-                    <q-item-label class="text-caption">20/10</q-item-label>
+                    <q-item-label class="text-caption">
+                      {{ servicesUsageLabel }}
+                    </q-item-label>
                   </div>
                   <q-linear-progress size="10px" :value="progressServices" />
                 </div>
@@ -178,12 +161,23 @@
                     <q-item-label class="text-caption"
                       >Colaboradores</q-item-label
                     >
-                    <q-item-label class="text-caption">1/1</q-item-label>
+                    <q-item-label class="text-caption">
+                      {{ collaboratorsUsageLabel }}
+                    </q-item-label>
                   </div>
                   <q-linear-progress
                     size="10px"
                     :value="progressCollaborators"
                   />
+                </div>
+                <div>
+                  <div class="row items-center justify-between">
+                    <q-item-label class="text-caption">Clientes</q-item-label>
+                    <q-item-label class="text-caption">
+                      {{ customersUsageLabel }}
+                    </q-item-label>
+                  </div>
+                  <q-linear-progress size="10px" :value="progressClients" />
                 </div>
               </q-item-section>
             </q-item>
@@ -201,11 +195,59 @@
 import useAuth from "~/composables/useAuth";
 const { logout, user } = useAuth();
 
-const drawer = ref(false);
-const miniState = ref(true);
-const progressServices = ref<number>(0.2);
-const progressClients = ref<number>(0.7);
-const progressCollaborators = ref<number>(1);
+const drawer = ref<boolean>(true);
+const miniState = ref<boolean>(true);
+
+const onMainDrawerMouseEnter = () => {
+  miniState.value = false;
+};
+
+const onMainDrawerMouseLeave = () => {
+  miniState.value = true;
+};
+
+const progressServices = computed(() => {
+  const max = user.value?.business?.maxServices;
+  const count = user.value?.business?.servicesCount ?? 0;
+  if (max === null || max === undefined || max <= 0) return 0;
+  return Math.min(count / max, 1);
+});
+
+const progressCollaborators = computed(() => {
+  const max = user.value?.business?.maxCollaborators;
+  const count = user.value?.business?.collaboratorsCount ?? 0;
+  if (max === null || max === undefined || max <= 0) return count > 0 ? 1 : 0;
+
+  return Math.min(count / max, 1);
+});
+
+const progressClients = computed(() => {
+  const count = user.value?.business?.customersCount ?? 0;
+  return count > 0 ? 1 : 0;
+});
+
+const formatUsage = (current: number, max?: number | null) => {
+  if (max === null || max === undefined) return `${current}/∞`;
+  return `${current}/${max}`;
+};
+
+const servicesUsageLabel = computed(() =>
+  formatUsage(
+    user.value?.business?.servicesCount ?? 0,
+    user.value?.business?.maxServices,
+  ),
+);
+
+const collaboratorsUsageLabel = computed(() =>
+  formatUsage(
+    user.value?.business?.collaboratorsCount ?? 0,
+    user.value?.business?.maxCollaborators,
+  ),
+);
+
+const customersUsageLabel = computed(() =>
+  String(user.value?.business?.customersCount ?? 0),
+);
 const handleLogout = async () => {
   Loading.show();
   try {

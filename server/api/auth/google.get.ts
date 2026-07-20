@@ -14,15 +14,7 @@ export default defineOAuthGoogleEventHandler({
 
     await clearUserSession(event);
     await setUserSession(event, {
-      user: {
-        id: appUser.id,
-        firstName: appUser.firstName ?? "",
-        lastName: appUser.lastName ?? "",
-        email: appUser.email,
-        avatarUrl: appUser.avatarUrl ?? "",
-        preferences: appUser.preferences ?? {},
-        business: appUser.business ?? {},
-      },
+      user: appUser,
       secure: {
         userId: appUser.id,
       },

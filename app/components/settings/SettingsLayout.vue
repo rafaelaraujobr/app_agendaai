@@ -191,17 +191,19 @@
                     </template>
 
                     <template v-else-if="item.i === 'promotions'">
-                      <div class="preview-promotion full-height column flex-center">
-                        <q-icon
-                          name="mdi-sale-outline"
-                          size="36px"
-                          color="primary"
-                        />
-                        <div class="text-subtitle2 text-weight-bold q-mt-xs">
-                          Promoções e novidades
+                      <div class="preview-highlight full-height column">
+                        <div
+                          class="preview-highlight__image bg-grey-3 column flex-center"
+                        >
+                          <q-icon name="mdi-star-outline" size="28px" />
                         </div>
-                        <div class="text-caption text-grey-7">
-                          Carrossel de destaques
+                        <div class="q-pa-sm">
+                          <div class="text-caption text-weight-bold">
+                            Item em destaque
+                          </div>
+                          <div class="text-caption text-grey-7">
+                            Serviço selecionado
+                          </div>
                         </div>
                       </div>
                     </template>
@@ -365,7 +367,6 @@ const resetCurrentLayout = () => {
   cursor: move
 
 .preview-banner,
-.preview-promotion,
 .preview-map
   display: flex
   align-items: center
@@ -373,6 +374,10 @@ const resetCurrentLayout = () => {
   flex-direction: column
   min-height: 100%
   border-radius: 4px
+
+.preview-highlight__image
+  min-height: 72px
+  border-radius: 8px 8px 0 0
 
 .preview-banner
   color: white

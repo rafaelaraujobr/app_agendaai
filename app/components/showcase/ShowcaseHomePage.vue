@@ -27,19 +27,12 @@
         :whatsapp-url="whatsappUrl"
         :get-service-whatsapp-url="getServiceWhatsappUrl"
       />
-
-      <ShowcaseContact
-        v-if="business.businessChannels.length"
-        :channels="business.businessChannels"
-        :primary-color="primaryColor"
-      />
     </main>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import type { PublicBusiness } from "~/types/public-business";
-import ShowcaseContact from "./ShowcaseContact.vue";
 import ShowcaseCustomLayout from "./ShowcaseCustomLayout.vue";
 import ShowcaseEmptyState from "./ShowcaseEmptyState.vue";
 import { useShowcaseWhatsapp } from "~/composables/useShowcaseChannels";

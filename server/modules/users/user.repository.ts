@@ -5,6 +5,7 @@ import type {
   UserCreateInput,
   UserUpdateInput,
 } from "~~/prisma/generated/models/User";
+import { sessionBusinessSelectFields } from "../auth/session-user.mapper";
 
 const userWithRelations = {
   preferences: {
@@ -23,40 +24,7 @@ const userWithRelations = {
     },
     include: {
       business: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-          businessType: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
-          businessChannels: {
-            select: {
-              id: true,
-              type: true,
-              channel: true,
-            },
-          },
-          businessWorkingHours: {
-            select: {
-              id: true,
-              dayOfWeek: true,
-              startMinutes: true,
-              endMinutes: true,
-            },
-          },
-          businessLayout: {
-            select: {
-              id: true,
-              primaryColor: true,
-              secondaryColor: true,
-              theme: true,
-            },
-          },
-        },
+        select: sessionBusinessSelectFields,
       },
     },
   },

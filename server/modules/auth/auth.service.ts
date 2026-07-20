@@ -8,6 +8,7 @@ import type {
   LoginWithGoogleSchema,
 } from "./auth.schema.ts";
 import { AuthProvider } from "~~/prisma/generated/enums";
+import { mapSessionUser } from "./session-user.mapper";
 
 const SALT_ROUNDS = 12;
 
@@ -58,15 +59,7 @@ export const authService = {
       });
     }
 
-    return {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      avatarUrl: user.avatarUrl ?? "",
-      preferences: user.preferences,
-      business: user.businessMembers[0]?.business ?? null,
-    };
+    return mapSessionUser(user);
   },
 
   async loginWithGoogle(input: LoginWithGoogleSchema) {
@@ -75,15 +68,7 @@ export const authService = {
       input.googleId,
     );
     if (userByGoogleId) {
-      return {
-        id: userByGoogleId.id,
-        firstName: userByGoogleId.firstName,
-        lastName: userByGoogleId.lastName,
-        email: userByGoogleId.email,
-        avatarUrl: userByGoogleId.avatarUrl,
-        preferences: userByGoogleId.preferences,
-        business: userByGoogleId.businessMembers[0]?.business ?? null,
-      };
+      return mapSessionUser(userByGoogleId);
     }
 
     const userByEmail = await userRepository.findByEmail(input.email);
@@ -111,15 +96,7 @@ export const authService = {
         },
       });
 
-      return {
-        id: updatedUser.id,
-        firstName: updatedUser.firstName,
-        lastName: updatedUser.lastName,
-        email: updatedUser.email,
-        avatarUrl: updatedUser.avatarUrl,
-        preferences: updatedUser.preferences,
-        business: updatedUser.businessMembers[0]?.business ?? null,
-      };
+      return mapSessionUser(updatedUser);
     }
 
     const createdUser = await userRepository.create({
@@ -140,14 +117,6 @@ export const authService = {
       },
     });
 
-    return {
-      id: createdUser.id,
-      firstName: createdUser.firstName,
-      lastName: createdUser.lastName,
-      email: createdUser.email,
-      avatarUrl: createdUser.avatarUrl,
-      preferences: createdUser.preferences,
-      business: createdUser.businessMembers[0]?.business ?? null,
-    };
+    return mapSessionUser(createdUser);
   },
 };

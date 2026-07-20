@@ -1,14 +1,20 @@
 <template>
-  <q-card flat bordered class="full-height overflow-hidden rounded-borders">
+  <q-card
+    v-if="context.business.businessAddress"
+    flat
+    bordered
+    class="full-height overflow-hidden rounded-borders"
+  >
     <q-card-section class="q-pa-lg">
       <div class="row items-start no-wrap q-gutter-md">
         <div class="col">
           <div class="text-h6 text-weight-bold">Onde estamos</div>
           <div
-            v-html="formattedAddress"
             class="text-body2 text-grey-7"
             style="white-space: pre-line"
-          />
+          >
+            {{ context.formattedAddress }}
+          </div>
         </div>
         <q-btn
           icon="mdi-google-maps"
@@ -16,7 +22,7 @@
           dense
           outline
           padding="sm md"
-          :href="googleMapsUrl"
+          :href="context.googleMapsUrl"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -28,7 +34,7 @@
           dense
           padding="sm md"
           outline
-          :href="wazeMapsUrl"
+          :href="context.wazeMapsUrl"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -39,11 +45,11 @@
 
     <q-separator />
 
-    <ClientOnly v-if="hasCoordinates">
+    <ClientOnly v-if="context.hasCoordinates">
       <div style="height: 340px">
         <LMap
           :zoom="16"
-          :center="mapCenter"
+          :center="context.mapCenter"
           :use-global-leaflet="false"
           :options="{ scrollWheelZoom: false }"
         >
@@ -53,7 +59,7 @@
             layer-type="base"
             name="CARTO Positron"
           />
-          <LMarker :lat-lng="mapCenter">
+          <LMarker :lat-lng="context.mapCenter">
             <LTooltip
               :options="{
                 permanent: true,
@@ -62,7 +68,7 @@
                 opacity: 1,
               }"
             >
-              {{ businessName }}
+              {{ context.business.name }}
             </LTooltip>
           </LMarker>
         </LMap>
@@ -79,16 +85,13 @@
       A localização no mapa ainda não está disponível.
     </q-banner>
   </q-card>
+
+  <ShowcaseLayoutEmptyCard v-else message="Endereço ainda não configurado" />
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  businessName: string;
-  primaryColor: string;
-  formattedAddress: string;
-  googleMapsUrl: string;
-  wazeMapsUrl: string;
-  hasCoordinates: boolean;
-  mapCenter: [number, number];
-}>();
+import type { ShowcaseLayoutContext } from "~/types/showcase-layout-context";
+import ShowcaseLayoutEmptyCard from "./ShowcaseLayoutEmptyCard.vue";
+
+defineProps<{ context: ShowcaseLayoutContext }>();
 </script>

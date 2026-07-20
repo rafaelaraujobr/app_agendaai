@@ -16,8 +16,8 @@ export const showcaseCardDefinitions = [
   },
   {
     id: "promotions",
-    label: "Carrossel de promoções",
-    icon: "mdi-view-carousel-outline",
+    label: "Itens em destaque",
+    icon: "mdi-star-circle-outline",
   },
   {
     id: "featured-services",

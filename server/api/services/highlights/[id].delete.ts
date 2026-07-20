@@ -4,7 +4,7 @@ import { requireUserId } from "../../../utils/require-auth";
 defineRouteMeta({
   openAPI: {
     tags: ["Serviços"] as string[],
-    summary: "Remover destaque do carrossel",
+    summary: "Remover item em destaque",
   },
 });
 

@@ -78,7 +78,7 @@ export const serviceHighlightService = {
     if (count >= MAX_HIGHLIGHTS) {
       throw createError({
         statusCode: 409,
-        message: `O carrossel permite no máximo ${MAX_HIGHLIGHTS} destaques`,
+        message: `É permitido no máximo ${MAX_HIGHLIGHTS} itens em destaque`,
       });
     }
 
