@@ -79,10 +79,11 @@
       :mini="miniState"
       :mini-width="70"
       :width="250"
+      bordered
       show-if-above
-      overlay
-      @mouseenter="onMainDrawerMouseEnter"
-      @mouseleave="onMainDrawerMouseLeave"
+      @mouseenter="miniState = false"
+      @mouseleave="miniState = true"
+      mini-to-overlay
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-w'"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
@@ -141,47 +142,6 @@
             </q-item-section>
             <q-item-section> Configurações </q-item-section>
           </q-item>
-          <q-list class="absolute-bottom">
-            <q-item>
-              <q-item-section avatar v-if="miniState">
-                <q-avatar color="primary" text-color="white" icon="bluetooth" />
-              </q-item-section>
-              <q-item-section class="q-gutter-y-sm">
-                <div>
-                  <div class="row items-center justify-between">
-                    <q-item-label class="text-caption">Serviços</q-item-label>
-                    <q-item-label class="text-caption">
-                      {{ servicesUsageLabel }}
-                    </q-item-label>
-                  </div>
-                  <q-linear-progress size="10px" :value="progressServices" />
-                </div>
-                <div>
-                  <div class="row items-center justify-between">
-                    <q-item-label class="text-caption"
-                      >Colaboradores</q-item-label
-                    >
-                    <q-item-label class="text-caption">
-                      {{ collaboratorsUsageLabel }}
-                    </q-item-label>
-                  </div>
-                  <q-linear-progress
-                    size="10px"
-                    :value="progressCollaborators"
-                  />
-                </div>
-                <div>
-                  <div class="row items-center justify-between">
-                    <q-item-label class="text-caption">Clientes</q-item-label>
-                    <q-item-label class="text-caption">
-                      {{ customersUsageLabel }}
-                    </q-item-label>
-                  </div>
-                  <q-linear-progress size="10px" :value="progressClients" />
-                </div>
-              </q-item-section>
-            </q-item>
-          </q-list>
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -198,56 +158,6 @@ const { logout, user } = useAuth();
 const drawer = ref<boolean>(true);
 const miniState = ref<boolean>(true);
 
-const onMainDrawerMouseEnter = () => {
-  miniState.value = false;
-};
-
-const onMainDrawerMouseLeave = () => {
-  miniState.value = true;
-};
-
-const progressServices = computed(() => {
-  const max = user.value?.business?.maxServices;
-  const count = user.value?.business?.servicesCount ?? 0;
-  if (max === null || max === undefined || max <= 0) return 0;
-  return Math.min(count / max, 1);
-});
-
-const progressCollaborators = computed(() => {
-  const max = user.value?.business?.maxCollaborators;
-  const count = user.value?.business?.collaboratorsCount ?? 0;
-  if (max === null || max === undefined || max <= 0) return count > 0 ? 1 : 0;
-
-  return Math.min(count / max, 1);
-});
-
-const progressClients = computed(() => {
-  const count = user.value?.business?.customersCount ?? 0;
-  return count > 0 ? 1 : 0;
-});
-
-const formatUsage = (current: number, max?: number | null) => {
-  if (max === null || max === undefined) return `${current}/∞`;
-  return `${current}/${max}`;
-};
-
-const servicesUsageLabel = computed(() =>
-  formatUsage(
-    user.value?.business?.servicesCount ?? 0,
-    user.value?.business?.maxServices,
-  ),
-);
-
-const collaboratorsUsageLabel = computed(() =>
-  formatUsage(
-    user.value?.business?.collaboratorsCount ?? 0,
-    user.value?.business?.maxCollaborators,
-  ),
-);
-
-const customersUsageLabel = computed(() =>
-  String(user.value?.business?.customersCount ?? 0),
-);
 const handleLogout = async () => {
   Loading.show();
   try {

@@ -1,9 +1,5 @@
 <template>
-  <q-layout
-    view="hHh Lpr lff"
-    container
-    class="settings-shell"
-  >
+  <q-layout view="hHh Lpr lff" container class="settings-shell">
     <q-drawer
       v-model="settingsDrawer"
       show-if-above
@@ -99,9 +95,4 @@ const pageSubtitle = computed(() => {
 <style scoped lang="sass">
 .settings-shell
   min-height: calc(100vh - 50px)
-
-@media (min-width: 768px)
-  .settings-shell
-    left: 70px
-    width: calc(100% - 70px)
 </style>
