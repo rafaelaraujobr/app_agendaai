@@ -49,7 +49,7 @@
             tag="label"
             clickable
           >
-            <q-item-section avatar>
+            <q-item-section side>
               <q-icon :name="card.icon" color="primary" />
             </q-item-section>
             <q-item-section>
@@ -336,60 +336,48 @@ const resetCurrentLayout = () => {
 };
 </script>
 
-<style scoped>
-.layout-preview-shell {
-  width: 100%;
-  margin-inline: auto;
-  overflow-x: hidden;
-  transition: max-width 200ms ease;
-}
+<style scoped lang="sass">
+.layout-preview-shell
+  width: 100%
+  margin-inline: auto
+  overflow-x: hidden
+  transition: max-width 200ms ease
 
-.layout-preview-shell--mobile {
-  max-width: 420px;
-}
+.layout-preview-shell--mobile
+  max-width: 420px
 
-.layout-preview-shell--tablet {
-  max-width: 760px;
-}
+.layout-preview-shell--tablet
+  max-width: 760px
 
-.layout-preview-shell--desktop {
-  max-width: 100%;
-}
+.layout-preview-shell--desktop
+  max-width: 100%
 
-.showcase-layout-editor {
-  min-height: 260px;
-  background-image:
-    linear-gradient(to right, rgb(0 0 0 / 5%) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(0 0 0 / 5%) 1px, transparent 1px);
-  background-size: 48px 56px;
-}
+.showcase-layout-editor
+  min-height: 260px
+  background-image: linear-gradient(to right, rgb(0 0 0 / 5%) 1px, transparent 1px), linear-gradient(to bottom, rgb(0 0 0 / 5%) 1px, transparent 1px)
+  background-size: 48px 56px
 
-:deep(.vgl-item:not(.vgl-item--placeholder)) {
-  overflow: hidden;
-  border-radius: 4px;
-}
+:deep(.vgl-item:not(.vgl-item--placeholder))
+  overflow: hidden
+  border-radius: 4px
 
-.layout-drag-handle {
-  cursor: move;
-}
+.layout-drag-handle
+  cursor: move
 
 .preview-banner,
 .preview-promotion,
-.preview-map {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  min-height: 100%;
-  border-radius: 4px;
-}
+.preview-map
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  min-height: 100%
+  border-radius: 4px
 
-.preview-banner {
-  color: white;
-  background: linear-gradient(135deg, v-bind("model.primaryColor"), v-bind("model.secondaryColor"));
-}
+.preview-banner
+  color: white
+  background: linear-gradient(135deg, v-bind('model.primaryColor'), v-bind('model.secondaryColor'))
 
-.preview-map {
-  min-height: 110px;
-}
+.preview-map
+  min-height: 110px
 </style>

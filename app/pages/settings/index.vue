@@ -83,7 +83,6 @@
             <q-tab-panels
               v-model="innerTab"
               animated
-              swipeable
               class="bg-transparent"
             >
               <q-tab-panel name="profile" class="settings-panel">
