@@ -103,15 +103,9 @@
                 <q-card flat bordered class="full-height column no-wrap">
                   <q-toolbar
                     class="layout-drag-handle bg-grey-1"
-                    style="min-height: 36px"
+                    style="min-height: 50px"
                   >
-                    <q-icon
-                      :name="getCardDefinition(item.i).icon"
-                      color="primary"
-                      size="20px"
-                      class="q-mr-sm"
-                    />
-                    <q-toolbar-title class="text-caption text-weight-bold">
+                    <q-toolbar-title class="text-subtitle2 text-weight-bold">
                       {{ getCardDefinition(item.i).label }}
                     </q-toolbar-title>
                     <q-btn

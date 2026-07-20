@@ -1,10 +1,18 @@
 <template>
   <q-layout view="hHh Lpr lff">
     <q-header
+      class="xs"
       bordered
       :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-white text-black'"
     >
       <q-toolbar class="q-px-sm">
+        <q-btn
+          flat
+          @click="drawer = !drawer"
+          dense
+          icon="menu"
+          padding="sm md"
+        />
         <q-toolbar-title @click="navigateTo('/')" class="cursor-pointer">
           agendaih
         </q-toolbar-title>
@@ -141,6 +149,83 @@
               <q-icon name="mdi-cog-outline" />
             </q-item-section>
             <q-item-section> Configurações </q-item-section>
+          </q-item>
+        </q-list>
+        <q-list class="absolute-bottom">
+          <q-separator />
+          <q-item-label header>Links </q-item-label>
+          <q-item clickable v-ripple @click="shareViaWhatsApp">
+            <q-item-section side>
+              <q-icon name="mdi-whatsapp" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Compartilhar</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple @click="copyLinkToClipboard">
+            <q-item-section side>
+              <q-icon name="mdi-content-copy" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Link de acesso</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-separator />
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-avatar v-if="user?.avatarUrl" size="40px">
+                <img :src="user?.avatarUrl" alt="Avatar do usuário" />
+              </q-avatar>
+              <q-avatar
+                v-else
+                color="primary"
+                text-color="white"
+                font-size="20px"
+                size="40px"
+              >
+                {{ user?.firstName?.charAt(0) }}{{ user?.lastName?.charAt(0) }}
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                {{ user?.firstName }} {{ user?.lastName }}
+              </q-item-label>
+            </q-item-section>
+            <q-menu>
+              <q-list>
+                <q-item clickable>
+                  <q-item-section side>
+                    <q-avatar v-if="user?.avatarUrl" size="40px">
+                      <img :src="user?.avatarUrl" alt="Avatar do usuário" />
+                    </q-avatar>
+                    <q-avatar
+                      v-else
+                      color="primary"
+                      text-color="white"
+                      font-size="20px"
+                      size="40px"
+                    >
+                      {{ user?.firstName?.charAt(0)
+                      }}{{ user?.lastName?.charAt(0) }}
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>
+                      {{ user?.firstName }} {{ user?.lastName }}
+                    </q-item-label>
+                    <q-item-label caption>
+                      {{ user?.email }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="handleLogout">
+                  <q-item-section side>
+                    <q-icon name="logout" />
+                  </q-item-section>
+                  <q-item-section>Sair</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
           </q-item>
         </q-list>
       </q-scroll-area>
