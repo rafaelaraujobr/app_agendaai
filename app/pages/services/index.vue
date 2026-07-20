@@ -55,6 +55,8 @@
       </div>
     </q-banner>
 
+    <ServiceHighlightsManager />
+
     <ServicesFilters
       v-model="filters"
       :total="pagination.total"
@@ -117,6 +119,7 @@
 <script setup lang="ts">
 import type { ManagedService, ServiceForm } from "~/types/service";
 import ServiceFormDialog from "~/components/services/ServiceFormDialog.vue";
+import ServiceHighlightsManager from "~/components/services/ServiceHighlightsManager.vue";
 import ServicesCardGrid from "~/components/services/ServicesCardGrid.vue";
 import ServicesFilters from "~/components/services/ServicesFilters.vue";
 import ServicesTable from "~/components/services/ServicesTable.vue";

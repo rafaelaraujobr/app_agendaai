@@ -393,6 +393,7 @@ export const ModelName = {
   BusinessType: 'BusinessType',
   BusinessMember: 'BusinessMember',
   Service: 'Service',
+  ServiceHighlight: 'ServiceHighlight',
   ServiceIllustration: 'ServiceIllustration',
   ServiceAssignment: 'ServiceAssignment',
   Appointment: 'Appointment',
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "oAuthAccount" | "userPreferences" | "business" | "plan" | "businessSubscription" | "businessType" | "businessMember" | "service" | "serviceIllustration" | "serviceAssignment" | "appointment" | "customer" | "businessWorkingHour" | "businessLayout" | "businessChannel" | "timeBlock" | "businessAddress"
+    modelProps: "user" | "oAuthAccount" | "userPreferences" | "business" | "plan" | "businessSubscription" | "businessType" | "businessMember" | "service" | "serviceHighlight" | "serviceIllustration" | "serviceAssignment" | "appointment" | "customer" | "businessWorkingHour" | "businessLayout" | "businessChannel" | "timeBlock" | "businessAddress"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1084,6 +1085,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ServiceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ServiceCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceHighlight: {
+      payload: Prisma.$ServiceHighlightPayload<ExtArgs>
+      fields: Prisma.ServiceHighlightFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceHighlightFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceHighlightFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceHighlightFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceHighlightFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceHighlightFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceHighlightCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceHighlightCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceHighlightCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceHighlightDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>
+        }
+        update: {
+          args: Prisma.ServiceHighlightUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceHighlightDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceHighlightUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceHighlightUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceHighlightUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceHighlightPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceHighlightAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceHighlight>
+        }
+        groupBy: {
+          args: Prisma.ServiceHighlightGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceHighlightGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceHighlightCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceHighlightCountAggregateOutputType> | number
         }
       }
     }
@@ -1928,6 +2003,24 @@ export const ServiceScalarFieldEnum = {
 export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
 
 
+export const ServiceHighlightScalarFieldEnum = {
+  id: 'id',
+  businessId: 'businessId',
+  serviceId: 'serviceId',
+  title: 'title',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  position: 'position',
+  isActive: 'isActive',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceHighlightScalarFieldEnum = (typeof ServiceHighlightScalarFieldEnum)[keyof typeof ServiceHighlightScalarFieldEnum]
+
+
 export const ServiceIllustrationScalarFieldEnum = {
   id: 'id',
   businessTypeId: 'businessTypeId',
@@ -2451,6 +2544,7 @@ export type GlobalOmitConfig = {
   businessType?: Prisma.BusinessTypeOmit
   businessMember?: Prisma.BusinessMemberOmit
   service?: Prisma.ServiceOmit
+  serviceHighlight?: Prisma.ServiceHighlightOmit
   serviceIllustration?: Prisma.ServiceIllustrationOmit
   serviceAssignment?: Prisma.ServiceAssignmentOmit
   appointment?: Prisma.AppointmentOmit

@@ -63,6 +63,11 @@ export type BusinessMember = Prisma.BusinessMemberModel
  */
 export type Service = Prisma.ServiceModel
 /**
+ * Model ServiceHighlight
+ * 
+ */
+export type ServiceHighlight = Prisma.ServiceHighlightModel
+/**
  * Model ServiceIllustration
  * 
  */

@@ -35,36 +35,52 @@ const formatCurrentBusiness = (business: CurrentBusiness) => ({
   businessWorkingHours: business.businessWorkingHours,
 });
 
-const formatPublicBusiness = (business: PublicBusiness) => ({
-  id: business.id,
-  name: business.name,
-  slug: business.slug,
-  description: business.description,
-  logoUrl: business.logoUrl,
-  bannerUrl: business.bannerUrl,
-  phone: business.phone,
-  businessType: business.businessType,
-  businessLayout: business.businessLayout,
-  businessChannels: business.businessChannels,
-  businessAddress: business.businessAddresses
-    ? {
-        ...business.businessAddresses,
-        latitude:
-          business.businessAddresses.latitude === null
-            ? null
-            : Number(business.businessAddresses.latitude),
-        longitude:
-          business.businessAddresses.longitude === null
-            ? null
-            : Number(business.businessAddresses.longitude),
-      }
-    : null,
-  businessWorkingHours: business.businessWorkingHours,
-  services: business.services.map((service) => ({
-    ...service,
-    price: Number(service.price),
-  })),
-});
+const formatPublicBusiness = (business: PublicBusiness) => {
+  const now = new Date();
+  return {
+    id: business.id,
+    name: business.name,
+    slug: business.slug,
+    description: business.description,
+    logoUrl: business.logoUrl,
+    bannerUrl: business.bannerUrl,
+    phone: business.phone,
+    businessType: business.businessType,
+    businessLayout: business.businessLayout,
+    businessChannels: business.businessChannels,
+    businessAddress: business.businessAddresses
+      ? {
+          ...business.businessAddresses,
+          latitude:
+            business.businessAddresses.latitude === null
+              ? null
+              : Number(business.businessAddresses.latitude),
+          longitude:
+            business.businessAddresses.longitude === null
+              ? null
+              : Number(business.businessAddresses.longitude),
+        }
+      : null,
+    businessWorkingHours: business.businessWorkingHours,
+    services: business.services.map((service) => ({
+      ...service,
+      price: Number(service.price),
+    })),
+    serviceHighlights: business.serviceHighlights
+      .filter(
+        (highlight) =>
+          (!highlight.startsAt || highlight.startsAt <= now) &&
+          (!highlight.endsAt || highlight.endsAt >= now),
+      )
+      .map((highlight) => ({
+        ...highlight,
+        service: {
+          ...highlight.service,
+          price: Number(highlight.service.price),
+        },
+      })),
+  };
+};
 
 export const businessService = {
   async listBusinessTypes() {

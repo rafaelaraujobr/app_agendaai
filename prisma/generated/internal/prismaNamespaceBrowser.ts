@@ -60,6 +60,7 @@ export const ModelName = {
   BusinessType: 'BusinessType',
   BusinessMember: 'BusinessMember',
   Service: 'Service',
+  ServiceHighlight: 'ServiceHighlight',
   ServiceIllustration: 'ServiceIllustration',
   ServiceAssignment: 'ServiceAssignment',
   Appointment: 'Appointment',
@@ -221,6 +222,24 @@ export const ServiceScalarFieldEnum = {
 } as const
 
 export type ServiceScalarFieldEnum = (typeof ServiceScalarFieldEnum)[keyof typeof ServiceScalarFieldEnum]
+
+
+export const ServiceHighlightScalarFieldEnum = {
+  id: 'id',
+  businessId: 'businessId',
+  serviceId: 'serviceId',
+  title: 'title',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  position: 'position',
+  isActive: 'isActive',
+  startsAt: 'startsAt',
+  endsAt: 'endsAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceHighlightScalarFieldEnum = (typeof ServiceHighlightScalarFieldEnum)[keyof typeof ServiceHighlightScalarFieldEnum]
 
 
 export const ServiceIllustrationScalarFieldEnum = {

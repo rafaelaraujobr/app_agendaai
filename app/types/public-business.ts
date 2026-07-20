@@ -73,6 +73,28 @@ export type PublicBusiness = {
       imageUrl: string;
     } | null;
   }>;
+  serviceHighlights: Array<{
+    id: string;
+    title: string;
+    description: string | null;
+    imageUrl: string | null;
+    position: number;
+    startsAt: string | null;
+    endsAt: string | null;
+    service: {
+      id: string;
+      name: string;
+      slug: string;
+      description: string | null;
+      imageUrl: string | null;
+      durationMinutes: number;
+      price: number;
+      illustration: {
+        title: string;
+        imageUrl: string;
+      } | null;
+    };
+  }>;
 };
 
 export type PublicBusinessResponse = {

@@ -58,3 +58,41 @@ export type ServicesResponse = {
     plan: "FREE" | "PRO" | "PREMIUM" | null;
   };
 };
+
+export type ServiceHighlight = {
+  id: string;
+  serviceId: string;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  position: number;
+  isActive: boolean;
+  startsAt: string | null;
+  endsAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  service: {
+    id: string;
+    name: string;
+    imageUrl: string | null;
+    isActive: boolean;
+    illustration: {
+      imageUrl: string;
+    } | null;
+  };
+};
+
+export type ServiceHighlightForm = {
+  serviceId: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  isActive: boolean;
+  startsAt: string;
+  endsAt: string;
+};
+
+export type ServiceHighlightsResponse = {
+  highlights: ServiceHighlight[];
+  maxHighlights: number;
+};

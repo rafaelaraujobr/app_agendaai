@@ -96,53 +96,70 @@
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
         <q-list>
           <q-item clickable v-ripple to="/">
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-view-dashboard-outline" />
             </q-item-section>
             <q-item-section> Dashboard </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-calendar-outline" />
             </q-item-section>
             <q-item-section> Agendamentos </q-item-section>
           </q-item>
           <q-item clickable v-ripple to="/services">
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-briefcase-outline" />
             </q-item-section>
             <q-item-section> Serviços </q-item-section>
           </q-item>
           <q-item clickable v-ripple>
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-account-group-outline" />
             </q-item-section>
             <q-item-section> Clientes </q-item-section>
           </q-item>
           <q-item clickable v-ripple disable>
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-bullhorn-outline" />
             </q-item-section>
             <q-item-section> Marketing </q-item-section>
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-lock-outline" size="xs" />
             </q-item-section>
           </q-item>
           <q-item clickable v-ripple disabled>
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-finance" />
             </q-item-section>
             <q-item-section> Financeiro </q-item-section>
-            <q-item-section side>
+            <q-item-section avatar>
               <q-icon name="mdi-lock-outline" size="xs" />
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple to="/settings">
-            <q-item-section side>
-              <q-icon name="mdi-cog-outline" />
-            </q-item-section>
-            <q-item-section> Configurações </q-item-section>
-          </q-item>
+          <q-expansion-item
+            icon="mdi-cog-outline"
+            label="Configurações"
+          >
+            <q-item clickable v-ripple to="/settings">
+              <q-item-section side>
+                <q-icon name="mdi-account-outline" />
+              </q-item-section>
+              <q-item-section>Minha loja</q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/settings">
+              <q-item-section side>
+                <q-icon name="mdi-account-outline" />
+              </q-item-section>
+              <q-item-section>Meu perfil</q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/settings">
+              <q-item-section side>
+                <q-icon name="mdi-account-outline" />
+              </q-item-section>
+              <q-item-section> Planos e Assinaturas</q-item-section>
+            </q-item>
+          </q-expansion-item>
           <q-list class="absolute-bottom">
             <q-item>
               <q-item-section side v-if="miniState">

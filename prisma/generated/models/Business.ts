@@ -233,6 +233,7 @@ export type BusinessWhereInput = {
   businessAddresses?: Prisma.XOR<Prisma.BusinessAddressNullableScalarRelationFilter, Prisma.BusinessAddressWhereInput> | null
   businessChannels?: Prisma.BusinessChannelListRelationFilter
   businessLayout?: Prisma.XOR<Prisma.BusinessLayoutNullableScalarRelationFilter, Prisma.BusinessLayoutWhereInput> | null
+  serviceHighlights?: Prisma.ServiceHighlightListRelationFilter
 }
 
 export type BusinessOrderByWithRelationInput = {
@@ -257,6 +258,7 @@ export type BusinessOrderByWithRelationInput = {
   businessAddresses?: Prisma.BusinessAddressOrderByWithRelationInput
   businessChannels?: Prisma.BusinessChannelOrderByRelationAggregateInput
   businessLayout?: Prisma.BusinessLayoutOrderByWithRelationInput
+  serviceHighlights?: Prisma.ServiceHighlightOrderByRelationAggregateInput
 }
 
 export type BusinessWhereUniqueInput = Prisma.AtLeast<{
@@ -284,6 +286,7 @@ export type BusinessWhereUniqueInput = Prisma.AtLeast<{
   businessAddresses?: Prisma.XOR<Prisma.BusinessAddressNullableScalarRelationFilter, Prisma.BusinessAddressWhereInput> | null
   businessChannels?: Prisma.BusinessChannelListRelationFilter
   businessLayout?: Prisma.XOR<Prisma.BusinessLayoutNullableScalarRelationFilter, Prisma.BusinessLayoutWhereInput> | null
+  serviceHighlights?: Prisma.ServiceHighlightListRelationFilter
 }, "id" | "slug">
 
 export type BusinessOrderByWithAggregationInput = {
@@ -339,6 +342,7 @@ export type BusinessCreateInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateInput = {
@@ -362,6 +366,7 @@ export type BusinessUncheckedCreateInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUpdateInput = {
@@ -385,6 +390,7 @@ export type BusinessUpdateInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateInput = {
@@ -408,6 +414,7 @@ export type BusinessUncheckedUpdateInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateManyInput = {
@@ -586,6 +593,20 @@ export type BusinessUpdateOneRequiredWithoutServicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BusinessUpdateToOneWithWhereWithoutServicesInput, Prisma.BusinessUpdateWithoutServicesInput>, Prisma.BusinessUncheckedUpdateWithoutServicesInput>
 }
 
+export type BusinessCreateNestedOneWithoutServiceHighlightsInput = {
+  create?: Prisma.XOR<Prisma.BusinessCreateWithoutServiceHighlightsInput, Prisma.BusinessUncheckedCreateWithoutServiceHighlightsInput>
+  connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutServiceHighlightsInput
+  connect?: Prisma.BusinessWhereUniqueInput
+}
+
+export type BusinessUpdateOneRequiredWithoutServiceHighlightsNestedInput = {
+  create?: Prisma.XOR<Prisma.BusinessCreateWithoutServiceHighlightsInput, Prisma.BusinessUncheckedCreateWithoutServiceHighlightsInput>
+  connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutServiceHighlightsInput
+  upsert?: Prisma.BusinessUpsertWithoutServiceHighlightsInput
+  connect?: Prisma.BusinessWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BusinessUpdateToOneWithWhereWithoutServiceHighlightsInput, Prisma.BusinessUpdateWithoutServiceHighlightsInput>, Prisma.BusinessUncheckedUpdateWithoutServiceHighlightsInput>
+}
+
 export type BusinessCreateNestedOneWithoutAppointmentsInput = {
   create?: Prisma.XOR<Prisma.BusinessCreateWithoutAppointmentsInput, Prisma.BusinessUncheckedCreateWithoutAppointmentsInput>
   connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutAppointmentsInput
@@ -704,6 +725,7 @@ export type BusinessCreateWithoutBusinessSubscriptionInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessSubscriptionInput = {
@@ -726,6 +748,7 @@ export type BusinessUncheckedCreateWithoutBusinessSubscriptionInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessSubscriptionInput = {
@@ -764,6 +787,7 @@ export type BusinessUpdateWithoutBusinessSubscriptionInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessSubscriptionInput = {
@@ -786,6 +810,7 @@ export type BusinessUncheckedUpdateWithoutBusinessSubscriptionInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutBusinessTypeInput = {
@@ -808,6 +833,7 @@ export type BusinessCreateWithoutBusinessTypeInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessTypeInput = {
@@ -830,6 +856,7 @@ export type BusinessUncheckedCreateWithoutBusinessTypeInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessTypeInput = {
@@ -894,6 +921,7 @@ export type BusinessCreateWithoutBusinessMembersInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessMembersInput = {
@@ -916,6 +944,7 @@ export type BusinessUncheckedCreateWithoutBusinessMembersInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessMembersInput = {
@@ -954,6 +983,7 @@ export type BusinessUpdateWithoutBusinessMembersInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessMembersInput = {
@@ -976,6 +1006,7 @@ export type BusinessUncheckedUpdateWithoutBusinessMembersInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutServicesInput = {
@@ -998,6 +1029,7 @@ export type BusinessCreateWithoutServicesInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutServicesInput = {
@@ -1020,6 +1052,7 @@ export type BusinessUncheckedCreateWithoutServicesInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutServicesInput = {
@@ -1058,6 +1091,7 @@ export type BusinessUpdateWithoutServicesInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutServicesInput = {
@@ -1071,6 +1105,115 @@ export type BusinessUncheckedUpdateWithoutServicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   businessTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessMembers?: Prisma.BusinessMemberUncheckedUpdateManyWithoutBusinessNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutBusinessNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBusinessNestedInput
+  businessSubscription?: Prisma.BusinessSubscriptionUncheckedUpdateOneWithoutBusinessNestedInput
+  timeBlocks?: Prisma.TimeBlockUncheckedUpdateManyWithoutBusinessNestedInput
+  businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedUpdateManyWithoutBusinessNestedInput
+  businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
+  businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
+  businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
+}
+
+export type BusinessCreateWithoutServiceHighlightsInput = {
+  id?: string
+  name: string
+  slug: string
+  description?: string | null
+  logoUrl?: string | null
+  bannerUrl?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  services?: Prisma.ServiceCreateNestedManyWithoutBusinessInput
+  businessType?: Prisma.BusinessTypeCreateNestedOneWithoutBusinessesInput
+  businessMembers?: Prisma.BusinessMemberCreateNestedManyWithoutBusinessInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutBusinessInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBusinessInput
+  businessSubscription?: Prisma.BusinessSubscriptionCreateNestedOneWithoutBusinessInput
+  timeBlocks?: Prisma.TimeBlockCreateNestedManyWithoutBusinessInput
+  businessWorkingHours?: Prisma.BusinessWorkingHourCreateNestedManyWithoutBusinessInput
+  businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
+  businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
+  businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+}
+
+export type BusinessUncheckedCreateWithoutServiceHighlightsInput = {
+  id?: string
+  name: string
+  slug: string
+  description?: string | null
+  logoUrl?: string | null
+  bannerUrl?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  businessTypeId?: string | null
+  services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
+  businessMembers?: Prisma.BusinessMemberUncheckedCreateNestedManyWithoutBusinessInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutBusinessInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBusinessInput
+  businessSubscription?: Prisma.BusinessSubscriptionUncheckedCreateNestedOneWithoutBusinessInput
+  timeBlocks?: Prisma.TimeBlockUncheckedCreateNestedManyWithoutBusinessInput
+  businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedCreateNestedManyWithoutBusinessInput
+  businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
+  businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
+  businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+}
+
+export type BusinessCreateOrConnectWithoutServiceHighlightsInput = {
+  where: Prisma.BusinessWhereUniqueInput
+  create: Prisma.XOR<Prisma.BusinessCreateWithoutServiceHighlightsInput, Prisma.BusinessUncheckedCreateWithoutServiceHighlightsInput>
+}
+
+export type BusinessUpsertWithoutServiceHighlightsInput = {
+  update: Prisma.XOR<Prisma.BusinessUpdateWithoutServiceHighlightsInput, Prisma.BusinessUncheckedUpdateWithoutServiceHighlightsInput>
+  create: Prisma.XOR<Prisma.BusinessCreateWithoutServiceHighlightsInput, Prisma.BusinessUncheckedCreateWithoutServiceHighlightsInput>
+  where?: Prisma.BusinessWhereInput
+}
+
+export type BusinessUpdateToOneWithWhereWithoutServiceHighlightsInput = {
+  where?: Prisma.BusinessWhereInput
+  data: Prisma.XOR<Prisma.BusinessUpdateWithoutServiceHighlightsInput, Prisma.BusinessUncheckedUpdateWithoutServiceHighlightsInput>
+}
+
+export type BusinessUpdateWithoutServiceHighlightsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  services?: Prisma.ServiceUpdateManyWithoutBusinessNestedInput
+  businessType?: Prisma.BusinessTypeUpdateOneWithoutBusinessesNestedInput
+  businessMembers?: Prisma.BusinessMemberUpdateManyWithoutBusinessNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutBusinessNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBusinessNestedInput
+  businessSubscription?: Prisma.BusinessSubscriptionUpdateOneWithoutBusinessNestedInput
+  timeBlocks?: Prisma.TimeBlockUpdateManyWithoutBusinessNestedInput
+  businessWorkingHours?: Prisma.BusinessWorkingHourUpdateManyWithoutBusinessNestedInput
+  businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
+  businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
+  businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+}
+
+export type BusinessUncheckedUpdateWithoutServiceHighlightsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  businessTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
   businessMembers?: Prisma.BusinessMemberUncheckedUpdateManyWithoutBusinessNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutBusinessNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1102,6 +1245,7 @@ export type BusinessCreateWithoutAppointmentsInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutAppointmentsInput = {
@@ -1124,6 +1268,7 @@ export type BusinessUncheckedCreateWithoutAppointmentsInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutAppointmentsInput = {
@@ -1162,6 +1307,7 @@ export type BusinessUpdateWithoutAppointmentsInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutAppointmentsInput = {
@@ -1184,6 +1330,7 @@ export type BusinessUncheckedUpdateWithoutAppointmentsInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutCustomersInput = {
@@ -1206,6 +1353,7 @@ export type BusinessCreateWithoutCustomersInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutCustomersInput = {
@@ -1228,6 +1376,7 @@ export type BusinessUncheckedCreateWithoutCustomersInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutCustomersInput = {
@@ -1266,6 +1415,7 @@ export type BusinessUpdateWithoutCustomersInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutCustomersInput = {
@@ -1288,6 +1438,7 @@ export type BusinessUncheckedUpdateWithoutCustomersInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutBusinessWorkingHoursInput = {
@@ -1310,6 +1461,7 @@ export type BusinessCreateWithoutBusinessWorkingHoursInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessWorkingHoursInput = {
@@ -1332,6 +1484,7 @@ export type BusinessUncheckedCreateWithoutBusinessWorkingHoursInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessWorkingHoursInput = {
@@ -1370,6 +1523,7 @@ export type BusinessUpdateWithoutBusinessWorkingHoursInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessWorkingHoursInput = {
@@ -1392,6 +1546,7 @@ export type BusinessUncheckedUpdateWithoutBusinessWorkingHoursInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutBusinessLayoutInput = {
@@ -1414,6 +1569,7 @@ export type BusinessCreateWithoutBusinessLayoutInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourCreateNestedManyWithoutBusinessInput
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessLayoutInput = {
@@ -1436,6 +1592,7 @@ export type BusinessUncheckedCreateWithoutBusinessLayoutInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedCreateNestedManyWithoutBusinessInput
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessLayoutInput = {
@@ -1474,6 +1631,7 @@ export type BusinessUpdateWithoutBusinessLayoutInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUpdateManyWithoutBusinessNestedInput
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessLayoutInput = {
@@ -1496,6 +1654,7 @@ export type BusinessUncheckedUpdateWithoutBusinessLayoutInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedUpdateManyWithoutBusinessNestedInput
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutBusinessChannelsInput = {
@@ -1518,6 +1677,7 @@ export type BusinessCreateWithoutBusinessChannelsInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourCreateNestedManyWithoutBusinessInput
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessChannelsInput = {
@@ -1540,6 +1700,7 @@ export type BusinessUncheckedCreateWithoutBusinessChannelsInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedCreateNestedManyWithoutBusinessInput
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessChannelsInput = {
@@ -1578,6 +1739,7 @@ export type BusinessUpdateWithoutBusinessChannelsInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUpdateManyWithoutBusinessNestedInput
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessChannelsInput = {
@@ -1600,6 +1762,7 @@ export type BusinessUncheckedUpdateWithoutBusinessChannelsInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedUpdateManyWithoutBusinessNestedInput
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutTimeBlocksInput = {
@@ -1622,6 +1785,7 @@ export type BusinessCreateWithoutTimeBlocksInput = {
   businessAddresses?: Prisma.BusinessAddressCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutTimeBlocksInput = {
@@ -1644,6 +1808,7 @@ export type BusinessUncheckedCreateWithoutTimeBlocksInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedCreateNestedOneWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutTimeBlocksInput = {
@@ -1682,6 +1847,7 @@ export type BusinessUpdateWithoutTimeBlocksInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutTimeBlocksInput = {
@@ -1704,6 +1870,7 @@ export type BusinessUncheckedUpdateWithoutTimeBlocksInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateWithoutBusinessAddressesInput = {
@@ -1726,6 +1893,7 @@ export type BusinessCreateWithoutBusinessAddressesInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourCreateNestedManyWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutBusinessAddressesInput = {
@@ -1748,6 +1916,7 @@ export type BusinessUncheckedCreateWithoutBusinessAddressesInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedCreateNestedManyWithoutBusinessInput
   businessChannels?: Prisma.BusinessChannelUncheckedCreateNestedManyWithoutBusinessInput
   businessLayout?: Prisma.BusinessLayoutUncheckedCreateNestedOneWithoutBusinessInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutBusinessAddressesInput = {
@@ -1786,6 +1955,7 @@ export type BusinessUpdateWithoutBusinessAddressesInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUpdateManyWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessAddressesInput = {
@@ -1808,6 +1978,7 @@ export type BusinessUncheckedUpdateWithoutBusinessAddressesInput = {
   businessWorkingHours?: Prisma.BusinessWorkingHourUncheckedUpdateManyWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateManyBusinessTypeInput = {
@@ -1842,6 +2013,7 @@ export type BusinessUpdateWithoutBusinessTypeInput = {
   businessAddresses?: Prisma.BusinessAddressUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutBusinessTypeInput = {
@@ -1864,6 +2036,7 @@ export type BusinessUncheckedUpdateWithoutBusinessTypeInput = {
   businessAddresses?: Prisma.BusinessAddressUncheckedUpdateOneWithoutBusinessNestedInput
   businessChannels?: Prisma.BusinessChannelUncheckedUpdateManyWithoutBusinessNestedInput
   businessLayout?: Prisma.BusinessLayoutUncheckedUpdateOneWithoutBusinessNestedInput
+  serviceHighlights?: Prisma.ServiceHighlightUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateManyWithoutBusinessTypeInput = {
@@ -1891,6 +2064,7 @@ export type BusinessCountOutputType = {
   timeBlocks: number
   businessWorkingHours: number
   businessChannels: number
+  serviceHighlights: number
 }
 
 export type BusinessCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1901,6 +2075,7 @@ export type BusinessCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   timeBlocks?: boolean | BusinessCountOutputTypeCountTimeBlocksArgs
   businessWorkingHours?: boolean | BusinessCountOutputTypeCountBusinessWorkingHoursArgs
   businessChannels?: boolean | BusinessCountOutputTypeCountBusinessChannelsArgs
+  serviceHighlights?: boolean | BusinessCountOutputTypeCountServiceHighlightsArgs
 }
 
 /**
@@ -1962,6 +2137,13 @@ export type BusinessCountOutputTypeCountBusinessChannelsArgs<ExtArgs extends run
   where?: Prisma.BusinessChannelWhereInput
 }
 
+/**
+ * BusinessCountOutputType without action
+ */
+export type BusinessCountOutputTypeCountServiceHighlightsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceHighlightWhereInput
+}
+
 
 export type BusinessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1985,6 +2167,7 @@ export type BusinessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   businessAddresses?: boolean | Prisma.Business$businessAddressesArgs<ExtArgs>
   businessChannels?: boolean | Prisma.Business$businessChannelsArgs<ExtArgs>
   businessLayout?: boolean | Prisma.Business$businessLayoutArgs<ExtArgs>
+  serviceHighlights?: boolean | Prisma.Business$serviceHighlightsArgs<ExtArgs>
   _count?: boolean | Prisma.BusinessCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["business"]>
 
@@ -2042,6 +2225,7 @@ export type BusinessInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   businessAddresses?: boolean | Prisma.Business$businessAddressesArgs<ExtArgs>
   businessChannels?: boolean | Prisma.Business$businessChannelsArgs<ExtArgs>
   businessLayout?: boolean | Prisma.Business$businessLayoutArgs<ExtArgs>
+  serviceHighlights?: boolean | Prisma.Business$serviceHighlightsArgs<ExtArgs>
   _count?: boolean | Prisma.BusinessCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BusinessIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2065,6 +2249,7 @@ export type $BusinessPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     businessAddresses: Prisma.$BusinessAddressPayload<ExtArgs> | null
     businessChannels: Prisma.$BusinessChannelPayload<ExtArgs>[]
     businessLayout: Prisma.$BusinessLayoutPayload<ExtArgs> | null
+    serviceHighlights: Prisma.$ServiceHighlightPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2482,6 +2667,7 @@ export interface Prisma__BusinessClient<T, Null = never, ExtArgs extends runtime
   businessAddresses<T extends Prisma.Business$businessAddressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$businessAddressesArgs<ExtArgs>>): Prisma.Prisma__BusinessAddressClient<runtime.Types.Result.GetResult<Prisma.$BusinessAddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   businessChannels<T extends Prisma.Business$businessChannelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$businessChannelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   businessLayout<T extends Prisma.Business$businessLayoutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$businessLayoutArgs<ExtArgs>>): Prisma.Prisma__BusinessLayoutClient<runtime.Types.Result.GetResult<Prisma.$BusinessLayoutPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  serviceHighlights<T extends Prisma.Business$serviceHighlightsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$serviceHighlightsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceHighlightPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3163,6 +3349,30 @@ export type Business$businessLayoutArgs<ExtArgs extends runtime.Types.Extensions
    */
   include?: Prisma.BusinessLayoutInclude<ExtArgs> | null
   where?: Prisma.BusinessLayoutWhereInput
+}
+
+/**
+ * Business.serviceHighlights
+ */
+export type Business$serviceHighlightsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceHighlight
+   */
+  select?: Prisma.ServiceHighlightSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceHighlight
+   */
+  omit?: Prisma.ServiceHighlightOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceHighlightInclude<ExtArgs> | null
+  where?: Prisma.ServiceHighlightWhereInput
+  orderBy?: Prisma.ServiceHighlightOrderByWithRelationInput | Prisma.ServiceHighlightOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceHighlightWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceHighlightScalarFieldEnum | Prisma.ServiceHighlightScalarFieldEnum[]
 }
 
 /**

@@ -143,6 +143,7 @@ model Business {
   businessAddresses    BusinessAddress?
   businessChannels     BusinessChannel[]
   businessLayout       BusinessLayout?
+  serviceHighlights    ServiceHighlight[]
 
   @@map("businesses")
 }
@@ -235,11 +236,37 @@ model Service {
   updatedAt          DateTime             @updatedAt
   serviceAssignments ServiceAssignment[]
   appointments       Appointment[]
+  serviceHighlights  ServiceHighlight[]
 
   @@unique([businessId, slug])
   @@index([businessId])
   @@index([illustrationId])
   @@map("services")
+}
+
+model ServiceHighlight {
+  id          String   @id @default(cuid())
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  imageUrl    String?
+
+  position Int     @default(0)
+  isActive Boolean @default(true)
+
+  startsAt DateTime?
+  endsAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([businessId, position])
+  @@index([businessId, isActive, position])
+  @@index([serviceId])
+  @@map("service_highlights")
 }
 
 model ServiceIllustration {

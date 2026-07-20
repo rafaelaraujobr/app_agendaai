@@ -173,6 +173,41 @@ const publicBusinessSelect = {
     },
     orderBy: [{ position: "asc" }, { name: "asc" }],
   },
+  serviceHighlights: {
+    where: {
+      isActive: true,
+      service: {
+        isActive: true,
+      },
+    },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      imageUrl: true,
+      position: true,
+      startsAt: true,
+      endsAt: true,
+      service: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          description: true,
+          imageUrl: true,
+          durationMinutes: true,
+          price: true,
+          illustration: {
+            select: {
+              title: true,
+              imageUrl: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: [{ position: "asc" }, { createdAt: "asc" }],
+  },
 } satisfies Prisma.BusinessSelect;
 
 export type PublicBusiness = Prisma.BusinessGetPayload<{

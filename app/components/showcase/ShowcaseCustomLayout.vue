@@ -100,7 +100,7 @@
                 class="full-height"
               >
                 <q-carousel-slide
-                  v-if="!promotionServices.length"
+                  v-if="!promotionHighlights.length"
                   name="welcome"
                   class="column flex-center text-center"
                   :style="{ color: primaryColor }"
@@ -111,23 +111,42 @@
                   </div>
                 </q-carousel-slide>
                 <q-carousel-slide
-                  v-for="service in promotionServices"
-                  :key="service.id"
-                  :name="service.id"
+                  v-for="highlight in promotionHighlights"
+                  :key="highlight.id"
+                  :name="highlight.id"
                   class="q-pa-none"
                 >
                   <q-img
-                    v-if="getShowcaseServiceImage(service)"
-                    :src="getShowcaseServiceImage(service)!"
-                    :alt="service.name"
+                    v-if="getHighlightImage(highlight)"
+                    :src="getHighlightImage(highlight)!"
+                    :alt="highlight.title"
                     fit="cover"
                     class="full-height"
                   >
                     <div class="absolute-bottom">
                       <div class="text-h6 text-weight-bold">
-                        {{ service.name }}
+                        {{ highlight.title }}
                       </div>
-                      <div>{{ formatShowcaseCurrency(service.price) }}</div>
+                      <div v-if="highlight.description">
+                        {{ highlight.description }}
+                      </div>
+                      <div>
+                        {{ formatShowcaseCurrency(highlight.service.price) }}
+                      </div>
+                      <q-btn
+                        v-if="getServiceWhatsappUrl(highlight.service.name)"
+                        label="Agendar"
+                        dense
+                        no-caps
+                        unelevated
+                        color="primary"
+                        class="q-mt-sm"
+                        :href="
+                          getServiceWhatsappUrl(highlight.service.name) ||
+                          undefined
+                        "
+                        target="_blank"
+                      />
                     </div>
                   </q-img>
                   <div
@@ -137,9 +156,14 @@
                   >
                     <q-icon name="mdi-star-circle-outline" size="56px" />
                     <div class="text-h6 text-weight-bold q-mt-sm">
-                      {{ service.name }}
+                      {{ highlight.title }}
                     </div>
-                    <div>{{ formatShowcaseCurrency(service.price) }}</div>
+                    <div v-if="highlight.description">
+                      {{ highlight.description }}
+                    </div>
+                    <div>
+                      {{ formatShowcaseCurrency(highlight.service.price) }}
+                    </div>
                   </div>
                 </q-carousel-slide>
               </q-carousel>
@@ -323,15 +347,24 @@ const syncLayout = () => {
 watch([device, savedLayouts], syncLayout, { immediate: true, deep: true });
 
 const featuredServices = computed(() => props.business.services.slice(0, 5));
-const promotionServices = computed(() => props.business.services.slice(0, 4));
+const promotionHighlights = computed(() =>
+  props.business.serviceHighlights.slice(0, 5),
+);
+const getHighlightImage = (
+  highlight: PublicBusiness["serviceHighlights"][number],
+) =>
+  highlight.imageUrl ||
+  highlight.service.imageUrl ||
+  highlight.service.illustration?.imageUrl ||
+  null;
 const bannerStyle = computed(() => ({
   background: `linear-gradient(135deg, ${props.primaryColor}, ${props.secondaryColor})`,
 }));
 
 watch(
-  promotionServices,
-  (services) => {
-    promotionSlide.value = services[0]?.id ?? "welcome";
+  promotionHighlights,
+  (highlights) => {
+    promotionSlide.value = highlights[0]?.id ?? "welcome";
   },
   { immediate: true },
 );
