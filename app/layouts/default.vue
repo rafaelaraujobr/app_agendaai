@@ -17,25 +17,6 @@
           agendaih
         </q-toolbar-title>
         <div class="q-gutter-x-sm">
-          <q-btn
-            outline
-            icon="mdi-share-variant"
-            dense
-            padding="sm"
-            flat
-            @click="shareViaWhatsApp"
-          >
-            <q-tooltip>Compartilhar via WhatsApp</q-tooltip>
-          </q-btn>
-          <q-btn
-            icon="mdi-content-copy"
-            dense
-            flat
-            padding="sm"
-            @click="copyLinkToClipboard"
-          >
-            <q-tooltip>Copiar link de acesso</q-tooltip>
-          </q-btn>
           <q-btn dense padding="sm" flat>
             <q-avatar v-if="user?.avatarUrl" size="30px" bg-color="grey-3">
               <img :src="user?.avatarUrl" alt="Avatar do usuário" />
