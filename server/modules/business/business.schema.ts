@@ -70,6 +70,44 @@ const workingHourSchema = z
     }
   });
 
+const showcaseCardIds = [
+  "address",
+  "working-hours",
+  "banner",
+  "promotions",
+  "featured-services",
+  "booking-cta",
+] as const;
+
+const showcaseDeviceLayoutSchema = (columns: number) =>
+  z
+    .array(
+      z
+        .object({
+          i: z.enum(showcaseCardIds),
+          x: z.number().int().min(0).max(columns - 1),
+          y: z.number().int().min(0).max(200),
+          w: z.number().int().min(1).max(columns),
+          h: z.number().int().min(2).max(30),
+          minW: z.number().int().min(1).max(columns).optional(),
+          minH: z.number().int().min(1).max(30).optional(),
+        })
+        .refine((item) => item.x + item.w <= columns, {
+          message: "O card ultrapassa a largura disponível.",
+        }),
+    )
+    .max(showcaseCardIds.length)
+    .refine(
+      (items) => new Set(items.map((item) => item.i)).size === items.length,
+      "Não é permitido repetir cards no mesmo layout.",
+    );
+
+const showcaseLayoutsSchema = z.object({
+  mobile: showcaseDeviceLayoutSchema(4),
+  tablet: showcaseDeviceLayoutSchema(8),
+  desktop: showcaseDeviceLayoutSchema(12),
+});
+
 export const createBusinessSchema = z
   .object({
     business: z.object({
@@ -91,6 +129,7 @@ export const createBusinessSchema = z
       theme: z.string().trim().min(1).max(50),
       settings: z.object({
         fontFamily: z.string().trim().min(1).max(100),
+        showcaseLayouts: showcaseLayoutsSchema.optional(),
       }),
     }),
     businessChannels: z

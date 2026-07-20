@@ -61,6 +61,11 @@
                 icon="mdi-palette-outline"
               />
               <q-tab
+                name="layout"
+                label="Página pública"
+                icon="mdi-view-dashboard-edit-outline"
+              />
+              <q-tab
                 name="channels"
                 label="Canais"
                 icon="mdi-message-text-outline"
@@ -104,6 +109,14 @@
                   :font-options="fontOptions"
                   :loading="savingSection === 'appearance'"
                   @save="saveSettings('appearance')"
+                />
+              </q-tab-panel>
+
+              <q-tab-panel name="layout" class="settings-panel">
+                <SettingsLayout
+                  v-model="form"
+                  :loading="savingSection === 'layout'"
+                  @save="saveSettings('layout')"
                 />
               </q-tab-panel>
 

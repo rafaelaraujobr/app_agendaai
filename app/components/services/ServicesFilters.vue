@@ -1,7 +1,7 @@
 <template>
-  <q-card flat bordered class="rounded-borders q-mb-md">
+  <q-card flat>
     <q-card-section class="q-pa-md">
-      <div class="row q-col-gutter-md items-center">
+      <div class="row q-col-gutter-md items-center justify-between">
         <div class="col-12 col-md">
           <q-input
             v-model="model.search"
@@ -12,41 +12,13 @@
             clearable
             bg-color="grey-1"
             debounce="400"
+            style="max-width: 400px"
             @update:model-value="model.page = 1"
           >
             <template #prepend>
               <q-icon name="mdi-magnify" />
             </template>
           </q-input>
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-          <q-select
-            v-model="model.status"
-            label="Status"
-            :options="statusOptions"
-            outlined
-            dense
-            emit-value
-            map-options
-            bg-color="grey-1"
-            dropdown-icon="mdi-chevron-down"
-            @update:model-value="model.page = 1"
-          />
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-          <q-select
-            v-model="sort"
-            label="Ordenar por"
-            :options="sortOptions"
-            outlined
-            dense
-            emit-value
-            map-options
-            bg-color="grey-1"
-            dropdown-icon="mdi-chevron-down"
-          />
         </div>
       </div>
 
@@ -65,6 +37,25 @@
       </div>
     </q-card-section>
   </q-card>
+  <div class="row justify-between">
+    <q-tabs v-model="model.status" inline-label align="left" no-caps>
+      <q-tab name="all" label="Todos" />
+      <q-tab name="active" label="Ativos" />
+      <q-tab name="inactive" label="Inativos" />
+    </q-tabs>
+    <q-select
+      v-model="sort"
+      label="Ordenar por"
+      :options="sortOptions"
+      borderless
+      style="min-width: 140px"
+      dense
+      emit-value
+      map-options
+      dropdown-icon="mdi-chevron-down"
+    />
+  </div>
+  <q-separator />
 </template>
 
 <script setup lang="ts">

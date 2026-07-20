@@ -6,6 +6,10 @@ import type {
   OnboardingOption,
   OnboardingWorkingHour,
 } from "~/composables/useOnboarding";
+import {
+  createDefaultShowcaseLayouts,
+  type ShowcaseLayouts,
+} from "~/types/showcase-layout";
 
 export type SettingsSection =
   | "profile"
@@ -13,7 +17,8 @@ export type SettingsSection =
   | "appearance"
   | "channels"
   | "address"
-  | "hours";
+  | "hours"
+  | "layout";
 
 export type SettingsForm = {
   businessName: string;
@@ -26,6 +31,7 @@ export type SettingsForm = {
   primaryColor: string;
   secondaryColor: string;
   fontFamily: string;
+  showcaseLayouts: ShowcaseLayouts;
   channels: OnboardingChannel[];
   address: OnboardingAddress;
   notHaveNumber: boolean;
@@ -111,6 +117,7 @@ const createDefaultForm = (): SettingsForm => ({
   primaryColor: "#1976d2",
   secondaryColor: "#26a69a",
   fontFamily: "Inter",
+  showcaseLayouts: createDefaultShowcaseLayouts(),
   channels: [],
   address: {
     street: "",
@@ -200,7 +207,10 @@ export const useSettings = () => {
     const settings =
       typeof business.businessLayout?.settings === "object" &&
       business.businessLayout.settings !== null
-        ? (business.businessLayout.settings as { fontFamily?: string })
+        ? (business.businessLayout.settings as {
+            fontFamily?: string;
+            showcaseLayouts?: ShowcaseLayouts;
+          })
         : {};
     const address = business.businessAddress;
 
@@ -215,6 +225,8 @@ export const useSettings = () => {
       primaryColor: business.businessLayout?.primaryColor ?? "#1976d2",
       secondaryColor: business.businessLayout?.secondaryColor ?? "#26a69a",
       fontFamily: settings.fontFamily ?? "Inter",
+      showcaseLayouts:
+        settings.showcaseLayouts ?? createDefaultShowcaseLayouts(),
       channels: business.businessChannels.map((channel) => ({
         type: channel.type.toLowerCase() as OnboardingChannel["type"],
         value: channel.channel,
@@ -372,7 +384,10 @@ export const useSettings = () => {
       primaryColor: form.value.primaryColor,
       secondaryColor: form.value.secondaryColor,
       theme: "default",
-      settings: { fontFamily: form.value.fontFamily },
+      settings: {
+        fontFamily: form.value.fontFamily,
+        showcaseLayouts: form.value.showcaseLayouts,
+      },
     },
     businessChannels: form.value.channels.flatMap((channel) => {
       if (!channel.type || !channel.value.trim()) return [];

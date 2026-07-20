@@ -22,7 +22,7 @@ async function main() {
     where: { code: PlanCode.FREE },
     update: {
       name: "Free",
-      maxServices: 3,
+      maxServices: 10,
       maxCollaborators: 0,
       customDomainEnabled: false,
       reportsLevel: 1,
@@ -32,7 +32,7 @@ async function main() {
     create: {
       code: PlanCode.FREE,
       name: "Free",
-      maxServices: 3,
+      maxServices: 10,
       maxCollaborators: 0,
       customDomainEnabled: false,
       reportsLevel: 1,
@@ -230,7 +230,7 @@ async function main() {
     update: {
       name: "Barbearia Admin",
       description: "Ambiente demo para testar o fluxo de agendamento.",
-      logoUrl: "/images/demo/logo.svg",
+      logoUrl: "https://res.cloudinary.com/dp0qcuzkq/image/upload/v1784556371/agendaai/business-logos/cmr5n1swc00004gvz5yxatbnx/c6qk8fc68awzbsailnis.webp",
       bannerUrl: "/images/demo/banner.jpg",
       phone: "(21) 99999-9999",
       businessTypeId: barbershopType.id,

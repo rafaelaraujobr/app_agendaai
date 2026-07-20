@@ -1,3 +1,5 @@
+import type { ShowcaseLayouts } from "./showcase-layout";
+
 export type PublicBusinessChannelType =
   | "WHATSAPP"
   | "TELEGRAM"
@@ -23,6 +25,7 @@ export type PublicBusiness = {
     theme: string | null;
     settings: {
       fontFamily?: string;
+      showcaseLayouts?: ShowcaseLayouts;
     } | null;
   } | null;
   businessChannels: Array<{

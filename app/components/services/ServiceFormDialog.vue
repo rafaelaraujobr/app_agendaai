@@ -20,10 +20,12 @@
       <q-form ref="formRef" class="col scroll" @submit.prevent="submit">
         <q-card-section class="q-pa-lg">
           <div class="row q-col-gutter-md">
-            <div class="col-12 col-md-8">
+            <div class="col-12">
+              <label class="text-weight-medium text-subtitle2 q-mb-xs">
+                Nome
+              </label>
               <q-input
                 v-model="form.name"
-                label="Nome do serviço"
                 outlined
                 dense
                 bg-color="grey-1"
@@ -36,44 +38,12 @@
                 @update:model-value="updateName"
               />
             </div>
-            <div class="col-12 col-md-4">
-              <q-input
-                v-model.number="form.position"
-                label="Posição"
-                type="number"
-                min="0"
-                outlined
-                dense
-                bg-color="grey-1"
-                hint="Ordem na página pública"
-              />
-            </div>
-
-            <div class="col-12">
-              <q-input
-                :model-value="form.slug"
-                label="Endereço amigável"
-                outlined
-                dense
-                bg-color="grey-1"
-                maxlength="100"
-                prefix="/servicos/"
-                :rules="[
-                  (value) =>
-                    String(value || '').length >= 2 ||
-                    'Use pelo menos 2 caracteres',
-                  (value) =>
-                    /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(String(value || '')) ||
-                    'Use letras minúsculas, números e hífens',
-                ]"
-                @update:model-value="updateSlug"
-              />
-            </div>
-
             <div class="col-12 col-sm-6">
+              <label class="text-weight-medium text-subtitle2 q-mb-xs">
+                Preço
+              </label>
               <q-input
                 v-model.number="form.price"
-                label="Preço"
                 type="number"
                 inputmode="decimal"
                 prefix="R$"
@@ -91,9 +61,11 @@
             </div>
 
             <div class="col-12 col-sm-6">
+              <label class="text-weight-medium text-subtitle2 q-mb-xs">
+                Duração
+              </label>
               <q-input
                 v-model.number="form.durationMinutes"
-                label="Duração"
                 type="number"
                 inputmode="numeric"
                 suffix="minutos"
@@ -111,12 +83,14 @@
             </div>
 
             <div class="col-12">
+              <label class="text-weight-medium text-subtitle2 q-mb-xs">
+                Descrição
+              </label>
               <q-input
                 v-model="form.description"
-                label="Descrição"
                 type="textarea"
-                autogrow
-                maxlength="2000"
+                rows="3"
+                maxlength="200"
                 counter
                 outlined
                 bg-color="grey-1"

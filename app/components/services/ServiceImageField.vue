@@ -14,20 +14,20 @@
       text-color="grey-8"
       :options="[
         {
-          label: 'Imagem automática',
-          value: 'automatic',
-          icon: 'mdi-auto-fix',
-        },
-        {
           label: 'Enviar imagem',
           value: 'upload',
           icon: 'mdi-cloud-upload-outline',
+        },
+        {
+          label: 'Galeria',
+          value: 'automatic',
+          icon: 'mdi-image-outline',
         },
       ]"
       class="q-mb-md"
     />
 
-    <template v-if="imageMode === 'automatic'">
+    <template v-if="imageMode === 'gallery'">
       <q-banner
         v-if="!illustrations.length"
         rounded
@@ -40,7 +40,7 @@
         ícone padrão do serviço.
       </q-banner>
 
-      <div v-else class="row q-col-gutter-sm">
+      <div v-else class="row q-col-gutter-sm scroll" style="max-height: 150px">
         <div
           v-for="illustration in illustrations"
           :key="illustration.id"
@@ -128,10 +128,7 @@
 
 <script setup lang="ts">
 import InputImageCrop from "~/components/common/InputImageCrop.vue";
-import type {
-  ServiceForm,
-  ServiceIllustration,
-} from "~/types/service";
+import type { ServiceForm, ServiceIllustration } from "~/types/service";
 
 const props = defineProps<{
   illustrations: ServiceIllustration[];
@@ -139,8 +136,8 @@ const props = defineProps<{
 
 const model = defineModel<ServiceForm>({ required: true });
 
-const imageMode = ref<"automatic" | "upload">(
-  model.value.imageUrl || model.value.imageFile ? "upload" : "automatic",
+const imageMode = ref<"gallery" | "upload">(
+  model.value.imageUrl || model.value.imageFile ? "upload" : "gallery",
 );
 
 watch(imageMode, (mode) => {
@@ -164,7 +161,7 @@ watch(
   () => props.illustrations,
   (illustrations) => {
     if (
-      imageMode.value === "automatic" &&
+      imageMode.value === "gallery" &&
       model.value.illustrationId &&
       !illustrations.some((item) => item.id === model.value.illustrationId)
     ) {
@@ -174,8 +171,7 @@ watch(
 );
 
 const selectIllustration = (id: string) => {
-  model.value.illustrationId =
-    model.value.illustrationId === id ? null : id;
+  model.value.illustrationId = model.value.illustrationId === id ? null : id;
   model.value.imageUrl = null;
   model.value.imageFile = null;
 };

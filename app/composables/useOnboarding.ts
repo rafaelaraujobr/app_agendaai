@@ -1,3 +1,5 @@
+import type { ShowcaseLayouts } from "~/types/showcase-layout";
+
 export type OnboardingAddress = {
   street: string;
   number: string;
@@ -70,6 +72,7 @@ export type CreateBusinessPayload = {
     theme: string;
     settings: {
       fontFamily: string;
+      showcaseLayouts?: ShowcaseLayouts;
     };
   };
   businessChannels: {

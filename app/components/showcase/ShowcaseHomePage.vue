@@ -14,23 +14,18 @@
     />
 
     <main v-else-if="business" class="wrapper q-px-md q-pb-xl">
-      <ShowcaseServices
-        v-if="business.services.length"
-        :services="business.services"
-        :primary-color="primaryColor"
-        :secondary-color="secondaryColor"
-        :get-service-whatsapp-url="getServiceWhatsappUrl"
-      />
-
-      <ShowcaseInfo
+      <ShowcaseCustomLayout
         :business="business"
         :primary-color="primaryColor"
+        :secondary-color="secondaryColor"
         :sorted-working-hours="sortedWorkingHours"
         :formatted-address="formattedAddress"
         :google-maps-url="googleMapsUrl"
         :waze-maps-url="wazeMapsUrl"
         :has-coordinates="hasCoordinates"
         :map-center="mapCenter"
+        :whatsapp-url="whatsappUrl"
+        :get-service-whatsapp-url="getServiceWhatsappUrl"
       />
 
       <ShowcaseContact
@@ -45,9 +40,8 @@
 <script setup lang="ts">
 import type { PublicBusiness } from "~/types/public-business";
 import ShowcaseContact from "./ShowcaseContact.vue";
+import ShowcaseCustomLayout from "./ShowcaseCustomLayout.vue";
 import ShowcaseEmptyState from "./ShowcaseEmptyState.vue";
-import ShowcaseInfo from "./ShowcaseInfo.vue";
-import ShowcaseServices from "./ShowcaseServices.vue";
 import { useShowcaseWhatsapp } from "~/composables/useShowcaseChannels";
 
 const showcaseBusiness = useState<PublicBusiness | null>(
@@ -70,7 +64,7 @@ const {
   wazeMapsUrl,
 } = usePublicBusiness();
 
-const { getServiceWhatsappUrl } = useShowcaseWhatsapp(business);
+const { whatsappUrl, getServiceWhatsappUrl } = useShowcaseWhatsapp(business);
 
 useSeoMeta({
   title: () =>

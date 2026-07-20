@@ -63,12 +63,15 @@
 
     <ServicesTable
       v-if="$q.screen.gt.sm"
-      :services="services"
+      v-model="services"
       :loading="isLoading"
       :deleting-id="deletingId"
+      :reorder-enabled="canReorder"
+      :reordering="isReordering"
       @edit="openEdit"
       @delete="confirmDelete"
       @toggle="toggleService"
+      @reorder="reorderServices"
     />
 
     <ServicesCardGrid
