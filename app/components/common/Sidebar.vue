@@ -111,7 +111,7 @@
         clickable
         v-ripple
         style="min-height: 38px"
-        class="rounded-borders q-mx-sm gt-sm"
+        class="rounded-borders q-mx-sm"
       >
         <q-item-section avatar>
           <q-avatar v-if="user?.avatarUrl" size="40px">
