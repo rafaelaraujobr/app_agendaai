@@ -13,26 +13,35 @@
       </q-item-section>
     </q-item>
     <q-list class="q-gutter-y-sm q-mt-sm" dense>
-      <q-item
-        v-for="item in menuItems"
-        :key="item.label"
-        v-ripple="!item.block"
-        :clickable="!item.block"
-        :to="item.to"
-        :disable="item.block"
-        :class="{ 'text-grey-6': item.block }"
-        class="rounded-borders q-mx-sm"
-        style="min-height: 38px"
-        active-class="bg-primary text-white"
-      >
-        <q-item-section avatar>
-          <q-icon :name="item.icon" />
-        </q-item-section>
-        <q-item-section> {{ item.label }} </q-item-section>
-        <q-item-section avatar v-if="item.block">
-          <q-icon name="mdi-lock-outline" size="xs" />
-        </q-item-section>
-      </q-item>
+      <div v-for="item in menuItems" :key="item.label">
+        <q-item-label
+          header
+          class="text-grey-7 q-py-xs"
+          dense
+          v-if="item.type === 'header'"
+          >{{ item.label }}</q-item-label
+        >
+        <q-item
+          v-if="item.type === 'item'"
+          v-ripple="!item.block"
+          :clickable="!item.block"
+          :to="item.to"
+          :disable="item.block"
+          :class="{ 'text-grey-6': item.block }"
+          class="rounded-borders q-mx-sm"
+          style="min-height: 38px"
+          active-class="bg-primary text-white"
+        >
+          <q-item-section avatar>
+            <q-icon :name="item.icon" />
+          </q-item-section>
+          <q-item-section> {{ item.label }} </q-item-section>
+          <q-item-section side v-if="item.block">
+            <q-chip label="PRO" color="grey-3" dense class="text-caption" />
+          </q-item-section>
+        </q-item>
+        <q-separator inset v-if="item.type === 'separator' && !miniState" />
+      </div>
     </q-list>
     <q-list
       :class="!$q.screen.lt.sm ? 'absolute-bottom' : ''"
@@ -80,7 +89,14 @@
             >Compartilhar link no WhatsApp</q-tooltip
           >
         </q-btn>
-        <q-btn flat icon="mdi-open-in-new" color="grey-7" padding="sm" dense @click="openPage">
+        <q-btn
+          flat
+          icon="mdi-open-in-new"
+          color="grey-7"
+          padding="sm"
+          dense
+          @click="openPage"
+        >
           <q-tooltip
             class="text-caption"
             anchor="center right"
@@ -167,17 +183,23 @@ const initialLetter = computed(() => {
 
 const menuItems = ref<
   {
-    icon: string;
-    label: string;
-    to: string;
-    block: boolean;
+    icon?: string;
+    label?: string;
+    to?: string;
+    block?: boolean;
+    type?: "header" | "item" | "separator";
   }[]
 >([
+  {
+    type: "header",
+    label: "Geral",
+  },
   {
     icon: "mdi-view-dashboard-outline",
     label: "Dashboard",
     to: "/dashboard",
     block: false,
+    type: "item",
   },
 
   {
@@ -185,42 +207,70 @@ const menuItems = ref<
     label: "Agendamentos",
     to: "/appointments",
     block: false,
+    type: "item",
   },
   {
     icon: "mdi-briefcase-outline",
     label: "Serviços",
     to: "/services",
     block: false,
+    type: "item",
   },
   {
     icon: "mdi-account-group-outline",
     label: "Clientes",
     to: "/clients",
     block: false,
+    type: "item",
+  },
+  {
+    type: "separator",
+  },
+  {
+    type: "header",
+    label: "Negocio",
   },
   {
     icon: "mdi-bullhorn-outline",
     label: "Marketing",
     to: "/marketing",
     block: true,
+    type: "item",
   },
   {
     icon: "mdi-finance",
     label: "Financeiro",
     to: "/finance",
     block: true,
+    type: "item",
   },
   {
     icon: "mdi-account-outline",
+    label: "Colaboradores",
+    to: "/plans",
+    block: true,
+    type: "item",
+  },
+  {
+    type: "separator",
+  },
+  {
+    type: "header",
+    label: "Sistema",
+  },
+  {
+    icon: "mdi-clipboard-text-outline",
     label: "Planos e Assinaturas",
     to: "/plans",
     block: false,
+    type: "item",
   },
   {
     icon: "mdi-cog-outline",
     label: "Configurações",
     to: "/settings",
     block: false,
+    type: "item",
   },
 ]);
 

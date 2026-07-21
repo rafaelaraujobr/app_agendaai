@@ -1,7 +1,24 @@
 <template>
   <nav class="settings-nav">
     <q-list padding class="q-gutter-y-sm" dense>
-      <q-item-label header class="text-grey-7">Empresa</q-item-label>
+      <q-item class="q-mb-lg">
+        <q-item-section avatar>
+          <q-avatar
+            color="grey-3"
+            text-color="primary"
+            icon="mdi-cog-outline"
+            rounded
+          />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label class="text-weight-medium text-body1"
+            >Empresa</q-item-label
+          >
+          <q-item-label caption lines="2"
+            >Personalize sua negocio.</q-item-label
+          >
+        </q-item-section>
+      </q-item>
       <q-item
         v-for="section in companySections"
         :key="section.name"
@@ -42,7 +59,7 @@ const companySections: Array<{
 }> = [
   { name: "profile", label: "Perfil", icon: "mdi-storefront-outline" },
   { name: "access", label: "Link", icon: "mdi-link-variant" },
-  { name: "appearance", label: "Visual", icon: "mdi-palette-outline" },
+  { name: "appearance", label: "Aparência", icon: "mdi-palette-outline" },
   {
     name: "layout",
     label: "Página pública",

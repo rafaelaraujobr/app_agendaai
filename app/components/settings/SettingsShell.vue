@@ -81,7 +81,7 @@ const companySections: Array<{
   },
   {
     name: "appearance",
-    label: "Visual",
+    label: "Aparência",
     subtitle: "Personalize as cores e a tipografia da página pública.",
     icon: "mdi-palette-outline",
   },
