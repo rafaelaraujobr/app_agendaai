@@ -3,7 +3,7 @@
     <q-toolbar class="q-px-none q-mb-md">
       <q-toolbar-title>
         <div class="text-h5 text-weight-medium">Serviços</div>
-        <div class="text-caption text-grey-7">
+        <div class="text-caption text-grey-7 gt-sm">
           Gerencie os atendimentos oferecidos pelo seu negócio.
         </div>
       </q-toolbar-title>

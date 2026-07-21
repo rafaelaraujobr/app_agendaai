@@ -1,7 +1,7 @@
 <template>
   <q-scroll-area :horizontal-thumb-style="{ opacity: '0' }" class="fit">
-    <q-list class="q-gutter-y-sm">
-      <q-item clickable v-ripple to="/">
+    <q-list class="q-gutter-y-sm q-mt-sm">
+      <q-item clickable v-ripple to="/" class="gt-sm">
         <q-item-section
           v-if="miniState"
           avatar

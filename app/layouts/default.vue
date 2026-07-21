@@ -67,7 +67,7 @@
       v-model="drawer"
       :mini="miniState"
       :mini-width="70"
-      :width="250"
+      :width="$q.screen.gt.sm ? 250 : 300"
       bordered
       show-if-above
       @mouseenter="miniState = false"
