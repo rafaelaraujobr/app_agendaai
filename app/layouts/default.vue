@@ -67,7 +67,7 @@
       mini-to-overlay
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-w'"
     >
-      <sidebar-menu v-model:miniState="miniState" />
+      <Sidebar v-model:miniState="miniState" />
     </q-drawer>
     <q-page-container>
       <slot />
@@ -77,7 +77,7 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import SidebarMenu from "~/components/common/SidebarMenu.vue";
+import Sidebar from "~/components/common/Sidebar.vue";
 const { logout, user } = useAuth();
 const drawer = ref<boolean>(true);
 const miniState = ref<boolean>(true);
