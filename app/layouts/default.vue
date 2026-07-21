@@ -5,7 +5,7 @@
       bordered
       :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-white text-black'"
     >
-      <q-toolbar class="q-px-sm">
+      <q-toolbar>
         <q-btn
           flat
           @click="drawer = !drawer"
