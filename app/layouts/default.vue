@@ -58,7 +58,7 @@
       </q-toolbar>
     </q-header>
     <q-drawer
-      v-model="drawer"
+      v-model="computedDrawer"
       :mini="miniState"
       :width="$q.screen.gt.sm ? 250 : 300"
       bordered
@@ -78,9 +78,19 @@
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
 import Sidebar from "~/components/common/Sidebar.vue";
+
+const $q = useQuasar();
 const { logout, user } = useAuth();
-const drawer = ref<boolean>(true);
-const miniState = ref<boolean>(true);
+const miniState = ref(true);
+const drawer = ref(false);
+const computedDrawer = computed({
+  get: () => {
+    return $q.screen.gt.sm ? true : drawer.value;
+  },
+  set: (value: boolean) => {
+    drawer.value = value;
+  },
+});
 
 const handleLogout = async () => {
   Loading.show();
