@@ -25,7 +25,7 @@
         v-ripple
         clickable
         :active="tab === 'company' && innerTab === section.name"
-        active-class="bg-primary text-white"
+        active-class="active-item"
         @click="emit('select-company', section.name)"
         class="rounded-borders q-mx-sm"
         style="min-height: 38px"
@@ -77,4 +77,16 @@ const companySections: Array<{
 
 :deep(.q-item__section--avatar)
   min-width: 32px
+
+.active-item
+  background-color: $grey-3
+  &::before
+    content: ''
+    position: absolute
+    left: 0
+    top: 50%
+    transform: translateY(-50%)
+    width: 3px
+    height: 25px
+    background-color: $primary
 </style>

@@ -6,13 +6,7 @@
       :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-white text-black'"
     >
       <q-toolbar>
-        <q-btn
-          flat
-          @click="drawer = !drawer"
-          dense
-          icon="menu"
-          padding="sm"
-        />
+        <q-btn flat @click="drawer = !drawer" dense icon="menu" padding="sm" />
         <q-toolbar-title @click="navigateTo('/')" class="cursor-pointer">
           agendaih
         </q-toolbar-title>
@@ -73,7 +67,7 @@
       mini-to-overlay
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-w'"
     >
-      <SideBarMenu v-model:miniState="miniState" />
+      <SidebarMenu v-model:miniState="miniState" />
     </q-drawer>
     <q-page-container>
       <slot />
@@ -83,7 +77,7 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
-import SideBarMenu from "~/components/common/SideBarMenu.vue";
+import SidebarMenu from "~/components/common/SidebarMenu.vue";
 const { logout, user } = useAuth();
 const drawer = ref<boolean>(true);
 const miniState = ref<boolean>(true);

@@ -30,7 +30,7 @@
           :class="{ 'text-grey-6': item.block }"
           class="rounded-borders q-mx-sm"
           style="min-height: 38px"
-          active-class="bg-primary text-white"
+          active-class="active-item"
         >
           <q-item-section avatar>
             <q-icon :name="item.icon" />
@@ -309,4 +309,16 @@ const openPage = () => {
 
 :deep(.q-item__section--avatar)
   min-width: 32px
+
+.active-item
+  background-color: $grey-3
+  &::before
+    content: ''
+    position: absolute
+    left: 0
+    top: 50%
+    transform: translateY(-50%)
+    width: 3px
+    height: 25px
+    background-color: $primary
 </style>
