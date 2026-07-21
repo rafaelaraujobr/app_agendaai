@@ -1,6 +1,6 @@
 <template>
   <nav class="settings-nav">
-    <q-list padding>
+    <q-list padding class="q-gutter-y-sm">
       <q-item-label header class="text-grey-7">Empresa</q-item-label>
       <q-item
         v-for="section in companySections"
@@ -10,6 +10,7 @@
         :active="tab === 'company' && innerTab === section.name"
         active-class="bg-primary text-white"
         @click="emit('select-company', section.name)"
+        class="rounded-borders q-mx-sm"
       >
         <q-item-section avatar>
           <q-icon :name="section.icon" />

@@ -1,14 +1,5 @@
 <template>
-  <q-card flat bordered class="rounded-borders">
-    <q-card-section class="row items-center no-wrap q-col-gutter-md">
-      <div class="col-auto">
-        <q-icon :name="icon" size="md" color="primary" />
-      </div>
-      <div class="col">
-        <div class="text-h6">{{ title }}</div>
-        <div class="text-body2 text-grey-7">{{ subtitle }}</div>
-      </div>
-    </q-card-section>
+  <q-card flat>
     <q-separator />
     <q-card-section>
       <slot />
