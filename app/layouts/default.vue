@@ -67,7 +67,7 @@
       mini-to-overlay
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-w'"
     >
-      <SidebarMenu v-model:miniState="miniState" />
+      <sidebar-menu v-model:miniState="miniState" />
     </q-drawer>
     <q-page-container>
       <slot />
