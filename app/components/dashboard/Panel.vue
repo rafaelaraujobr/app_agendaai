@@ -33,6 +33,10 @@
         :w="item.w"
         :h="item.h"
         :i="item.i"
+        :min-h="item.minH"
+        :min-w="item.minW"
+        :max-h="item.maxH"
+        :max-w="item.maxW"
         drag-allow-from=".vue-draggable-handle"
         drag-ignore-from=".no-drag"
       >
@@ -50,15 +54,11 @@
               </q-toolbar>
             </div>
           </q-slide-transition>
-          <q-card-section class="no-drag">
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
-          </q-card-section>
+          <q-card-section class="no-drag"> </q-card-section>
         </q-card>
       </GridItem>
     </GridLayout>
   </client-only>
-
 </template>
 <script setup lang="ts">
 import {
@@ -70,13 +70,57 @@ import {
 
 const presetLayouts = reactive({
   lg: [
-    { x: 0, y: 0, w: 3, h: 3, i: "0", moved: false },
-    { x: 0, y: 12, w: 12, h: 3, i: "1", moved: false },
-    { x: 3, y: 0, w: 3, h: 3, i: "2", moved: false },
-    { x: 6, y: 0, w: 3, h: 3, i: "3", moved: false },
-    { x: 7, y: 7, w: 5, h: 5, i: "4", moved: false },
+    {
+      x: 0,
+      y: 0,
+      w: 3,
+      h: 3,
+      i: "0",
+      moved: false,
+      minH: 3,
+      minW: 3,
+      maxH: 3,
+      maxW: 3,
+    },
+    {
+      x: 0,
+      y: 11,
+      w: 12,
+      h: 3,
+      i: "1",
+      moved: false,
+      minH: 3,
+      minW: 3,
+      maxH: 3,
+      maxW: 12,
+    },
+    {
+      x: 3,
+      y: 0,
+      w: 3,
+      h: 3,
+      i: "2",
+      moved: false,
+      minH: 3,
+      minW: 3,
+      maxH: 3,
+      maxW: 3,
+    },
+    {
+      x: 6,
+      y: 0,
+      w: 3,
+      h: 3,
+      i: "3",
+      moved: false,
+      minH: 3,
+      minW: 3,
+      maxH: 3,
+      maxW: 3,
+    },
+    { x: 7, y: 7, w: 5, h: 4, i: "4", moved: false },
     { x: 9, y: 0, w: 3, h: 3, i: "5", moved: false },
-    { x: 0, y: 3, w: 7, h: 9, i: "6", moved: false },
+    { x: 0, y: 3, w: 7, h: 8, i: "6", moved: false },
     { x: 7, y: 3, w: 5, h: 4, i: "7", moved: false },
   ],
   md: [

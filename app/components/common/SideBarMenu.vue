@@ -1,18 +1,18 @@
 <template>
   <q-scroll-area :horizontal-thumb-style="{ opacity: '0' }" class="fit">
-    <q-list class="q-gutter-y-sm q-mt-sm">
-      <q-item clickable v-ripple to="/" class="gt-sm">
-        <q-item-section
-          v-if="miniState"
-          avatar
-          class="text-primary text-weight-bold text-h6"
-        >
-          AG
-        </q-item-section>
-        <q-item-section class="text-weight-bold text-h6">
-          agendaih
-        </q-item-section>
-      </q-item>
+    <q-item clickable v-ripple to="/" class="gt-sm">
+      <q-item-section
+        v-if="miniState"
+        avatar
+        class="text-primary text-weight-bold text-h6"
+      >
+        AG
+      </q-item-section>
+      <q-item-section class="text-weight-bold text-h6">
+        agendaih
+      </q-item-section>
+    </q-item>
+    <q-list class="q-gutter-y-sm q-mt-sm" dense>
       <q-item
         v-for="item in menuItems"
         :key="item.label"
@@ -22,6 +22,7 @@
         :disable="item.block"
         :class="{ 'text-grey-6': item.block }"
         class="rounded-borders q-mx-sm"
+        style="min-height: 38px"
         active-class="bg-primary text-white"
       >
         <q-item-section avatar>
@@ -33,26 +34,69 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-list :class="!$q.screen.lt.sm ? 'absolute-bottom' : ''">
+    <q-list
+      :class="!$q.screen.lt.sm ? 'absolute-bottom' : ''"
+      dense
+      class="q-gutter-y-sm q-mb-sm"
+    >
       <q-separator />
-      <q-item clickable v-ripple @click="shareViaWhatsApp">
-        <q-item-section side>
-          <q-icon name="mdi-whatsapp" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Compartilhar</q-item-label>
-        </q-item-section>
+      <q-item
+        :class="
+          miniState
+            ? 'column items-center q-gutter-y-sm'
+            : 'row items-center q-gutter-x-md justify-between'
+        "
+        class="no-wrap"
+      >
+        <q-btn
+          flat
+          icon="mdi-content-copy"
+          color="grey-7"
+          padding="sm"
+          @click="copyLinkToClipboard"
+          dense
+        >
+          <q-tooltip
+            class="text-caption"
+            anchor="center right"
+            self="center left"
+            :offset="[10, 10]"
+            >Copiar link</q-tooltip
+          >
+        </q-btn>
+        <q-btn
+          flat
+          icon="mdi-whatsapp"
+          color="grey-7"
+          padding="sm"
+          dense
+          @click="shareViaWhatsApp"
+        >
+          <q-tooltip
+            class="text-caption"
+            anchor="center right"
+            self="center left"
+            :offset="[10, 10]"
+            >Compartilhar link no WhatsApp</q-tooltip
+          >
+        </q-btn>
+        <q-btn flat icon="mdi-open-in-new" color="grey-7" padding="sm" dense @click="openPage">
+          <q-tooltip
+            class="text-caption"
+            anchor="center right"
+            self="center left"
+            :offset="[10, 10]"
+            >Ir sua página</q-tooltip
+          >
+        </q-btn>
       </q-item>
-      <q-item clickable v-ripple @click="copyLinkToClipboard">
-        <q-item-section side>
-          <q-icon name="mdi-content-copy" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Link de acesso</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-separator />
-      <q-item clickable v-ripple>
+      <q-separator inset />
+      <q-item
+        clickable
+        v-ripple
+        style="min-height: 38px"
+        class="rounded-borders q-mx-sm"
+      >
         <q-item-section avatar>
           <q-avatar v-if="user?.avatarUrl" size="40px">
             <img :src="user?.avatarUrl" alt="Avatar do usuário" />
@@ -205,6 +249,9 @@ const copyLinkToClipboard = () => {
     icon: "mdi-content-copy",
     timeout: 2000,
   });
+};
+const openPage = () => {
+  window.open(url.value, "_blank");
 };
 </script>
 

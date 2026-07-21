@@ -94,7 +94,7 @@
           </q-input>
           <div class="row justify-end items-center" style="margin-top: -20px">
             <router-link
-              to="/auth/forgout-password"
+              to="/auth/forgot-password"
               class="text-primary text-weight-medium text-subtitle2 q-py-sm"
               style="text-decoration: none"
               >Esqueci minha senha</router-link

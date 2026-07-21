@@ -66,7 +66,6 @@
     <q-drawer
       v-model="drawer"
       :mini="miniState"
-      :mini-width="70"
       :width="$q.screen.gt.sm ? 250 : 300"
       bordered
       show-if-above

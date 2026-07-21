@@ -29,7 +29,9 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ pageTitle }}</q-item-label>
-                <q-item-label lines="1" class="text-subtitle2 text-grey-">{{ pageSubtitle }}</q-item-label>
+                <q-item-label lines="1" class="text-subtitle2 text-grey-">{{
+                  pageSubtitle
+                }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-toolbar-title>
@@ -145,5 +147,5 @@ const pageIcon = computed(() => {
 
 <style scoped lang="sass">
 .settings-shell
-  min-height: calc(100vh - 50px)
+  min-height: 100vh
 </style>

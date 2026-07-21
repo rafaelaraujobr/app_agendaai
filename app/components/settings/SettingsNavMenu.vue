@@ -1,6 +1,6 @@
 <template>
   <nav class="settings-nav">
-    <q-list padding class="q-gutter-y-sm">
+    <q-list padding class="q-gutter-y-sm" dense>
       <q-item-label header class="text-grey-7">Empresa</q-item-label>
       <q-item
         v-for="section in companySections"
@@ -11,6 +11,7 @@
         active-class="bg-primary text-white"
         @click="emit('select-company', section.name)"
         class="rounded-borders q-mx-sm"
+        style="min-height: 38px"
       >
         <q-item-section avatar>
           <q-icon :name="section.icon" />
