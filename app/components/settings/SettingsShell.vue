@@ -29,7 +29,7 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ pageTitle }}</q-item-label>
-                <q-item-label lines="1" class="text-subtitle2 text-grey-6">{{ pageSubtitle }}</q-item-label>
+                <q-item-label lines="1" class="text-subtitle2 text-grey-">{{ pageSubtitle }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-toolbar-title>
