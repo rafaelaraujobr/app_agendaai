@@ -6,4 +6,4 @@ allowBuilds:
   prisma: true
   unrs-resolver: true
 minimumReleaseAgeExclude:
-  - quasar@2.21.0
+  - quasar@2.21.0 || 2.22.0
