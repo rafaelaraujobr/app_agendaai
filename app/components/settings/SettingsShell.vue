@@ -2,11 +2,10 @@
   <q-layout view="hHh Lpr lff" container class="settings-shell">
     <q-drawer
       v-model="settingsDrawer"
-      show-if-above
       :side="$q.screen.lt.md ? 'right' : 'left'"
       :width="$q.screen.lt.md ? 300 : 260"
       :breakpoint="768"
-      bordered
+      :bordered="!$q.screen.lt.sm"
       :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-1'"
     >
       <q-scroll-area class="fit">

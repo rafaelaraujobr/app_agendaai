@@ -31,6 +31,7 @@
           :label="$q.screen.lt.sm ? '' : 'Copiar URL'"
           color="primary"
           no-caps
+          v-if="!$q.screen.lt.sm"
         >
           <q-tooltip>Copiar URL</q-tooltip>
         </q-btn>
