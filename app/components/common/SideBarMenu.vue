@@ -1,5 +1,8 @@
 <template>
-  <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: '0' }">
+  <q-scroll-area
+    :horizontal-thumb-style="{ opacity: '0' }"
+    style="height: calc(100vh - 150px)"
+  >
     <q-list class="q-gutter-y-sm">
       <q-item clickable v-ripple to="/">
         <q-item-section
@@ -33,84 +36,82 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-list class="absolute-bottom">
-      <q-separator />
-      <q-item-label header>Links </q-item-label>
-      <q-item clickable v-ripple @click="shareViaWhatsApp">
-        <q-item-section side>
-          <q-icon name="mdi-whatsapp" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Compartilhar</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item clickable v-ripple @click="copyLinkToClipboard">
-        <q-item-section side>
-          <q-icon name="mdi-content-copy" />
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>Link de acesso</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-separator />
-      <q-item clickable v-ripple>
-        <q-item-section avatar>
-          <q-avatar v-if="user?.avatarUrl" size="40px">
-            <img :src="user?.avatarUrl" alt="Avatar do usuário" />
-          </q-avatar>
-          <q-avatar
-            v-else
-            color="primary"
-            text-color="white"
-            font-size="16px"
-            size="30px"
-          >
-            {{ initialLetter }}
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label>
-            {{ user?.firstName }} {{ user?.lastName }}
-          </q-item-label>
-        </q-item-section>
-        <q-menu>
-          <q-list>
-            <q-item clickable>
-              <q-item-section side>
-                <q-avatar v-if="user?.avatarUrl" size="40px">
-                  <img :src="user?.avatarUrl" alt="Avatar do usuário" />
-                </q-avatar>
-                <q-avatar
-                  v-else
-                  color="primary"
-                  text-color="white"
-                  font-size="20px"
-                  size="40px"
-                >
-                  {{ user?.firstName?.charAt(0)
-                  }}{{ user?.lastName?.charAt(0) }}
-                </q-avatar>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>
-                  {{ user?.firstName }} {{ user?.lastName }}
-                </q-item-label>
-                <q-item-label caption>
-                  {{ user?.email }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="handleLogout">
-              <q-item-section side>
-                <q-icon name="logout" />
-              </q-item-section>
-              <q-item-section>Sair</q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-item>
-    </q-list>
   </q-scroll-area>
+  <q-list class="absolute-bottom">
+    <q-separator />
+    <q-item clickable v-ripple @click="shareViaWhatsApp">
+      <q-item-section side>
+        <q-icon name="mdi-whatsapp" />
+      </q-item-section>
+      <q-item-section>
+        <q-item-label>Compartilhar</q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-item clickable v-ripple @click="copyLinkToClipboard">
+      <q-item-section side>
+        <q-icon name="mdi-content-copy" />
+      </q-item-section>
+      <q-item-section>
+        <q-item-label>Link de acesso</q-item-label>
+      </q-item-section>
+    </q-item>
+    <q-separator />
+    <q-item clickable v-ripple>
+      <q-item-section avatar>
+        <q-avatar v-if="user?.avatarUrl" size="40px">
+          <img :src="user?.avatarUrl" alt="Avatar do usuário" />
+        </q-avatar>
+        <q-avatar
+          v-else
+          color="primary"
+          text-color="white"
+          font-size="16px"
+          size="30px"
+        >
+          {{ initialLetter }}
+        </q-avatar>
+      </q-item-section>
+      <q-item-section>
+        <q-item-label>
+          {{ user?.firstName }} {{ user?.lastName }}
+        </q-item-label>
+      </q-item-section>
+      <q-menu>
+        <q-list>
+          <q-item clickable>
+            <q-item-section side>
+              <q-avatar v-if="user?.avatarUrl" size="40px">
+                <img :src="user?.avatarUrl" alt="Avatar do usuário" />
+              </q-avatar>
+              <q-avatar
+                v-else
+                color="primary"
+                text-color="white"
+                font-size="20px"
+                size="40px"
+              >
+                {{ user?.firstName?.charAt(0) }}{{ user?.lastName?.charAt(0) }}
+              </q-avatar>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                {{ user?.firstName }} {{ user?.lastName }}
+              </q-item-label>
+              <q-item-label caption>
+                {{ user?.email }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="handleLogout">
+            <q-item-section side>
+              <q-icon name="logout" />
+            </q-item-section>
+            <q-item-section>Sair</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </q-item>
+  </q-list>
 </template>
 
 <script setup lang="ts">
