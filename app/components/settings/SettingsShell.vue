@@ -28,7 +28,7 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ pageTitle }}</q-item-label>
-                <q-item-label lines="1" class="text-subtitle2 text-grey-">{{
+                <q-item-label lines="1" class="text-subtitle2 text-grey-5">{{
                   pageSubtitle
                 }}</q-item-label>
               </q-item-section>

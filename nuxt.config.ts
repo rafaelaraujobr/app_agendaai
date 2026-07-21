@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: [
+        "@quasar/quasar-ui-qcalendar",
         "vue-advanced-cropper",
         "vue3-lottie",
         "vue-qrcode-reader",

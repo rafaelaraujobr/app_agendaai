@@ -8,21 +8,27 @@
     @save="$emit('save')"
   >
     <div class="row items-center justify-between q-col-gutter-md q-mb-md">
-      <div class="col-12 col-md-auto">
-        <q-btn-toggle
-          v-model="device"
+      <div class="col-12 col-md-auto q-gutter-x-sm">
+        <q-btn
+          v-for="option in deviceOptions"
+          :key="option.value"
+          :label="option.label"
+          :icon="option.icon"
+          :color="device === option.value ? 'primary' : 'grey-2'"
+          :text-color="device === option.value ? 'white' : 'grey-8'"
           no-caps
           unelevated
-          toggle-color="primary"
-          color="grey-2"
-          text-color="grey-8"
-          :options="deviceOptions"
+          dense
+          padding="sm md"
+          @click="device = option.value as ShowcaseDevice"
         />
       </div>
       <div class="col-12 col-md-auto">
         <q-btn
           label="Restaurar padrão"
           icon="mdi-restore"
+          dense
+          padding="sm md"
           outline
           no-caps
           color="primary"
@@ -39,8 +45,8 @@
       As alterações desta aba afetam apenas {{ currentDeviceLabel }}.
     </q-banner>
 
-    <div class="row q-col-gutter-lg">
-      <div class="col-12 col-lg-3">
+    <div class="row q-col-gutter-md">
+      <div class="col-12 col-lg-4">
         <q-list bordered separator class="rounded-borders">
           <q-item-label header>Cards disponíveis</q-item-label>
           <q-item
@@ -54,6 +60,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label>{{ card.label }}</q-item-label>
+              <q-item-label caption>{{ card.description }}</q-item-label>
             </q-item-section>
             <q-item-section side>
               <q-toggle
@@ -63,16 +70,28 @@
               />
             </q-item-section>
           </q-item>
+          <q-separator inset />
+          <q-item class="bg-grey-1 q-ma-sm rounded-borders">
+            <q-item-section  side>
+              <q-icon name="mdi-drag" color="primary" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label lines="2"
+                >Arraste os cards para reordenar e organizar a
+                página.</q-item-label
+              >
+            </q-item-section>
+          </q-item>
         </q-list>
       </div>
 
-      <div class="col-12 col-lg-9">
+      <div class="col-12 col-lg-8">
         <div class="text-caption text-grey-7 q-mb-sm">
           Pré-visualização: {{ currentDeviceLabel }} ·
           {{ currentColumns }} colunas
         </div>
         <div
-          class="layout-preview-shell bg-grey-2 q-pa-sm rounded-borders"
+          class="layout-preview-shell bg-grey-2 rounded-borders"
           :class="`layout-preview-shell--${device}`"
         >
           <ClientOnly>

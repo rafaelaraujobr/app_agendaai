@@ -3,31 +3,37 @@ export const showcaseCardDefinitions = [
     id: "address",
     label: "Endereço",
     icon: "mdi-map-marker-outline",
+    description: "Exibe o endereço do seu negócio.",
   },
   {
     id: "working-hours",
     label: "Horário de funcionamento",
     icon: "mdi-clock-outline",
+    description: "Exibe o horário horario de atendimento",
   },
   {
     id: "banner",
     label: "Banner",
     icon: "mdi-image-outline",
+    description: "Exibe o banner do seu negócio.",
   },
   {
     id: "promotions",
     label: "Itens em destaque",
     icon: "mdi-star-circle-outline",
+    description: "Destaque produtos ou serviços",
   },
   {
     id: "featured-services",
     label: "Serviços em destaque",
     icon: "mdi-star-outline",
+    description: "Lista dos principais serviços ",
   },
   {
     id: "booking-cta",
     label: "Botão de agendamento",
     icon: "mdi-calendar-check-outline",
+    description: "Botão para agendar um horario",
   },
 ] as const;
 
