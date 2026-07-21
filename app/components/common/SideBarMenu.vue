@@ -51,7 +51,7 @@
       <q-separator />
       <q-item
         :class="
-          miniState
+          miniState && !$q.screen.lt.sm
             ? 'column items-center q-gutter-y-sm'
             : 'row items-center q-gutter-x-md justify-between'
         "
@@ -111,7 +111,7 @@
         clickable
         v-ripple
         style="min-height: 38px"
-        class="rounded-borders q-mx-sm"
+        class="rounded-borders q-mx-sm gt-sm"
       >
         <q-item-section avatar>
           <q-avatar v-if="user?.avatarUrl" size="40px">

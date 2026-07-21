@@ -68,7 +68,6 @@
       :mini="miniState"
       :width="$q.screen.gt.sm ? 250 : 300"
       bordered
-      show-if-above
       @mouseenter="miniState = false"
       @mouseleave="miniState = true"
       mini-to-overlay
