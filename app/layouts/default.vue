@@ -11,7 +11,7 @@
           @click="drawer = !drawer"
           dense
           icon="menu"
-          padding="sm md"
+          padding="sm"
         />
         <q-toolbar-title @click="navigateTo('/')" class="cursor-pointer">
           agendaih
