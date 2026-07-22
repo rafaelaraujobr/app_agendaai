@@ -1,15 +1,15 @@
 <template>
   <q-toolbar class="gt-xs">
     <q-toolbar-title>
-      <q-icon name="mdi-view-dashboard" />
+      <!-- <q-icon name="mdi-view-dashboard" /> -->
       Dashboard
     </q-toolbar-title>
-    <q-toggle
+    <!-- <q-toggle
       :model-value="isEditMode"
       :label="isEditMode ? 'Modo edição ativo' : 'Editar painel'"
       color="primary"
       @update:model-value="toggleEditMode"
-    />
+    /> -->
   </q-toolbar>
   <client-only>
     <GridLayout
@@ -86,12 +86,12 @@ const presetLayouts = reactive({
       x: 0,
       y: 11,
       w: 12,
-      h: 3,
+      h: 4,
       i: "1",
       moved: false,
       minH: 3,
       minW: 3,
-      maxH: 3,
+      maxH: 4,
       maxW: 12,
     },
     {

@@ -72,7 +72,7 @@
           </q-item>
           <q-separator inset />
           <q-item class="bg-grey-1 q-ma-sm rounded-borders">
-            <q-item-section  side>
+            <q-item-section side>
               <q-icon name="mdi-drag" color="primary" />
             </q-item-section>
             <q-item-section>
@@ -124,7 +124,8 @@
                     class="layout-drag-handle bg-grey-1"
                     style="min-height: 50px"
                   >
-                    <q-toolbar-title class="text-subtitle2 text-weight-bold">
+                    <q-icon name="mdi-drag" color="primary" size="24px" />
+                    <q-toolbar-title class="text-subtitle2 text-weight-medium">
                       {{ getCardDefinition(item.i).label }}
                     </q-toolbar-title>
                     <q-btn
@@ -147,8 +148,10 @@
                     </div>
 
                     <template v-else-if="item.i === 'address'">
-                      <div class="text-weight-bold">Onde estamos</div>
-                      <div class="text-caption text-grey-7 q-mt-xs">
+                      <div class="text-weight-medium text-subtitle2 q-px-md">
+                        Onde estamos
+                      </div>
+                      <div class="text-caption text-grey-7 q-mt-xs q-px-md">
                         {{
                           [
                             model.address.street,
@@ -159,7 +162,7 @@
                             .join(", ") || "Endereço do estabelecimento"
                         }}
                       </div>
-                      <div class="preview-map bg-grey-3 q-mt-sm">
+                      <div class="preview-map bg-grey-3 q-mt-sm q-mx-md">
                         <q-icon
                           name="mdi-map-marker"
                           color="primary"
@@ -169,15 +172,18 @@
                     </template>
 
                     <template v-else-if="item.i === 'working-hours'">
-                      <div class="text-weight-bold">Horário de atendimento</div>
+                      <div class="text-weight-medium text-subtitle2 q-px-md">
+                        Horário de atendimento
+                      </div>
                       <q-list dense separator class="q-mt-xs">
                         <q-item
-                          v-for="hour in model.workingHours.slice(0, 4)"
+                          v-for="hour in model.workingHours"
                           :key="hour.dayOfWeek"
                           class="q-px-none"
                         >
                           <q-item-section>
-                            <q-skeleton type="text" width="75px" />
+                            <q-skeleton type="text" width="50%" />
+                            <q-skeleton type="text" width="25%" />
                           </q-item-section>
                           <q-item-section side>
                             <span class="text-caption">
@@ -189,18 +195,20 @@
                     </template>
 
                     <template v-else-if="item.i === 'featured-services'">
-                      <div class="text-weight-bold">Serviços em destaque</div>
-                      <div
-                        v-for="index in 3"
-                        :key="index"
-                        class="row items-center no-wrap q-gutter-sm q-mt-sm"
-                      >
-                        <q-avatar rounded color="grey-3" size="34px" />
-                        <div class="col">
-                          <q-skeleton type="text" width="70%" />
-                          <q-skeleton type="text" width="35%" />
-                        </div>
+                      <div class="text-weight-medium text-subtitle2 q-px-md">
+                        Serviços em destaque
                       </div>
+                      <q-item v-for="index in 3" :key="index">
+                        <q-item-section side>
+                          <q-avatar rounded color="grey-3" size="34px" />
+                        </q-item-section>
+                        <q-item-section>
+                          <div class="col">
+                            <q-skeleton type="text" width="90%" />
+                            <q-skeleton type="text" width="35%" />
+                          </div>
+                        </q-item-section>
+                      </q-item>
                     </template>
 
                     <template v-else-if="item.i === 'promotions'">
@@ -230,11 +238,9 @@
                       </div>
                       <q-btn
                         label="Agendar agora"
-                        icon="mdi-calendar-check"
                         color="primary"
                         unelevated
                         no-caps
-                        size="sm"
                         class="q-mt-sm"
                       />
                     </div>
@@ -352,6 +358,7 @@ const resetCurrentLayout = () => {
 </script>
 
 <style scoped lang="sass">
+
 .layout-preview-shell
   width: 100%
   margin-inline: auto
@@ -371,6 +378,12 @@ const resetCurrentLayout = () => {
   min-height: 260px
   background-image: linear-gradient(to right, rgb(0 0 0 / 5%) 1px, transparent 1px), linear-gradient(to bottom, rgb(0 0 0 / 5%) 1px, transparent 1px)
   background-size: 48px 56px
+
+:deep(.vgl-layout)
+    --vgl-resizer-size: 12px;
+    --vgl-resizer-border-width: 3px;
+    --vgl-resizer-border-color: var(--q-primary);
+
 
 :deep(.vgl-item:not(.vgl-item--placeholder))
   overflow: hidden
