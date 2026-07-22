@@ -18,6 +18,7 @@ export default defineNuxtConfig({
         "vue3-lottie",
         "vue-qrcode-reader",
         "vuedraggable",
+        "vue-echarts",
       ],
     },
   },
@@ -31,6 +32,7 @@ export default defineNuxtConfig({
     "nuxt-nodemailer",
     "@nuxtjs/leaflet",
     "nuxt-qrcode",
+    "nuxt-echarts",
   ],
   fonts: {
     defaults: {

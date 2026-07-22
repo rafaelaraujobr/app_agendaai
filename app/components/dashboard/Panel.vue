@@ -55,7 +55,16 @@
             </div>
           </q-slide-transition>
           <q-card-section class="no-drag">
-            <component :is="widgetRegistry[item.widget as WidgetKey]" />
+            <component
+              :is="widgetRegistry[item.widget as WidgetKey]"
+              :data="{
+                total: 18,
+                confirmed: 14,
+                pending: 3,
+                completed: 1,
+                variation: 12,
+              }"
+            />
           </q-card-section>
         </q-card>
       </GridItem>
