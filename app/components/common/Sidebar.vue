@@ -1,14 +1,14 @@
 <template>
   <q-scroll-area :horizontal-thumb-style="{ opacity: '0' }" class="fit">
     <q-item clickable v-ripple to="/" class="gt-sm">
-      <q-item-section v-if="miniState" avatar>
+      <q-item-section avatar class="q-mini-drawer-only">
         <q-img
           :src="logotipoUrl"
           fit="contain"
           style="width: 38px; height: 38px"
         />
       </q-item-section>
-      <q-item-section v-else class="text-center full-width">
+      <q-item-section class="text-center full-width q-mini-drawer-hide">
         <q-img :src="logoUrl" fit="contain" style="width: 100%; height: 32px" />
       </q-item-section>
     </q-item>
@@ -38,9 +38,9 @@
           <q-item-section> {{ item.label }} </q-item-section>
           <q-item-section side v-if="item.block">
             <q-chip
+              square
               label="PRO"
               color="secondary-light"
-              dense
               class="text-caption text-secondary text-weight-medium"
             />
           </q-item-section>
@@ -121,7 +121,7 @@
       <q-item
         clickable
         v-ripple
-        style="min-height: 38px"
+        style="min-height: 50px"
         class="rounded-borders q-mx-sm"
       >
         <q-item-section avatar>
@@ -142,6 +142,12 @@
           <q-item-label>
             {{ user?.firstName }} {{ user?.lastName }}
           </q-item-label>
+          <q-item-label caption>
+            {{ user?.email }}
+          </q-item-label>
+        </q-item-section>
+        <q-item-section side>
+          <q-icon name="mdi-chevron-down" />
         </q-item-section>
         <q-menu>
           <q-list>
@@ -170,11 +176,115 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
+            <q-card flat bordered class="q-ma-sm q-mini-drawer-hide">
+              <div class="row items-center justify-between q-pa-sm">
+                <div class="col-auto">
+                  <q-item-label class="text-weight-medium text-subtitle2"
+                    >Uso do plano</q-item-label
+                  >
+                </div>
+                <div class="col-auto">
+                  <q-chip
+                    square
+                    class="text-caption"
+                    label="Gratuito"
+                    text-color="secondary"
+                    color="secondary-light"
+                  />
+                </div>
+              </div>
+              <q-list>
+                <q-item>
+                  <q-item-section avatar>
+                    <q-avatar
+                      color="primary-light"
+                      text-color="primary"
+                      icon="mdi-briefcase-outline"
+                      rounded
+                      size="32px"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label
+                      class="text-weight-medium text-caption row items-center justify-between"
+                    >
+                      <span>Serviços</span>
+                      <span>3/10</span>
+                    </q-item-label>
+                    <q-linear-progress
+                      stripe
+                      rounded
+                      size="md"
+                      :value="servicesProgress"
+                      color="primary"
+                      class="q-mt-xs"
+                    />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section side>
+                    <q-avatar
+                      color="primary-light"
+                      text-color="primary"
+                      icon="mdi-briefcase-outline"
+                      rounded
+                      size="32px"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label
+                      class="text-weight-medium text-caption row items-center justify-between"
+                    >
+                      <span>Colaboradores</span>
+                      <span>1/1</span>
+                    </q-item-label>
+                    <q-linear-progress
+                      stripe
+                      rounded
+                      size="md"
+                      :value="servicesProgress"
+                      color="primary"
+                      class="q-mt-xs"
+                    />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section side>
+                    <q-avatar
+                      color="primary-light"
+                      text-color="primary"
+                      icon="mdi-briefcase-outline"
+                      rounded
+                      size="32px"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label
+                      class="text-weight-medium text-caption row items-center justify-between"
+                    >
+                      <span>Agendamentos no mês</span>
+                      <span>3/30</span>
+                    </q-item-label>
+                    <q-linear-progress
+                      stripe
+                      rounded
+                      size="md"
+                      :value="servicesProgress"
+                      color="primary"
+                      class="q-mt-xs"
+                    />
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card>
             <q-item clickable v-close-popup @click="handleLogout">
               <q-item-section side>
                 <q-icon name="logout" />
               </q-item-section>
               <q-item-section>Sair</q-item-section>
+              <q-item-section side>
+                <q-icon name="mdi-chevron-right" />
+              </q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -189,7 +299,7 @@ import logotipoUrl from "~/assets/images/logotipo.svg";
 import logoUrl from "~/assets/images/logo.svg";
 const { logout, user } = useAuth();
 const miniState = defineModel<boolean>("miniState", { required: true });
-
+const servicesProgress = ref(0.5);
 const initialLetter = computed(() => {
   return user.value?.firstName?.charAt(0) || user.value?.lastName?.charAt(0);
 });

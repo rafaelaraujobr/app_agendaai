@@ -4,7 +4,7 @@
       <q-form @submit.prevent="handleLogin">
         <q-card-section>
           <div class="row items-center justify-center">
-            <q-img :src="logoUrl" fit="contain" style="width: 100%; height: 32px" />
+            <q-img :src="logoUrl" fit="contain" style="width: 100%; height: 50px" />
             <div class="col-12 text-center text-weight-medium text-h6 q-mt-sm">
               Bem-vindo de volta !
             </div>
