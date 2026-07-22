@@ -60,7 +60,7 @@
     <q-drawer
       v-model="computedDrawer"
       :mini="miniState"
-      :width="$q.screen.gt.sm ? 280 : 300"
+      :width="$q.screen.gt.sm ? 256 : 300"
       bordered
       @mouseenter="miniState = false"
       @mouseleave="miniState = true"

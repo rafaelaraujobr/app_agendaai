@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <q-banner rounded class="bg-blue-1 text-primary q-mb-md">
+    <q-banner rounded class="bg-primary-light text-primary q-mb-md">
       <template #avatar>
         <q-icon name="mdi-gesture-tap-hold" />
       </template>
@@ -71,7 +71,7 @@
             </q-item-section>
           </q-item>
           <q-separator inset />
-          <q-item class="bg-grey-1 q-ma-sm rounded-borders">
+          <q-item class="bg-primary-light text-primary q-ma-sm rounded-borders">
             <q-item-section side>
               <q-icon name="mdi-drag" color="primary" />
             </q-item-section>

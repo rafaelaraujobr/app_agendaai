@@ -3,7 +3,12 @@
 $colors: (
 primary: $primary,
 primary-light: $primary-light,
+primary-dark: $primary-dark,
+
 secondary: $secondary,
+secondary-light: $secondary-light,
+secondary-dark: $secondary-dark,
+
 accent: $accent,
 positive: $positive,
 negative: $negative,
@@ -26,12 +31,12 @@ grey-9: $grey-9,
 )
 
 @each $color, $value in $colors
-    .bg-#{$color}
-        background-color: $value
+  .bg-#{$color}
+    background-color: $value
     .text-#{$color}
-        color: $value
+      color: $value
     .border-#{$color}
-        border-color: $value
+      border-color: $value
 
 $border-sizes: (
   "xs": 1px,
@@ -41,8 +46,8 @@ $border-sizes: (
   "xl": 16px,
 )
 @each $size, $value in $border-sizes
-    @each $color, $color-value in $colors
-        .border-#{$size}-#{$color}
-            border-width: $value
-            border-style: solid
-            border-color: $color-value
+  @each $color, $color-value in $colors
+    .border-#{$size}-#{$color}
+      border-width: $value
+      border-style: solid
+      border-color: $color-value

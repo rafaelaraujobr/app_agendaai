@@ -5,7 +5,7 @@
         <q-img
           :src="logotipoUrl"
           fit="contain"
-          style="width: 36px; height: 36px"
+          style="width: 38px; height: 38px"
         />
       </q-item-section>
       <q-item-section v-else class="text-center full-width">
@@ -37,7 +37,12 @@
           </q-item-section>
           <q-item-section> {{ item.label }} </q-item-section>
           <q-item-section side v-if="item.block">
-            <q-chip label="PRO" color="grey-3" dense class="text-caption" />
+            <q-chip
+              label="PRO"
+              color="secondary-light"
+              dense
+              class="text-caption text-secondary text-weight-medium"
+            />
           </q-item-section>
         </q-item>
         <q-separator inset v-if="item.type === 'separator' && !miniState" />
@@ -69,9 +74,6 @@
           dense
           no-caps
         >
-          <div class="items-center text-caption q-pt-sm text-dark" v-if="!miniState">
-            Copiar
-          </div>
           <q-tooltip
             class="text-caption"
             anchor="center right"
@@ -89,9 +91,6 @@
           @click="shareViaWhatsApp"
           no-caps
         >
-          <div class="items-center text-caption q-pt-sm text-dark" v-if="!miniState">
-            WhatsApp
-          </div>
           <q-tooltip
             class="text-caption"
             anchor="center right"
@@ -109,9 +108,6 @@
           @click="openPage"
           no-caps
         >
-          <div class="items-center text-caption q-pt-sm text-dark" v-if="!miniState">
-            Abrir
-          </div>
           <q-tooltip
             class="text-caption"
             anchor="center right"

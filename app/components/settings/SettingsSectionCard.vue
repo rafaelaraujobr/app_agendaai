@@ -8,7 +8,7 @@
     <q-card-actions align="right" class="q-pa-md">
       <q-btn
         :label="saveLabel"
-        color="primary"
+        color="secondary"
         dense
         padding="sm md"
         unelevated

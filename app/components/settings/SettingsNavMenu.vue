@@ -4,7 +4,7 @@
       <q-item class="q-mb-lg">
         <q-item-section avatar>
           <q-avatar
-            color="grey-3"
+            color="primary-light"
             text-color="primary"
             icon="mdi-cog-outline"
             rounded
@@ -31,7 +31,7 @@
         style="min-height: 38px"
       >
         <q-item-section avatar>
-          <q-icon :name="section.icon" />
+          <q-icon :name="section.icon" color="primary" />
         </q-item-section>
         <q-item-section>{{ section.label }}</q-item-section>
       </q-item>

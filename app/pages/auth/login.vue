@@ -4,8 +4,9 @@
       <q-form @submit.prevent="handleLogin">
         <q-card-section>
           <div class="row items-center justify-center">
+            <q-img :src="logoUrl" fit="contain" style="width: 100%; height: 32px" />
             <div class="col-12 text-center text-weight-medium text-h6 q-mt-sm">
-              Bem-vindo de volta!
+              Bem-vindo de volta !
             </div>
           </div>
         </q-card-section>
@@ -19,7 +20,7 @@
               :icon="`img:${googleIcon}`"
               :loading="isLoadingGoogle"
               padding="sm md"
-              class="bg-white full-width border-xs-grey-3 text-primary"
+              class="bg-white full-width border-xs-grey-3 "
               @click="handleGoogleLogin"
             >
               <template #loading>
@@ -34,18 +35,6 @@
                 </div>
               </template>
             </q-btn>
-
-            <!-- <q-btn
-              no-caps
-              unelevated
-              dense
-              label="Continuar com apple"
-              icon="mdi-apple"
-              padding="sm md"
-              disabled
-              class="bg-white full-width border-xs-grey-3 text-primary"
-              @click="handleGoogleLogin"
-            /> -->
           </div>
           <div class="row items-center q-mt-md">
             <div class="col-5"><q-separator /></div>
@@ -130,7 +119,7 @@
 definePageMeta({
   layout: "auth",
 });
-
+import logoUrl from "~/assets/images/logo.svg";
 import googleIcon from "~/assets/images/google.svg";
 import GoogleAnimation from "~/assets/lotties/google.json";
 import useAuth from "~/composables/useAuth";
