@@ -4,12 +4,12 @@
       <!-- <q-icon name="mdi-view-dashboard" /> -->
       Dashboard
     </q-toolbar-title>
-    <!-- <q-toggle
+    <q-toggle
       :model-value="isEditMode"
       :label="isEditMode ? 'Modo edição ativo' : 'Editar painel'"
       color="primary"
       @update:model-value="toggleEditMode"
-    /> -->
+    />
   </q-toolbar>
   <client-only>
     <GridLayout
@@ -47,52 +47,79 @@
                 class="vue-draggable-handle dashboard-edit-toolbar bg-grey-2 q-pr-none"
                 style="min-height: 30px"
               >
-                <q-toolbar-title class="text-subtitle1">
-                  Painel {{ item.i }}
+                <q-icon name="mdi-drag" size="sm" />
+                <q-toolbar-title class="text-subtitle2">
+                  {{ item.title }}
                 </q-toolbar-title>
-                <q-btn class="no-drag" flat dense icon="more_vert" />
               </q-toolbar>
             </div>
           </q-slide-transition>
-          <q-card-section class="no-drag"> </q-card-section>
+          <q-card-section class="no-drag">
+            <component :is="widgetRegistry[item.widget as WidgetKey]" />
+          </q-card-section>
         </q-card>
       </GridItem>
     </GridLayout>
   </client-only>
 </template>
 <script setup lang="ts">
+import TodayAppointmentsCard from "./widgets/TodayAppointmentsCard.vue";
+import ProjectedRevenueCard from "./widgets/ProjectedRevenueCard.vue";
+import OccupancyRateCard from "./widgets/OccupancyRateCard.vue";
+import CancellationsCard from "./widgets/CancellationsCard.vue";
+import DailySchedule from "./widgets/DailySchedule.vue";
+import AppointmentStatusChart from "./widgets/AppointmentStatusChart.vue";
+import TopServicesChart from "./widgets/TopServicesChart.vue";
+import AppointmentsRevenueChart from "./widgets/AppointmentsRevenueChart.vue";
 import {
   GridItem,
   GridLayout,
   type Breakpoint,
   type Layout,
+  type LayoutItem,
 } from "grid-layout-plus";
 
-const presetLayouts = reactive({
+type WidgetKey =
+  | "todayAppointments"
+  | "projectedRevenue"
+  | "occupancyRate"
+  | "cancellations"
+  | "dailySchedule"
+  | "appointmentStatus"
+  | "topServices"
+  | "appointmentsRevenue";
+
+export interface PanelLayoutItem extends LayoutItem {
+  widget?: WidgetKey;
+  title?: string;
+}
+
+const widgetRegistry = {
+  todayAppointments: TodayAppointmentsCard,
+  projectedRevenue: ProjectedRevenueCard,
+  occupancyRate: OccupancyRateCard,
+  cancellations: CancellationsCard,
+  dailySchedule: DailySchedule,
+  appointmentStatus: AppointmentStatusChart,
+  topServices: TopServicesChart,
+  appointmentsRevenue: AppointmentsRevenueChart,
+} satisfies Record<WidgetKey, Component>;
+
+const presetLayouts = reactive<Record<Breakpoint, PanelLayoutItem[]>>({
   lg: [
     {
       x: 0,
       y: 0,
       w: 3,
       h: 3,
-      i: "0",
+      i: "1",
       moved: false,
       minH: 3,
       minW: 3,
       maxH: 3,
       maxW: 3,
-    },
-    {
-      x: 0,
-      y: 11,
-      w: 12,
-      h: 4,
-      i: "1",
-      moved: false,
-      minH: 3,
-      minW: 3,
-      maxH: 4,
-      maxW: 12,
+      widget: "todayAppointments",
+      title: "Serviços mais agendados",
     },
     {
       x: 3,
@@ -105,6 +132,8 @@ const presetLayouts = reactive({
       minW: 3,
       maxH: 3,
       maxW: 3,
+      widget: "projectedRevenue",
+      title: "Receita prevista",
     },
     {
       x: 6,
@@ -117,11 +146,63 @@ const presetLayouts = reactive({
       minW: 3,
       maxH: 3,
       maxW: 3,
+      widget: "occupancyRate",
+      title: "Taxa de ocupação",
     },
-    { x: 7, y: 7, w: 5, h: 4, i: "4", moved: false },
-    { x: 9, y: 0, w: 3, h: 3, i: "5", moved: false },
-    { x: 0, y: 3, w: 7, h: 8, i: "6", moved: false },
-    { x: 7, y: 3, w: 5, h: 4, i: "7", moved: false },
+    {
+      x: 9,
+      y: 0,
+      w: 3,
+      h: 3,
+      i: "4",
+      moved: false,
+      widget: "cancellations",
+      title: "Cancelamentos e faltas",
+    },
+    {
+      x: 0,
+      y: 3,
+      w: 7,
+      h: 8,
+      i: "5",
+      moved: false,
+      widget: "dailySchedule",
+      title: "Agenda de hoje",
+    },
+    {
+      x: 7,
+      y: 3,
+      w: 5,
+      h: 4,
+      i: "6",
+      moved: false,
+      widget: "appointmentStatus",
+      title: "Status dos agendamentos",
+    },
+    {
+      x: 7,
+      y: 7,
+      w: 5,
+      h: 4,
+      i: "7",
+      moved: false,
+      widget: "topServices",
+      title: "Serviços mais agendados",
+    },
+    {
+      x: 0,
+      y: 11,
+      w: 12,
+      h: 4,
+      i: "8",
+      moved: false,
+      minH: 3,
+      minW: 3,
+      maxH: 4,
+      maxW: 12,
+      widget: "appointmentsRevenue",
+      title: "Evolução de agendamentos e receita",
+    },
   ],
   md: [
     { x: 0, y: 0, w: 5, h: 3, i: "0" },
