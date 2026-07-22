@@ -6,9 +6,9 @@
       :class="$q.dark.isActive ? 'bg-grey-9 text-white' : 'bg-white text-black'"
     >
       <q-toolbar>
-        <q-btn flat @click="drawer = !drawer" dense icon="menu" padding="sm" />
+        <q-btn flat @click="drawer = !drawer" dense icon="menu" padding="sm" color="primary" />
         <q-toolbar-title @click="navigateTo('/')" class="cursor-pointer">
-          agendaih
+          <q-img :src="logoUrl" fit="contain" style="width: 100%; height: 32px" />
         </q-toolbar-title>
         <div class="q-gutter-x-sm">
           <q-btn dense padding="sm" flat>
@@ -60,7 +60,7 @@
     <q-drawer
       v-model="computedDrawer"
       :mini="miniState"
-      :width="$q.screen.gt.sm ? 250 : 300"
+      :width="$q.screen.gt.sm ? 280 : 300"
       bordered
       @mouseenter="miniState = false"
       @mouseleave="miniState = true"
@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
 import Sidebar from "~/components/common/Sidebar.vue";
-
+import logoUrl from "~/assets/images/logo.svg";
 const $q = useQuasar();
 const { logout, user } = useAuth();
 const miniState = ref(true);

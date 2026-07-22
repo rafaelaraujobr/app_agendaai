@@ -79,7 +79,7 @@ const companySections: Array<{
   min-width: 32px
 
 .active-item
-  background-color: $grey-3
+  background-color: $primary-light
   &::before
     content: ''
     position: absolute

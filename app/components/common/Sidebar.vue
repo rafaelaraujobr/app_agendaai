@@ -1,15 +1,15 @@
 <template>
   <q-scroll-area :horizontal-thumb-style="{ opacity: '0' }" class="fit">
     <q-item clickable v-ripple to="/" class="gt-sm">
-      <q-item-section
-        v-if="miniState"
-        avatar
-        class="text-primary text-weight-bold text-h6"
-      >
-        AG
+      <q-item-section v-if="miniState" avatar>
+        <q-img
+          :src="logotipoUrl"
+          fit="contain"
+          style="width: 36px; height: 36px"
+        />
       </q-item-section>
-      <q-item-section class="text-weight-bold text-h6">
-        agendaih
+      <q-item-section v-else class="text-center full-width">
+        <q-img :src="logoUrl" fit="contain" style="width: 100%; height: 32px" />
       </q-item-section>
     </q-item>
     <q-list class="q-gutter-y-sm q-mt-sm" dense>
@@ -33,7 +33,7 @@
           active-class="active-item"
         >
           <q-item-section avatar>
-            <q-icon :name="item.icon" />
+            <q-icon :name="item.icon" color="primary" />
           </q-item-section>
           <q-item-section> {{ item.label }} </q-item-section>
           <q-item-section side v-if="item.block">
@@ -49,22 +49,29 @@
       class="q-gutter-y-sm q-mb-sm"
     >
       <q-separator />
+      <q-item-label header class="text-grey-7 q-py-xs" dense
+        >Links úteis</q-item-label
+      >
       <q-item
         :class="
           miniState && !$q.screen.lt.sm
             ? 'column items-center q-gutter-y-sm'
-            : 'row items-center q-gutter-x-md justify-between'
+            : 'row items-center q-gutter-x-xs justify-between'
         "
         class="no-wrap"
       >
         <q-btn
           flat
           icon="mdi-content-copy"
-          color="grey-7"
+          color="primary"
           padding="sm"
           @click="copyLinkToClipboard"
           dense
+          no-caps
         >
+          <div class="items-center text-caption q-pt-sm text-dark" v-if="!miniState">
+            Copiar
+          </div>
           <q-tooltip
             class="text-caption"
             anchor="center right"
@@ -76,11 +83,15 @@
         <q-btn
           flat
           icon="mdi-whatsapp"
-          color="grey-7"
+          color="primary"
           padding="sm"
           dense
           @click="shareViaWhatsApp"
+          no-caps
         >
+          <div class="items-center text-caption q-pt-sm text-dark" v-if="!miniState">
+            WhatsApp
+          </div>
           <q-tooltip
             class="text-caption"
             anchor="center right"
@@ -92,11 +103,15 @@
         <q-btn
           flat
           icon="mdi-open-in-new"
-          color="grey-7"
+          color="primary"
           padding="sm"
           dense
           @click="openPage"
+          no-caps
         >
+          <div class="items-center text-caption q-pt-sm text-dark" v-if="!miniState">
+            Abrir
+          </div>
           <q-tooltip
             class="text-caption"
             anchor="center right"
@@ -174,6 +189,8 @@
 
 <script setup lang="ts">
 import useAuth from "~/composables/useAuth";
+import logotipoUrl from "~/assets/images/logotipo.svg";
+import logoUrl from "~/assets/images/logo.svg";
 const { logout, user } = useAuth();
 const miniState = defineModel<boolean>("miniState", { required: true });
 
@@ -311,7 +328,7 @@ const openPage = () => {
   min-width: 32px
 
 .active-item
-  background-color: $grey-3
+  background-color: $primary-light
   &::before
     content: ''
     position: absolute
