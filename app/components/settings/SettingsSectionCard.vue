@@ -1,7 +1,7 @@
 <template>
   <q-card flat>
     <q-separator />
-    <q-card-section>
+    <q-card-section class="q-pa-sm">
       <slot />
     </q-card-section>
     <q-separator />
