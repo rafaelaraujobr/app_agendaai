@@ -31,9 +31,9 @@ export const showcaseCardDefinitions = [
   },
   {
     id: "booking-cta",
-    label: "Botão de agendamento",
+    label: "Agendar",
     icon: "mdi-calendar-check-outline",
-    description: "Botão para agendar um horario",
+    description: "Botão para agendar um horário",
   },
 ] as const;
 

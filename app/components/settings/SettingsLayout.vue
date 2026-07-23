@@ -47,13 +47,16 @@
 
     <div class="row q-col-gutter-md">
       <div class="col-12 col-lg-3">
-        <q-list bordered separator class="rounded-borders">
+        <q-list bordered class="rounded-borders">
           <q-item-label header>Cards disponíveis</q-item-label>
+          <q-separator inset />
           <q-item
             v-for="card in showcaseCardDefinitions"
             :key="card.id"
             tag="label"
             clickable
+            class="q-py-sm rounded-borders q-mx-sm"
+            dense
           >
             <q-item-section side>
               <q-icon :name="card.icon" color="primary" />
@@ -70,7 +73,7 @@
               />
             </q-item-section>
           </q-item>
-          <q-separator inset />
+          <q-separator inset spaced />
           <q-item class="bg-primary-light text-primary q-ma-sm rounded-borders">
             <q-item-section side>
               <q-icon name="mdi-drag" color="primary" />
