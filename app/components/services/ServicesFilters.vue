@@ -1,72 +1,73 @@
 <template>
-  <q-card flat>
-    <q-card-section class="q-pa-md">
-      <div class="row q-col-gutter-md items-center justify-between">
-        <div class="col-12 col-md">
-          <q-input
-            v-model="model.search"
-            label="Buscar serviço"
-            placeholder="Nome ou descrição"
-            outlined
-            dense
-            clearable
-            bg-color="grey-1"
-            debounce="400"
-            style="max-width: 400px"
-            @update:model-value="model.page = 1"
-          >
-            <template #prepend>
-              <q-icon name="mdi-magnify" />
-            </template>
-          </q-input>
-        </div>
+  <div class="services-filters">
+    <div class="row q-col-gutter-md items-center">
+      <div class="col-12 col-md-5">
+        <q-input
+          v-model="model.search"
+          placeholder="Buscar serviço..."
+          outlined
+          dense
+          clearable
+          bg-color="white"
+          debounce="400"
+          @update:model-value="model.page = 1"
+        >
+          <template #prepend>
+            <q-icon name="mdi-magnify" />
+          </template>
+        </q-input>
       </div>
 
-      <div class="row items-center q-gutter-sm q-mt-sm">
-        <q-chip
-          icon="mdi-check-circle-outline"
-          color="green-1"
-          text-color="green-9"
+      <div class="col-12 col-sm-6 col-md-3">
+        <q-select
+          v-model="model.status"
+          :options="statusOptions"
+          label="Status"
+          outlined
           dense
-        >
-          {{ activeCount }} ativo(s)
-        </q-chip>
-        <q-chip icon="mdi-format-list-bulleted" color="grey-2" dense>
-          {{ total }} serviço(s)
-        </q-chip>
+          emit-value
+          map-options
+          bg-color="white"
+          dropdown-icon="mdi-chevron-down"
+          @update:model-value="model.page = 1"
+        />
       </div>
-    </q-card-section>
-  </q-card>
-  <div class="row justify-between">
-    <q-tabs v-model="model.status" inline-label align="left" no-caps>
-      <q-tab name="all" label="Todos" />
-      <q-tab name="active" label="Ativos" />
-      <q-tab name="inactive" label="Inativos" />
-    </q-tabs>
-    <q-select
-      v-model="sort"
-      label="Ordenar por"
-      :options="sortOptions"
-      borderless
-      style="min-width: 140px"
-      dense
-      emit-value
-      map-options
-      dropdown-icon="mdi-chevron-down"
-    />
+
+      <div class="col-12 col-sm-6 col-md-4">
+        <q-select
+          v-model="sort"
+          label="Ordenar serviços"
+          :options="sortOptions"
+          outlined
+          dense
+          emit-value
+          map-options
+          bg-color="white"
+          dropdown-icon="mdi-chevron-down"
+        />
+      </div>
+    </div>
+
+    <div class="text-caption text-grey-7 q-mt-md">
+      {{ total }} serviço(s) • {{ activeCount }} ativo(s) •
+      {{ inactiveCount }} inativo(s)
+    </div>
   </div>
-  <q-separator />
 </template>
 
 <script setup lang="ts">
 import type { ServiceFilters } from "~/types/service";
 
-defineProps<{
+const props = defineProps<{
   total: number;
   activeCount: number;
 }>();
 
 const model = defineModel<ServiceFilters>({ required: true });
+
+const inactiveCount = computed(() =>
+  Math.max(props.total - props.activeCount, 0),
+);
 
 const statusOptions = [
   { label: "Todos", value: "all" },
@@ -96,3 +97,8 @@ const sort = computed({
   },
 });
 </script>
+
+<style scoped lang="sass">
+.services-filters
+  padding: 16px 0 8px
+</style>

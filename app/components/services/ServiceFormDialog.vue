@@ -3,7 +3,7 @@
     <q-card class="service-form-card">
       <q-toolbar class="q-px-md">
         <q-toolbar-title>
-          {{ service ? "Editar serviço" : "Adicionar serviço" }}
+          {{ service ? "Editar serviço" : "Novo serviço" }}
         </q-toolbar-title>
         <q-btn
           icon="mdi-close"
@@ -19,6 +19,10 @@
 
       <q-form ref="formRef" class="col scroll" @submit.prevent="submit">
         <q-card-section class="q-pa-lg">
+          <div class="text-subtitle1 text-weight-medium q-mb-md">
+            Informações do serviço
+          </div>
+
           <div class="row q-col-gutter-md">
             <div class="col-12">
               <label class="text-weight-medium text-subtitle2 q-mb-xs">
@@ -38,6 +42,7 @@
                 @update:model-value="updateName"
               />
             </div>
+
             <div class="col-12 col-sm-6">
               <label class="text-weight-medium text-subtitle2 q-mb-xs">
                 Preço
@@ -113,6 +118,15 @@
             label="Serviço ativo e visível para os clientes"
             color="positive"
           />
+
+          <q-separator class="q-my-lg" />
+
+          <ServiceHighlightFields
+            v-model="form.highlight"
+            :service-image-url="servicePreviewImage"
+            :max-highlights="maxHighlights"
+            :disable-toggle="highlightToggleDisabled"
+          />
         </q-card-section>
 
         <q-separator />
@@ -129,7 +143,7 @@
             @click="dialogModel = false"
           />
           <q-btn
-            :label="service ? 'Salvar' : 'Criar'"
+            :label="service ? 'Salvar' : 'Criar serviço'"
             color="primary"
             no-caps
             dense
@@ -151,15 +165,18 @@ import type {
   ServiceIllustration,
 } from "~/types/service";
 import {
-  createEmptyServiceForm,
   normalizeServiceSlug,
 } from "~/composables/useServices";
 import ServiceImageField from "./ServiceImageField.vue";
+import ServiceHighlightFields from "./ServiceHighlightFields.vue";
 
 const props = defineProps<{
   service: ManagedService | null;
   illustrations: ServiceIllustration[];
   saving: boolean;
+  initialForm: ServiceForm;
+  maxHighlights: number;
+  hasReachedHighlightLimit: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -168,36 +185,41 @@ const emit = defineEmits<{
 
 const dialogModel = defineModel<boolean>({ required: true });
 const formRef = ref<{ validate: () => Promise<boolean> } | null>(null);
-const form = reactive<ServiceForm>(createEmptyServiceForm());
+const form = reactive<ServiceForm>(props.initialForm);
 const hasCustomSlug = ref(false);
 const imageFieldKey = ref(0);
 
-const hydrateForm = () => {
-  const service = props.service;
-  Object.assign(
-    form,
-    service
-      ? {
-          name: service.name,
-          slug: service.slug,
-          description: service.description || "",
-          imageUrl: service.imageUrl,
-          imageFile: null,
-          illustrationId: service.illustrationId,
-          durationMinutes: service.durationMinutes,
-          price: service.price,
-          isActive: service.isActive,
-          position: service.position,
-        }
-      : createEmptyServiceForm(),
+const highlightToggleDisabled = computed(
+  () =>
+    props.hasReachedHighlightLimit &&
+    !props.service?.highlight &&
+    !form.highlight.enabled,
+);
+
+const servicePreviewImage = computed(() => {
+  if (form.imageUrl) return form.imageUrl;
+  const illustration = props.illustrations.find(
+    (item) => item.id === form.illustrationId,
   );
-  hasCustomSlug.value = Boolean(service);
+  return illustration?.imageUrl ?? null;
+});
+
+const hydrateForm = () => {
+  Object.assign(form, structuredClone(toRaw(props.initialForm)));
+  hasCustomSlug.value = Boolean(props.service);
   imageFieldKey.value += 1;
 };
 
 watch(dialogModel, (isOpen) => {
   if (isOpen) hydrateForm();
 });
+
+watch(
+  () => props.initialForm,
+  () => {
+    if (dialogModel.value) hydrateForm();
+  },
+);
 
 const updateName = (value: string | number | null) => {
   form.name = String(value ?? "");
@@ -206,24 +228,21 @@ const updateName = (value: string | number | null) => {
   }
 };
 
-const updateSlug = (value: string | number | null) => {
-  hasCustomSlug.value = true;
-  form.slug = normalizeServiceSlug(String(value ?? ""));
-};
-
 const submit = async () => {
   const isValid = await formRef.value?.validate();
   if (!isValid) return;
-  emit("save", { ...form }, props.service?.id ?? null);
+  emit("save", structuredClone(toRaw(form)), props.service?.id ?? null);
 };
 </script>
 
 <style scoped lang="sass">
 .service-form-card
-  max-height: 92vh;
-
+  max-height: 92vh
+  width: 760px
+  max-width: 95vw
 
 @media (max-width: 599px)
   .service-form-card
-    max-height: none;
+    max-height: none
+    width: 100%
 </style>

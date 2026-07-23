@@ -83,10 +83,12 @@ export const serviceHighlightService = {
     }
 
     await requireOwnedService(context.id, payload.serviceId);
-    const position =
-      await serviceHighlightRepository.getAvailablePosition(context.id);
 
     try {
+      const position =
+        payload.position ??
+        (await serviceHighlightRepository.getAvailablePosition(context.id));
+
       return formatHighlight(
         await serviceHighlightRepository.create(
           context.id,

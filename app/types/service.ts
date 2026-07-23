@@ -4,6 +4,17 @@ export type ServiceIllustration = {
   imageUrl: string;
 };
 
+export type ServiceHighlightSummary = {
+  id: string;
+  title: string;
+  description: string | null;
+  imageUrl: string | null;
+  position: number;
+  isActive: boolean;
+  startsAt: string | null;
+  endsAt: string | null;
+};
+
 export type ManagedService = {
   id: string;
   name: string;
@@ -17,8 +28,22 @@ export type ManagedService = {
   isActive: boolean;
   position: number;
   appointmentCount: number;
+  highlight: ServiceHighlightSummary | null;
   createdAt: string;
   updatedAt: string;
+};
+
+export type ServiceHighlightForm = {
+  enabled: boolean;
+  id: string | null;
+  title: string;
+  description: string;
+  imageUrl: string | null;
+  imageFile: File | null;
+  isActive: boolean;
+  startsAt: string;
+  endsAt: string;
+  position: number | null;
 };
 
 export type ServiceForm = {
@@ -32,6 +57,7 @@ export type ServiceForm = {
   price: number | null;
   isActive: boolean;
   position: number | null;
+  highlight: ServiceHighlightForm;
 };
 
 export type ServiceFilters = {
@@ -56,6 +82,8 @@ export type ServicesResponse = {
     totalCount: number;
     maxServices: number | null;
     plan: "FREE" | "PRO" | "PREMIUM" | null;
+    highlightsCount: number;
+    maxHighlights: number;
   };
 };
 
@@ -80,16 +108,6 @@ export type ServiceHighlight = {
       imageUrl: string;
     } | null;
   };
-};
-
-export type ServiceHighlightForm = {
-  serviceId: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  isActive: boolean;
-  startsAt: string;
-  endsAt: string;
 };
 
 export type ServiceHighlightsResponse = {

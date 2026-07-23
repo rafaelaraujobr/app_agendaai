@@ -54,6 +54,12 @@ export const serviceHighlightRepository = {
       select: managedHighlightSelect,
     }),
 
+  findByServiceId: async (businessId: string, serviceId: string) =>
+    await prisma.serviceHighlight.findFirst({
+      where: { businessId, serviceId },
+      select: managedHighlightSelect,
+    }),
+
   serviceBelongsToBusiness: async (businessId: string, serviceId: string) =>
     await prisma.service.findFirst({
       where: { id: serviceId, businessId },

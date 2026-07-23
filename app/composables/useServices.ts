@@ -2,6 +2,9 @@ import type {
   ManagedService,
   ServiceFilters,
   ServiceForm,
+  ServiceHighlight,
+  ServiceHighlightForm,
+  ServiceHighlightsResponse,
   ServiceIllustration,
   ServicesResponse,
 } from "~/types/service";
@@ -18,6 +21,19 @@ type ApiError = {
 type UploadResponse = {
   url: string;
 };
+
+export const createEmptyHighlightForm = (): ServiceHighlightForm => ({
+  enabled: false,
+  id: null,
+  title: "",
+  description: "",
+  imageUrl: null,
+  imageFile: null,
+  isActive: true,
+  startsAt: "",
+  endsAt: "",
+  position: null,
+});
 
 export const normalizeServiceSlug = (value: string) =>
   value
@@ -39,6 +55,7 @@ export const createEmptyServiceForm = (): ServiceForm => ({
   price: null,
   isActive: true,
   position: null,
+  highlight: createEmptyHighlightForm(),
 });
 
 const getErrorMessage = (error: unknown, fallback: string) => {
@@ -55,14 +72,24 @@ const getErrorMessage = (error: unknown, fallback: string) => {
 const getServiceEndpoint = (id: string) =>
   `/api/services/${encodeURIComponent(id)}` as "/api/services/:id";
 
+const toApiDate = (value: string) =>
+  value ? new Date(value).toISOString() : null;
+
+const toLocalDate = (value: string | null) =>
+  value ? new Date(value).toISOString().slice(0, 16) : "";
+
 export const useServices = () => {
   const $q = useQuasar();
   const services = ref<ManagedService[]>([]);
+  const highlights = ref<ServiceHighlight[]>([]);
   const illustrations = ref<ServiceIllustration[]>([]);
   const isLoading = ref(false);
+  const isLoadingHighlights = ref(false);
   const isSaving = ref(false);
   const isReordering = ref(false);
+  const isReorderingHighlights = ref(false);
   const deletingId = ref<string | null>(null);
+  const removingHighlightId = ref<string | null>(null);
 
   const filters = ref<ServiceFilters>({
     page: 1,
@@ -85,12 +112,18 @@ export const useServices = () => {
     totalCount: 0,
     maxServices: null,
     plan: null,
+    highlightsCount: 0,
+    maxHighlights: 5,
   });
 
   const hasReachedLimit = computed(
     () =>
       summary.maxServices !== null &&
       summary.totalCount >= summary.maxServices,
+  );
+
+  const hasReachedHighlightLimit = computed(
+    () => summary.highlightsCount >= summary.maxHighlights,
   );
 
   const loadServices = async (append = false) => {
@@ -128,6 +161,28 @@ export const useServices = () => {
     }
   };
 
+  const loadHighlights = async () => {
+    isLoadingHighlights.value = true;
+    try {
+      const response = await $fetch<ServiceHighlightsResponse>(
+        "/api/services/highlights",
+      );
+      highlights.value = response.highlights;
+      summary.highlightsCount = response.highlights.length;
+      summary.maxHighlights = response.maxHighlights;
+    } catch (error) {
+      $q.notify({
+        type: "negative",
+        message: getErrorMessage(error, "Não foi possível carregar os destaques"),
+      });
+    } finally {
+      isLoadingHighlights.value = false;
+    }
+  };
+
+  const fetchServiceById = async (id: string) =>
+    await $fetch<ManagedService>(getServiceEndpoint(id));
+
   const loadIllustrations = async () => {
     try {
       const response = await $fetch<{
@@ -156,6 +211,58 @@ export const useServices = () => {
     return response.url;
   };
 
+  const saveHighlight = async (
+    serviceId: string,
+    servicePayload: {
+      name: string;
+      description: string | null;
+      imageUrl: string | null;
+      illustrationImageUrl?: string | null;
+    },
+    highlight: ServiceHighlightForm,
+  ) => {
+    if (!highlight.enabled) {
+      if (highlight.id) {
+        await $fetch(`/api/services/highlights/${highlight.id}`, {
+          method: "DELETE",
+        });
+      }
+      return;
+    }
+
+    const highlightImageUrl = highlight.imageFile
+      ? await uploadImage(highlight.imageFile)
+      : highlight.imageUrl;
+
+    const fallbackImage =
+      servicePayload.imageUrl || servicePayload.illustrationImageUrl || null;
+
+    const body = {
+      serviceId,
+      title: highlight.title.trim() || servicePayload.name,
+      description:
+        highlight.description.trim() || servicePayload.description || null,
+      imageUrl: highlightImageUrl || fallbackImage || null,
+      isActive: highlight.isActive,
+      startsAt: toApiDate(highlight.startsAt),
+      endsAt: toApiDate(highlight.endsAt),
+      ...(highlight.position === null ? {} : { position: highlight.position }),
+    };
+
+    if (highlight.id) {
+      await $fetch(`/api/services/highlights/${highlight.id}`, {
+        method: "PATCH",
+        body,
+      });
+      return;
+    }
+
+    await $fetch("/api/services/highlights", {
+      method: "POST",
+      body,
+    });
+  };
+
   const saveService = async (
     form: ServiceForm,
     serviceId: string | null,
@@ -177,16 +284,35 @@ export const useServices = () => {
         ...(form.position === null ? {} : { position: form.position }),
       };
 
+      let savedServiceId = serviceId;
+
       if (serviceId) {
         await $fetch(getServiceEndpoint(serviceId), {
           method: "PATCH",
           body: payload,
         });
       } else {
-        await $fetch("/api/services", {
+        const created = await $fetch<{ service: ManagedService }>("/api/services", {
           method: "POST",
           body: payload,
         });
+        savedServiceId = created.service.id;
+      }
+
+      if (savedServiceId) {
+        const illustration = illustrations.value.find(
+          (item) => item.id === form.illustrationId,
+        );
+        await saveHighlight(
+          savedServiceId,
+          {
+            name: payload.name,
+            description: payload.description,
+            imageUrl: payload.imageUrl,
+            illustrationImageUrl: illustration?.imageUrl ?? null,
+          },
+          form.highlight,
+        );
       }
 
       $q.notify({
@@ -195,7 +321,7 @@ export const useServices = () => {
           ? "Serviço atualizado com sucesso"
           : "Serviço criado com sucesso",
       });
-      await loadServices();
+      await Promise.all([loadServices(), loadHighlights()]);
       return true;
     } catch (error) {
       $q.notify({
@@ -220,7 +346,7 @@ export const useServices = () => {
       if (services.value.length === 1 && filters.value.page > 1) {
         filters.value.page -= 1;
       }
-      await loadServices();
+      await Promise.all([loadServices(), loadHighlights()]);
       return true;
     } catch (error) {
       $q.notify({
@@ -245,12 +371,67 @@ export const useServices = () => {
           ? "Serviço desativado"
           : "Serviço ativado",
       });
-      await loadServices();
+      await Promise.all([loadServices(), loadHighlights()]);
     } catch (error) {
       $q.notify({
         type: "negative",
         message: getErrorMessage(error, "Não foi possível alterar o serviço"),
       });
+    }
+  };
+
+  const reorderHighlights = async (ordered: ServiceHighlight[]) => {
+    highlights.value = ordered.map((highlight, position) => ({
+      ...highlight,
+      position,
+    }));
+
+    isReorderingHighlights.value = true;
+    try {
+      await $fetch("/api/services/highlights/reorder", {
+        method: "PATCH",
+        body: {
+          items: highlights.value.map((highlight) => ({
+            id: highlight.id,
+            position: highlight.position,
+          })),
+        },
+      });
+      $q.notify({
+        type: "positive",
+        message: "Ordem dos destaques atualizada",
+      });
+    } catch (error) {
+      $q.notify({
+        type: "negative",
+        message: getErrorMessage(
+          error,
+          "Não foi possível reordenar os destaques",
+        ),
+      });
+      await loadHighlights();
+    } finally {
+      isReorderingHighlights.value = false;
+    }
+  };
+
+  const removeHighlight = async (highlight: ServiceHighlight) => {
+    removingHighlightId.value = highlight.id;
+    try {
+      await $fetch(`/api/services/highlights/${highlight.id}`, {
+        method: "DELETE",
+      });
+      $q.notify({ type: "positive", message: "Destaque removido" });
+      await Promise.all([loadServices(), loadHighlights()]);
+      return true;
+    } catch (error) {
+      $q.notify({
+        type: "negative",
+        message: getErrorMessage(error, "Não foi possível remover o destaque"),
+      });
+      return false;
+    } finally {
+      removingHighlightId.value = null;
     }
   };
 
@@ -292,22 +473,69 @@ export const useServices = () => {
     }
   };
 
+  const buildServiceForm = (
+    service?: ManagedService | null,
+    options?: { enableHighlight?: boolean },
+  ): ServiceForm => {
+    if (!service) {
+      const form = createEmptyServiceForm();
+      if (options?.enableHighlight) form.highlight.enabled = true;
+      return form;
+    }
+
+    const highlight = service.highlight;
+    return {
+      name: service.name,
+      slug: service.slug,
+      description: service.description || "",
+      imageUrl: service.imageUrl,
+      imageFile: null,
+      illustrationId: service.illustrationId,
+      durationMinutes: service.durationMinutes,
+      price: service.price,
+      isActive: service.isActive,
+      position: service.position,
+      highlight: {
+        enabled: Boolean(highlight) || Boolean(options?.enableHighlight),
+        id: highlight?.id ?? null,
+        title: highlight?.title ?? "",
+        description: highlight?.description ?? "",
+        imageUrl: highlight?.imageUrl ?? null,
+        imageFile: null,
+        isActive: highlight?.isActive ?? true,
+        startsAt: toLocalDate(highlight?.startsAt ?? null),
+        endsAt: toLocalDate(highlight?.endsAt ?? null),
+        position: highlight?.position ?? null,
+      },
+    };
+  };
+
   return {
     services,
+    highlights,
     illustrations,
     filters,
     pagination,
     summary,
     hasReachedLimit,
+    hasReachedHighlightLimit,
     isLoading,
+    isLoadingHighlights,
     isSaving,
     isReordering,
+    isReorderingHighlights,
     deletingId,
+    removingHighlightId,
     loadServices,
+    loadHighlights,
     loadIllustrations,
+    fetchServiceById,
     saveService,
     deleteService,
     toggleService,
     reorderServices,
+    reorderHighlights,
+    removeHighlight,
+    buildServiceForm,
   };
 };

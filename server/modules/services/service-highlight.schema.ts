@@ -11,6 +11,7 @@ const highlightBaseSchema = z.object({
   isActive: z.boolean(),
   startsAt: z.iso.datetime().nullable(),
   endsAt: z.iso.datetime().nullable(),
+  position: z.number().int().min(0).max(4).optional(),
 });
 
 const validatePeriod = (

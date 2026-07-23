@@ -1,3 +1,4 @@
+import { serviceHighlightRepository } from "./service-highlight.repository";
 import {
   serviceRepository,
   type ManagedService,
@@ -15,12 +16,31 @@ type ManagementContext = NonNullable<
   Awaited<ReturnType<typeof serviceRepository.findManagementContext>>
 >;
 
-const formatService = (service: ManagedService) => ({
-  ...service,
-  price: Number(service.price),
-  appointmentCount: service._count.appointments,
-  _count: undefined,
-});
+const formatServiceHighlight = (
+  highlight: ManagedService["serviceHighlights"][number] | undefined,
+) => {
+  if (!highlight) return null;
+  return {
+    id: highlight.id,
+    title: highlight.title,
+    description: highlight.description,
+    imageUrl: highlight.imageUrl,
+    position: highlight.position,
+    isActive: highlight.isActive,
+    startsAt: highlight.startsAt?.toISOString() ?? null,
+    endsAt: highlight.endsAt?.toISOString() ?? null,
+  };
+};
+
+const formatService = (service: ManagedService) => {
+  const { serviceHighlights, _count, ...rest } = service;
+  return {
+    ...rest,
+    price: Number(rest.price),
+    appointmentCount: _count.appointments,
+    highlight: formatServiceHighlight(serviceHighlights[0]),
+  };
+};
 
 const requireManagementContext = async (
   userId: string,
@@ -85,6 +105,7 @@ export const serviceService = {
     const result = await serviceRepository.list(context.id, filters);
     const maxServices =
       context.businessSubscription?.plan.maxServices ?? null;
+    const highlightsCount = await serviceHighlightRepository.count(context.id);
 
     return {
       services: result.services.map(formatService),
@@ -99,6 +120,8 @@ export const serviceService = {
         totalCount: result.totalCount,
         maxServices,
         plan: context.businessSubscription?.plan.code ?? null,
+        highlightsCount,
+        maxHighlights: 5,
       },
     };
   },

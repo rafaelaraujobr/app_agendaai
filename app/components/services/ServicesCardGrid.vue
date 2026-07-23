@@ -76,7 +76,15 @@
                     :text-color="service.isActive ? 'green-9' : 'grey-8'"
                     :label="service.isActive ? 'Ativo' : 'Inativo'"
                   />
-                  <span class="q-ml-xs">Posição {{ service.position }}</span>
+                  <q-badge
+                    v-if="service.highlight"
+                    color="orange-1"
+                    text-color="orange-9"
+                    class="q-ml-xs"
+                  >
+                    <q-icon name="mdi-star" size="12px" class="q-mr-xs" />
+                    Em destaque
+                  </q-badge>
                 </q-item-label>
               </q-item-section>
 
@@ -118,6 +126,18 @@
                         <q-item-section>
                           {{ service.isActive ? "Desativar" : "Ativar" }}
                         </q-item-section>
+                      </q-item>
+                      <q-item
+                        v-if="!service.highlight && service.isActive"
+                        v-close-popup
+                        clickable
+                        :disable="!canHighlight"
+                        @click="$emit('highlight', service)"
+                      >
+                        <q-item-section avatar>
+                          <q-icon name="mdi-star-outline" />
+                        </q-item-section>
+                        <q-item-section>Destacar</q-item-section>
                       </q-item>
                       <q-separator />
                       <q-item
@@ -179,12 +199,14 @@ defineProps<{
   reorderEnabled: boolean;
   reordering: boolean;
   hasMore: boolean;
+  canHighlight: boolean;
 }>();
 
 const emit = defineEmits<{
   edit: [service: ManagedService];
   delete: [service: ManagedService];
   toggle: [service: ManagedService];
+  highlight: [service: ManagedService];
   reorder: [services: ManagedService[]];
   loadMore: [done: (stop?: boolean) => void];
 }>();

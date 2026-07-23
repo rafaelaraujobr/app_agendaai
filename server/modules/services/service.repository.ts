@@ -33,6 +33,22 @@ const managedServiceSelect = {
       appointments: true,
     },
   },
+  serviceHighlights: {
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      imageUrl: true,
+      position: true,
+      isActive: true,
+      startsAt: true,
+      endsAt: true,
+    },
+    take: 1,
+    orderBy: {
+      createdAt: "asc",
+    },
+  },
 } satisfies Prisma.ServiceSelect;
 
 export type ManagedService = Prisma.ServiceGetPayload<{
