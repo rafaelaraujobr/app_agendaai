@@ -13,13 +13,10 @@
           <q-card
             v-if="summary.maxServices !== null"
             flat
-            bordered
             class="plan-card rounded-borders"
           >
             <q-card-section class="q-pa-sm q-px-md">
-              <div class="text-caption text-grey-7">
-                Plano {{ planLabel }}
-              </div>
+              <div class="text-caption text-grey-7">Plano {{ planLabel }}</div>
               <div class="text-body2 text-weight-medium">
                 {{ summary.totalCount }} de {{ summary.maxServices }} serviços
                 utilizados
@@ -53,15 +50,16 @@
       </div>
     </div>
 
-    <q-card flat bordered class="rounded-borders services-card">
+    <q-card flat class="rounded-borders services-card">
       <q-tabs
         v-model="activeTab"
         align="left"
         no-caps
         inline-label
+        dense
         active-color="primary"
         indicator-color="primary"
-        class="services-tabs q-px-md"
+        class="services-tabs"
       >
         <q-tab
           name="services"
@@ -78,49 +76,45 @@
       <q-separator />
 
       <template v-if="activeTab === 'services'">
-        <q-card-section class="q-pb-none">
-          <ServicesFilters
-            v-model="filters"
-            :total="summary.totalCount"
-            :active-count="summary.activeCount"
-          />
-        </q-card-section>
+        <ServicesFilters
+          v-model="filters"
+          :total="summary.totalCount"
+          :active-count="summary.activeCount"
+        />
 
         <q-separator />
 
-        <q-card-section class="q-pt-none q-px-none">
-          <ServicesTable
-            v-if="$q.screen.gt.sm"
-            v-model="services"
-            :loading="isLoading"
-            :deleting-id="deletingId"
-            :reorder-enabled="canReorder"
-            :reordering="isReordering"
-            :can-highlight="!hasReachedHighlightLimit"
-            @edit="openEdit"
-            @delete="confirmDelete"
-            @toggle="toggleService"
-            @highlight="openHighlight"
-            @reorder="reorderServices"
-          />
+        <ServicesTable
+          v-if="$q.screen.gt.sm"
+          v-model="services"
+          :loading="isLoading"
+          :deleting-id="deletingId"
+          :reorder-enabled="canReorder"
+          :reordering="isReordering"
+          :can-highlight="!hasReachedHighlightLimit"
+          @edit="openEdit"
+          @delete="confirmDelete"
+          @toggle="toggleService"
+          @highlight="openHighlight"
+          @reorder="reorderServices"
+        />
 
-          <ServicesCardGrid
-            v-else
-            v-model="services"
-            :loading="isLoading"
-            :deleting-id="deletingId"
-            :reorder-enabled="canReorder"
-            :reordering="isReordering"
-            :has-more="hasMoreServices"
-            :can-highlight="!hasReachedHighlightLimit"
-            @edit="openEdit"
-            @delete="confirmDelete"
-            @toggle="toggleService"
-            @highlight="openHighlight"
-            @reorder="reorderServices"
-            @load-more="loadMoreServices"
-          />
-        </q-card-section>
+        <ServicesCardGrid
+          v-else
+          v-model="services"
+          :loading="isLoading"
+          :deleting-id="deletingId"
+          :reorder-enabled="canReorder"
+          :reordering="isReordering"
+          :has-more="hasMoreServices"
+          :can-highlight="!hasReachedHighlightLimit"
+          @edit="openEdit"
+          @delete="confirmDelete"
+          @toggle="toggleService"
+          @highlight="openHighlight"
+          @reorder="reorderServices"
+          @load-more="loadMoreServices"
+        />
 
         <q-card-section
           v-if="$q.screen.gt.sm && pagination.totalPages > 1"
@@ -169,7 +163,7 @@
       class="bg-green-1 text-green-10 q-mt-md tip-banner"
     >
       <template #avatar>
-        <q-icon name="mdi-lightbulb-on-outline" color="green-8" />
+        <q-icon name="mdi-lightbulb-on-outline" color="green-8" size="30px" />
       </template>
       <div class="text-body2">
         Dica: arraste os serviços para definir a ordem em que aparecerão na sua
@@ -191,7 +185,11 @@
 </template>
 
 <script setup lang="ts">
-import type { ManagedService, ServiceForm, ServiceHighlight } from "~/types/service";
+import type {
+  ManagedService,
+  ServiceForm,
+  ServiceHighlight,
+} from "~/types/service";
 import ServiceFormDialog from "~/components/services/ServiceFormDialog.vue";
 import ServiceHighlightsTable from "~/components/services/ServiceHighlightsTable.vue";
 import ServicesCardGrid from "~/components/services/ServicesCardGrid.vue";
@@ -268,9 +266,7 @@ const canReorder = computed(
     filters.value.sortOrder === "asc",
 );
 
-const hasMoreServices = computed(
-  () => pagination.page < pagination.totalPages,
-);
+const hasMoreServices = computed(() => pagination.page < pagination.totalPages);
 
 const openCreate = () => {
   if (hasReachedLimit.value) {

@@ -26,7 +26,7 @@
           <q-item class="highlight-item q-py-md rounded-borders q-mb-sm">
             <q-item-section side>
               <q-icon
-                name="mdi-drag-vertical"
+                name="mdi-drag"
                 color="grey-6"
                 size="20px"
                 class="highlight-drag-handle cursor-grab"
