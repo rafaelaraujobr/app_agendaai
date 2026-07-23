@@ -7,21 +7,21 @@ export const showcaseCardDefinitions = [
   },
   {
     id: "working-hours",
-    label: "Horário de funcionamento",
+    label: "Horário",
     icon: "mdi-clock-outline",
-    description: "Exibe o horário horario de atendimento",
+    description: "Exibe o horário de atendimento",
   },
   {
     id: "banner",
     label: "Banner",
     icon: "mdi-image-outline",
-    description: "Exibe o banner do seu negócio.",
+    description: "Banner de destaque",
   },
   {
     id: "promotions",
-    label: "Itens em destaque",
+    label: "Destaque",
     icon: "mdi-star-circle-outline",
-    description: "Destaque produtos ou serviços",
+    description: "Serviços em destaque",
   },
   {
     id: "featured-services",

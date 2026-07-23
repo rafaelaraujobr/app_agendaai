@@ -46,7 +46,7 @@
     </q-banner>
 
     <div class="row q-col-gutter-md">
-      <div class="col-12 col-lg-4">
+      <div class="col-12 col-lg-3">
         <q-list bordered separator class="rounded-borders">
           <q-item-label header>Cards disponíveis</q-item-label>
           <q-item
@@ -85,7 +85,7 @@
         </q-list>
       </div>
 
-      <div class="col-12 col-lg-8">
+      <div class="col-12 col-lg-9">
         <div class="text-caption text-grey-7 q-mb-sm">
           Pré-visualização: {{ currentDeviceLabel }} ·
           {{ currentColumns }} colunas

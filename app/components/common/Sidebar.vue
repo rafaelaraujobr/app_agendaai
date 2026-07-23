@@ -201,6 +201,7 @@
                       text-color="primary"
                       icon="mdi-briefcase-outline"
                       rounded
+                      font-size="20px"
                       size="32px"
                     />
                   </q-item-section>
@@ -226,8 +227,9 @@
                     <q-avatar
                       color="primary-light"
                       text-color="primary"
-                      icon="mdi-briefcase-outline"
+                      icon="mdi-account-group-outline"
                       rounded
+                      font-size="20px"
                       size="32px"
                     />
                   </q-item-section>
@@ -242,7 +244,7 @@
                       stripe
                       rounded
                       size="md"
-                      :value="servicesProgress"
+                      :value="colaboratorsProgress"
                       color="primary"
                       class="q-mt-xs"
                     />
@@ -253,8 +255,9 @@
                     <q-avatar
                       color="primary-light"
                       text-color="primary"
-                      icon="mdi-briefcase-outline"
+                      icon="mdi-calendar-outline"
                       rounded
+                      font-size="20px"
                       size="32px"
                     />
                   </q-item-section>
@@ -269,7 +272,7 @@
                       stripe
                       rounded
                       size="md"
-                      :value="servicesProgress"
+                      :value="appointmentsProgress"
                       color="primary"
                       class="q-mt-xs"
                     />
@@ -300,6 +303,8 @@ import logoUrl from "~/assets/images/logo.svg";
 const { logout, user } = useAuth();
 const miniState = defineModel<boolean>("miniState", { required: true });
 const servicesProgress = ref(0.5);
+const colaboratorsProgress = ref(1);
+const appointmentsProgress = ref(0.5);
 const initialLetter = computed(() => {
   return user.value?.firstName?.charAt(0) || user.value?.lastName?.charAt(0);
 });
