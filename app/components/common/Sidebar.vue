@@ -54,9 +54,6 @@
       class="q-gutter-y-sm q-mb-sm"
     >
       <q-separator />
-      <q-item-label header class="text-grey-7 q-py-xs" dense
-        >Links úteis</q-item-label
-      >
       <q-item
         :class="
           miniState && !$q.screen.lt.sm
@@ -72,6 +69,7 @@
           padding="sm"
           @click="copyLinkToClipboard"
           dense
+          class="full-width"
           no-caps
         >
           <q-tooltip
@@ -88,6 +86,7 @@
           color="primary"
           padding="sm"
           dense
+          class="full-width"
           @click="shareViaWhatsApp"
           no-caps
         >
@@ -103,6 +102,7 @@
           flat
           icon="mdi-open-in-new"
           color="primary"
+           class="full-width"
           padding="sm"
           dense
           @click="openPage"

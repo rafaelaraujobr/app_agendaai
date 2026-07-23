@@ -46,9 +46,18 @@
     </q-banner>
 
     <div class="row q-col-gutter-md">
-      <div class="col-12 col-lg-3">
+      <div class="col-12 col-lg-4">
         <q-list bordered class="rounded-borders">
-          <q-item-label header>Cards disponíveis</q-item-label>
+          <q-item>
+            <q-item-section>
+              <q-item-label class="text-weight-medium">
+                Seções data pagina
+              </q-item-label>
+              <q-item-label caption
+                >Ative, oculte e organize as seções</q-item-label
+              >
+            </q-item-section>
+          </q-item>
           <q-separator inset />
           <q-item
             v-for="card in showcaseCardDefinitions"
@@ -59,10 +68,17 @@
             dense
           >
             <q-item-section side>
-              <q-icon :name="card.icon" color="primary" />
+              <q-avatar
+                size="42px"
+                font-size="24px"
+                color="primary-light"
+                text-color="primary"
+                :icon="card.icon"
+                rounded
+              />
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{ card.label }}</q-item-label>
+              <q-item-label class="text-weight-medium">{{ card.label }}</q-item-label>
               <q-item-label caption>{{ card.description }}</q-item-label>
             </q-item-section>
             <q-item-section side>
@@ -88,7 +104,7 @@
         </q-list>
       </div>
 
-      <div class="col-12 col-lg-9">
+      <div class="col-12 col-lg-8">
         <div class="text-caption text-grey-7 q-mb-sm">
           Pré-visualização: {{ currentDeviceLabel }} ·
           {{ currentColumns }} colunas

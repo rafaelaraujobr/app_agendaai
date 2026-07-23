@@ -3,19 +3,19 @@ export const showcaseCardDefinitions = [
     id: "address",
     label: "Endereço",
     icon: "mdi-map-marker-outline",
-    description: "Exibe o endereço do seu negócio.",
+    description: "Exibe o endereço onde você atende.",
   },
   {
     id: "working-hours",
-    label: "Horário",
+    label: "Horário de atendimento",
     icon: "mdi-clock-outline",
-    description: "Exibe o horário de atendimento",
+    description: "Mostre seus horários",
   },
   {
     id: "banner",
     label: "Banner",
     icon: "mdi-image-outline",
-    description: "Banner de destaque",
+    description: "Imagem principal do seu negócio",
   },
   {
     id: "promotions",
@@ -31,9 +31,9 @@ export const showcaseCardDefinitions = [
   },
   {
     id: "booking-cta",
-    label: "Agendar",
+    label: "Botão de agendamento",
     icon: "mdi-calendar-check-outline",
-    description: "Botão para agendar um horário",
+    description: "Destaque um botão de agendamento",
   },
 ] as const;
 
